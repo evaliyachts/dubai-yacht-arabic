@@ -1,6 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import FeaturedYachts from "@/components/home/FeaturedYachts";
+import ServicesSection from "@/components/home/ServicesSection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ExperiencesSection from "@/components/home/ExperiencesSection";
 import PackagesSection from "@/components/home/PackagesSection";
@@ -21,6 +22,7 @@ const Index = () => (
     />
     <HeroSection />
     <FeaturedYachts />
+    <ServicesSection />
     <WhyChooseUs />
     <ExperiencesSection />
     <PackagesSection />
