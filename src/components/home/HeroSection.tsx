@@ -1,0 +1,123 @@
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { Link } from "react-router-dom";
+import { MessageCircle, Compass, Shield, Clock, Star, MapPin } from "lucide-react";
+import { PLACEHOLDER_IMAGE, getWhatsAppLink } from "@/lib/constants";
+
+const HeroSection = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const badges = [
+    { icon: Shield, text: "Licensed Crew" },
+    { icon: Clock, text: "Instant Booking Support" },
+    { icon: MapPin, text: "Dubai Marina Pickup" },
+    { icon: Star, text: "5★ Guest Experience" },
+  ];
+
+  return (
+    <section ref={ref} className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+      <motion.div style={{ y: imgY }} className="absolute inset-0">
+        <img src={PLACEHOLDER_IMAGE} alt="Luxury yacht rental in Dubai Marina" className="w-full h-full object-cover scale-110" />
+      </motion.div>
+      <div className="absolute inset-0 hero-gradient" />
+
+      <motion.div style={{ y: textY, opacity }} className="relative z-10 text-center max-w-4xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className="inline-block mb-4 px-4 py-1.5 text-xs font-semibold tracking-[0.2em] uppercase text-primary border border-primary/30 rounded-full glass-button">
+            Premium Yacht Charters
+          </span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-foreground mb-4 leading-tight"
+        >
+          Luxury Yacht Rental{" "}
+          <span className="text-gradient-gold">in Dubai</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-lg md:text-xl text-muted-foreground mb-3 font-light"
+        >
+          Private charters • Dubai Marina • Sunset cruises • VIP service
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="text-primary font-display text-xl mb-8"
+        >
+          From AED ___/hour
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-10"
+        >
+          <a
+            href={getWhatsAppLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-base hover:scale-105 transition-transform gold-glow"
+          >
+            <MessageCircle className="w-5 h-5" /> Book on WhatsApp
+          </a>
+          <Link
+            to="/yachts"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl glass-button text-foreground font-semibold text-base hover:scale-105 transition-transform"
+          >
+            <Compass className="w-5 h-5" /> Explore Yachts
+          </Link>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.0 }}
+          className="flex flex-wrap justify-center gap-4"
+        >
+          {badges.map((badge, i) => (
+            <motion.div
+              key={badge.text}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.1 + i * 0.1 }}
+              className="flex items-center gap-2 px-4 py-2 rounded-full glass-button text-sm text-muted-foreground"
+            >
+              <badge.icon className="w-4 h-4 text-primary" />
+              {badge.text}
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground"
+      >
+        <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/40 flex justify-center pt-2">
+          <div className="w-1 h-2 bg-primary rounded-full" />
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default HeroSection;
