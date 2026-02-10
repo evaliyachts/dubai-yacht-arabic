@@ -8,12 +8,12 @@ import {
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 const SERVICES = [
-  { title: "Private Yacht Charter", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/birthday-party/IMG-20250404-WA0001-1.webp" },
-  { title: "Sunset Cruise", url: "/yachts", image: PLACEHOLDER_IMAGE },
-  { title: "Birthday Party", url: "/occasions", image: PLACEHOLDER_IMAGE },
+  { title: "Birthday Party", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/birthday-party/IMG-20250404-WA0001-1.webp" },
+  { title: "Wedding Celebration", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/wedding-anniversary-celebration/IMG-20250404-WA0002.webp" },
+  { title: "Engagement Party", url: "/occasions", image: "https://evali.fra1.cdn.digitaloceanspaces.com/engagement-party/IMG-20250405-WA0033.webp" },
   { title: "Corporate Events", url: "/occasions", image: PLACEHOLDER_IMAGE },
   { title: "Fishing Trip", url: "/yachts", image: PLACEHOLDER_IMAGE },
-  { title: "Wedding Celebration", url: "/occasions", image: PLACEHOLDER_IMAGE },
+  { title: "Sunset Cruise", url: "/occasions", image: PLACEHOLDER_IMAGE },
   { title: "Overnight Stay", url: "/yachts", image: PLACEHOLDER_IMAGE },
   { title: "Water Sports", url: "/yachts", image: PLACEHOLDER_IMAGE },
   { title: "Dubai Marina Tour", url: "/yachts", image: PLACEHOLDER_IMAGE },
@@ -26,7 +26,7 @@ const SERVICES = [
   { title: "Graduation Party", url: "/occasions", image: PLACEHOLDER_IMAGE },
   { title: "Photography Tour", url: "/yachts", image: PLACEHOLDER_IMAGE },
   { title: "Family Fun Day", url: "/yachts", image: PLACEHOLDER_IMAGE },
-  { title: "VIP Experience", url: "/yachts", image: PLACEHOLDER_IMAGE },
+  { title: "Fishing", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/fishing-trips/IMG_8214-1.webp" },
 ];
 
 const ServicesSection = () => {
