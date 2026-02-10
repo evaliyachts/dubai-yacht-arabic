@@ -118,8 +118,9 @@ export const CardTransformed = React.forwardRef<
   ) => {
     const { scrollYProgress } = useContainerScrollContext();
 
-    const start = index / (arrayLength + 1);
-    const end = (index + 1) / (arrayLength + 1);
+    const scrollIndex = arrayLength - 1 - index;
+    const start = scrollIndex / (arrayLength + 1);
+    const end = (scrollIndex + 1) / (arrayLength + 1);
     const range = React.useMemo(() => [start, end], [start, end]);
     const rotateRange = [range[0] - 1.5, range[1] / 1.5];
 
