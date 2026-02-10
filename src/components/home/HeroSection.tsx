@@ -42,7 +42,7 @@ const HeroSection = () => {
       <motion.div style={{
       y: textY,
       opacity
-    }} className="relative z-10 text-center max-w-4xl mx-auto px-4">
+    }} className="relative z-10 text-center max-w-4xl mx-auto px-4 mt-0">
         <motion.div initial={{
         opacity: 0,
         y: 30
@@ -82,7 +82,7 @@ const HeroSection = () => {
       }} transition={{
         duration: 0.8,
         delay: 0.6
-      }} className="text-lg md:text-xl text-muted-foreground mb-3 font-light">
+      }} className="text-lg md:text-xl text-muted-foreground mb-3 font-light mt-[120px]">
           Private charters • Dubai Marina • Sunset cruises • VIP service
         </motion.p>
 
@@ -105,12 +105,12 @@ const HeroSection = () => {
       }} transition={{
         duration: 0.6,
         delay: 0.8
-      }} className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+      }} className="flex-col gap-4 justify-center mb-0 mt-[240px] flex sm:flex-row">
           <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn-primary text-base hover:scale-105 transition-transform">
-            <MessageCircle className="w-5 h-5" /> Book on WhatsApp
+            <MessageCircle className="w-5 h-5" /> Book
           </a>
           <Link to="/yachts" className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn text-foreground text-base hover:scale-105 transition-transform">
-            <Compass className="w-5 h-5" /> Explore Yachts
+            <Compass className="w-5 h-5" /> Yachts
           </Link>
         </motion.div>
 
