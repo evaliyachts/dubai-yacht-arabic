@@ -10,8 +10,8 @@ const TestimonialsSection = () => {
     <section className="section-padding">
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-14">
-          <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">Reviews</span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-2 mb-4">
+          <span className="liquid-pill inline-block">Reviews</span>
+          <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
             What Our Guests Say
           </h2>
           <div className="flex items-center justify-center gap-2 mb-2">
@@ -22,12 +22,12 @@ const TestimonialsSection = () => {
           <p className="text-muted-foreground">{avgRating} average from {testimonials.length} reviews</p>
         </AnimatedSection>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {testimonials.slice(0, 9).map((t, i) => (
             <motion.div
               key={i}
               variants={staggerItemVariants}
-              className="glass-card p-6"
+              className="liquid-glass p-6"
             >
               <div className="flex items-center gap-1 mb-3">
                 {[...Array(t.rating)].map((_, j) => (

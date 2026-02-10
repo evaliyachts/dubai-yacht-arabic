@@ -18,11 +18,11 @@ const faqs = [
 ];
 
 const HomeFAQ = () => (
-  <section className="section-padding bg-secondary/20">
+  <section className="section-padding liquid-divider">
     <div className="container mx-auto px-4 max-w-3xl">
       <AnimatedSection className="text-center mb-14">
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">FAQ</span>
-        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-2 mb-4">
+        <span className="liquid-pill inline-block">FAQ</span>
+        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
           Frequently Asked Questions
         </h2>
       </AnimatedSection>
@@ -30,7 +30,7 @@ const HomeFAQ = () => (
       <AnimatedSection>
         <Accordion type="single" collapsible className="space-y-3">
           {faqs.map((faq, i) => (
-            <AccordionItem key={i} value={`faq-${i}`} className="glass-card px-6 border-0">
+            <AccordionItem key={i} value={`faq-${i}`} className="liquid-glass px-6 border-0">
               <AccordionTrigger className="text-left text-foreground font-display font-semibold text-base hover:no-underline py-5">
                 {faq.q}
               </AccordionTrigger>

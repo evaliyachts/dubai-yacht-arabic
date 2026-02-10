@@ -23,7 +23,7 @@ const Header = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50 py-3" : "bg-transparent py-5"
+        scrolled ? "liquid-header py-3" : "bg-transparent py-5"
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -37,10 +37,10 @@ const Header = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 ${
                 location.pathname === link.path
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                  ? "text-primary liquid-btn-gold"
+                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/30"
               }`}
             >
               {link.label}
@@ -53,13 +53,13 @@ const Header = () => {
             href={getWhatsAppLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-600/20 text-green-400 hover:bg-green-600/30 border border-green-600/30 transition-all"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium liquid-btn text-green-400 border-green-500/20"
           >
             <MessageCircle className="w-4 h-4" /> WhatsApp
           </a>
           <a
             href={getPhoneLink()}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-primary/10 text-primary hover:bg-primary/20 border border-primary/30 transition-all"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium liquid-btn-gold text-primary"
           >
             <Phone className="w-4 h-4" /> Call Now
           </a>
@@ -77,7 +77,11 @@ const Header = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 top-0 bg-background z-40 lg:hidden flex flex-col pt-20 px-6"
+            className="fixed inset-0 top-0 z-40 lg:hidden flex flex-col pt-20 px-6"
+            style={{
+              background: "linear-gradient(180deg, hsl(220 25% 6% / 0.95) 0%, hsl(220 25% 6% / 0.98) 100%)",
+              backdropFilter: "blur(60px) saturate(2)",
+            }}
           >
             <nav className="flex flex-col gap-2">
               {NAV_LINKS.map((link, i) => (
@@ -89,8 +93,8 @@ const Header = () => {
                 >
                   <Link
                     to={link.path}
-                    className={`block px-4 py-3 text-lg font-display rounded-xl transition-colors ${
-                      location.pathname === link.path ? "text-primary bg-primary/10" : "text-foreground hover:bg-secondary"
+                    className={`block px-4 py-3 text-lg font-display rounded-2xl transition-all ${
+                      location.pathname === link.path ? "text-primary liquid-glass-gold" : "text-foreground hover:bg-secondary/30"
                     }`}
                   >
                     {link.label}
@@ -99,10 +103,10 @@ const Header = () => {
               ))}
             </nav>
             <div className="mt-8 flex flex-col gap-3">
-              <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-green-600/20 text-green-400 border border-green-600/30 font-medium">
+              <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-6 py-3 liquid-btn text-green-400 font-medium">
                 <MessageCircle className="w-5 h-5" /> WhatsApp
               </a>
-              <a href={getPhoneLink()} className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary/10 text-primary border border-primary/30 font-medium">
+              <a href={getPhoneLink()} className="flex items-center justify-center gap-2 px-6 py-3 liquid-btn-gold text-primary font-medium">
                 <Phone className="w-5 h-5" /> Call Now
               </a>
             </div>

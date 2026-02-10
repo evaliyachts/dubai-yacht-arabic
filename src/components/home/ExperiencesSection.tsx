@@ -4,7 +4,6 @@ import { occasions } from "@/data/occasions";
 import { StaggerContainer, staggerItemVariants } from "@/components/shared/AnimatedSection";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Cake, Heart, Briefcase, Fish, Sunset, Camera, PartyPopper } from "lucide-react";
-import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 const iconMap: Record<string, React.ElementType> = {
   birthday: Cake,
@@ -20,8 +19,8 @@ const ExperiencesSection = () => (
   <section className="section-padding">
     <div className="container mx-auto px-4">
       <AnimatedSection className="text-center mb-14">
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">Experiences</span>
-        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-2 mb-4">
+        <span className="liquid-pill inline-block">Experiences</span>
+        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
           Yacht Experiences for Every Occasion
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
@@ -36,9 +35,9 @@ const ExperiencesSection = () => (
             <motion.div key={occ.slug} variants={staggerItemVariants}>
               <Link
                 to="/occasions"
-                className="glass-card p-5 flex flex-col items-center text-center group hover:border-primary/50 transition-all block"
+                className="liquid-glass-gold p-5 flex flex-col items-center text-center group hover:border-primary/30 transition-all block"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 liquid-icon rounded-xl mb-3 group-hover:scale-110 transition-transform">
                   <Icon className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-sm font-display font-semibold text-foreground">{occ.name}</h3>

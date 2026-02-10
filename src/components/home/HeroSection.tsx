@@ -31,7 +31,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="inline-block mb-4 px-4 py-1.5 text-xs font-semibold tracking-[0.2em] uppercase text-primary border border-primary/30 rounded-full glass-button">
+          <span className="liquid-pill inline-block mb-4">
             Premium Yacht Charters
           </span>
         </motion.div>
@@ -74,13 +74,13 @@ const HeroSection = () => {
             href={getWhatsAppLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-base hover:scale-105 transition-transform gold-glow"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn-primary text-base hover:scale-105 transition-transform"
           >
             <MessageCircle className="w-5 h-5" /> Book on WhatsApp
           </a>
           <Link
             to="/yachts"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl glass-button text-foreground font-semibold text-base hover:scale-105 transition-transform"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn text-foreground text-base hover:scale-105 transition-transform"
           >
             <Compass className="w-5 h-5" /> Explore Yachts
           </Link>
@@ -90,7 +90,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0 }}
-          className="flex flex-wrap justify-center gap-4"
+          className="flex flex-wrap justify-center gap-3"
         >
           {badges.map((badge, i) => (
             <motion.div
@@ -98,7 +98,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.1 + i * 0.1 }}
-              className="flex items-center gap-2 px-4 py-2 rounded-full glass-button text-sm text-muted-foreground"
+              className="flex items-center gap-2 px-4 py-2 liquid-glass rounded-full text-sm text-muted-foreground"
             >
               <badge.icon className="w-4 h-4 text-primary" />
               {badge.text}

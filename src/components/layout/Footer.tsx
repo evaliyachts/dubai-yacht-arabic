@@ -3,7 +3,7 @@ import { Anchor, MessageCircle, Phone, MapPin, Clock } from "lucide-react";
 import { BRAND_NAME, NAV_LINKS, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
 
 const Footer = () => (
-  <footer className="bg-secondary/30 border-t border-border/50 pt-16 pb-8">
+  <footer className="liquid-divider pt-16 pb-8 border-t border-border/30">
     <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
         <div>
@@ -15,10 +15,10 @@ const Footer = () => (
             Premium yacht rental experiences in Dubai Marina. Licensed crew, luxury fleet, and unforgettable moments on the Arabian Gulf.
           </p>
           <div className="flex gap-3">
-            <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-green-600/20 text-green-400 hover:bg-green-600/30 transition-colors">
+            <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="p-2 liquid-btn rounded-xl text-green-400">
               <MessageCircle className="w-4 h-4" />
             </a>
-            <a href={getPhoneLink()} className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+            <a href={getPhoneLink()} className="p-2 liquid-btn-gold rounded-xl text-primary">
               <Phone className="w-4 h-4" />
             </a>
           </div>
@@ -55,7 +55,7 @@ const Footer = () => (
         </div>
       </div>
 
-      <div className="border-t border-border/50 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="border-t border-border/30 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} {BRAND_NAME}. All rights reserved.</p>
         <div className="flex gap-4 text-xs text-muted-foreground">
           <Link to="/terms" className="hover:text-primary transition-colors">Terms</Link>

@@ -2,15 +2,15 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { offers } from "@/data/offers";
 import { StaggerContainer, staggerItemVariants, AnimatedSection } from "@/components/shared/AnimatedSection";
-import { Check, ArrowRight } from "lucide-react";
+import { Check } from "lucide-react";
 import { getWhatsAppLink } from "@/lib/constants";
 
 const PackagesSection = () => (
-  <section className="section-padding bg-secondary/20">
+  <section className="section-padding liquid-divider">
     <div className="container mx-auto px-4">
       <AnimatedSection className="text-center mb-14">
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">Packages</span>
-        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-2 mb-4">
+        <span className="liquid-pill inline-block">Packages</span>
+        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
           Yacht Packages & Offers
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
@@ -18,16 +18,16 @@ const PackagesSection = () => (
         </p>
       </AnimatedSection>
 
-      <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
         {offers.map((offer, i) => (
           <motion.div
             key={offer.slug}
             variants={staggerItemVariants}
             whileHover={{ y: -6, transition: { duration: 0.3 } }}
-            className={`glass-card p-6 relative overflow-hidden ${i === 2 ? "border-primary/40" : ""}`}
+            className={`${i === 2 ? "liquid-glass-gold" : "liquid-glass"} p-6 relative overflow-hidden`}
           >
             {offer.badge && (
-              <span className="absolute top-4 right-4 text-xs font-semibold px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30">
+              <span className="absolute top-4 right-4 liquid-pill">
                 {offer.badge}
               </span>
             )}
@@ -47,7 +47,7 @@ const PackagesSection = () => (
               href={getWhatsAppLink(`Hi, I'm interested in the ${offer.name} package (${offer.price_label}).`)}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-center py-3 rounded-xl bg-primary/10 text-primary font-medium hover:bg-primary/20 transition-colors"
+              className="block w-full text-center py-3 liquid-btn-gold text-primary font-medium"
             >
               Inquire Now
             </a>

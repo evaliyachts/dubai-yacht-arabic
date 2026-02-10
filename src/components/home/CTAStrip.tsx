@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { MessageCircle, Phone, Send } from "lucide-react";
 import { getWhatsAppLink, getPhoneLink } from "@/lib/constants";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
@@ -6,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const CTAStrip = () => (
   <section className="section-padding relative overflow-hidden">
-    <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10" />
+    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5" />
     <div className="container mx-auto px-4 relative z-10 text-center">
       <AnimatedSection>
         <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-4">
@@ -20,19 +19,19 @@ const CTAStrip = () => (
             href={getWhatsAppLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold hover:scale-105 transition-transform gold-glow"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn-primary text-base hover:scale-105 transition-transform"
           >
             <MessageCircle className="w-5 h-5" /> WhatsApp
           </a>
           <a
             href={getPhoneLink()}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl glass-button text-foreground font-semibold hover:scale-105 transition-transform"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn text-foreground hover:scale-105 transition-transform"
           >
             <Phone className="w-5 h-5" /> Call Now
           </a>
           <Link
             to="/contact"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl glass-button text-foreground font-semibold hover:scale-105 transition-transform"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn-gold text-primary hover:scale-105 transition-transform"
           >
             <Send className="w-5 h-5" /> Inquiry Form
           </Link>

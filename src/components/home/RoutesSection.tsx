@@ -1,5 +1,5 @@
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import { MapPin, Navigation } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { ParallaxSection } from "@/components/shared/AnimatedSection";
 
 const routes = [
@@ -15,20 +15,22 @@ const RoutesSection = () => (
   <section className="section-padding">
     <div className="container mx-auto px-4">
       <AnimatedSection className="text-center mb-14">
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">Routes</span>
-        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-2 mb-4">
+        <span className="liquid-pill inline-block">Routes</span>
+        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
           Where Do Yachts Depart From in Dubai?
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          All our yachts depart from Dubai Marina with flexible routes covering Dubai's most iconic landmarks. Routes can be customized based on your preferences and charter duration.
+          All our yachts depart from Dubai Marina with flexible routes covering Dubai's most iconic landmarks.
         </p>
       </AnimatedSection>
 
       <ParallaxSection speed={0.15}>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
           {routes.map((r) => (
-            <div key={r.name} className="glass-card p-4 flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div key={r.name} className="liquid-glass p-4 flex items-start gap-3">
+              <div className="w-8 h-8 liquid-icon rounded-lg shrink-0">
+                <MapPin className="w-4 h-4 text-primary" />
+              </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">{r.name}</p>
                 <p className="text-xs text-muted-foreground">{r.note}</p>

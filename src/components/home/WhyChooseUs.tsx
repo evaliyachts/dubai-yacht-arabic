@@ -13,11 +13,11 @@ const highlights = [
 ];
 
 const WhyChooseUs = () => (
-  <section className="section-padding bg-secondary/20">
+  <section className="section-padding liquid-divider">
     <div className="container mx-auto px-4">
       <AnimatedSection className="text-center mb-14">
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">Why Us</span>
-        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-2 mb-4">
+        <span className="liquid-pill inline-block">Why Us</span>
+        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
           Why Choose Dubai Yatch
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
@@ -25,15 +25,15 @@ const WhyChooseUs = () => (
         </p>
       </AnimatedSection>
 
-      <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {highlights.map((item) => (
           <motion.div
             key={item.title}
             variants={staggerItemVariants}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="glass-card p-6 text-center"
+            className="liquid-glass-gold p-6 text-center"
           >
-            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
+            <div className="w-14 h-14 mx-auto mb-4 liquid-icon">
               <item.icon className="w-7 h-7 text-primary" />
             </div>
             <h3 className="text-lg font-display font-semibold text-foreground mb-2">{item.title}</h3>
