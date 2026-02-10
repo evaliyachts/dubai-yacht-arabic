@@ -2,10 +2,15 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { MessageCircle, Compass, Shield, Clock, Star, MapPin } from "lucide-react";
-import { PLACEHOLDER_IMAGE, getWhatsAppLink } from "@/lib/constants";
+import { getWhatsAppLink } from "@/lib/constants";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+const HERO_DESKTOP = "https://dubai-yacht.fra1.cdn.digitaloceanspaces.com/dubai_yacht_luxury_dt.avif";
+const HERO_MOBILE = "https://dubai-yacht.fra1.cdn.digitaloceanspaces.com/dubai_yacht_luxury_mob.avif";
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const textY = useTransform(scrollYProgress, [0, 1], [0, 80]);
@@ -21,7 +26,7 @@ const HeroSection = () => {
   return (
     <section ref={ref} className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
       <motion.div style={{ y: imgY }} className="absolute inset-0">
-        <img src={PLACEHOLDER_IMAGE} alt="Luxury yacht rental in Dubai Marina" className="w-full h-full object-cover scale-110" />
+        <img src={isMobile ? HERO_MOBILE : HERO_DESKTOP} alt="Luxury yacht rental in Dubai Marina" className="w-full h-full object-cover scale-110" />
       </motion.div>
       <div className="absolute inset-0 hero-gradient" />
 
