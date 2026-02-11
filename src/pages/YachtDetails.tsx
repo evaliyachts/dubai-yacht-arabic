@@ -1,3 +1,4 @@
+import { useState, useCallback, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
@@ -6,10 +7,34 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { yachts } from "@/data/yachts";
 import { PLACEHOLDER_IMAGE, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
 import { Users, BedDouble, Bath, Ruler, UserCheck, Check, MessageCircle, Phone, ArrowLeft } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 const YachtDetails = () => {
   const { slug } = useParams();
   const yacht = yachts.find((y) => y.slug === slug);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [slideCount, setSlideCount] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!carouselApi) return;
+    setCurrentSlide(carouselApi.selectedScrollSnap());
+  }, [carouselApi]);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+    setSlideCount(carouselApi.scrollSnapList().length);
+    setCurrentSlide(carouselApi.selectedScrollSnap());
+    carouselApi.on("select", onSelect);
+    return () => { carouselApi.off("select", onSelect); };
+  }, [carouselApi, onSelect]);
 
   if (!yacht) {
     return (
@@ -21,6 +46,8 @@ const YachtDetails = () => {
       </Layout>
     );
   }
+
+  const images = yacht.images?.length ? yacht.images : [PLACEHOLDER_IMAGE];
 
   const stats = [
     { icon: Ruler, label: "Length", value: `${yacht.length_ft} ft` },
@@ -39,10 +66,42 @@ const YachtDetails = () => {
         keywords={`${yacht.name} dubai, ${yacht.length_ft}ft yacht dubai, ${yacht.max_guests} guests yacht dubai`}
       />
 
-      {/* Hero */}
+      {/* Hero Carousel */}
       <div className="relative h-[50vh] min-h-[400px]">
-        <img src={PLACEHOLDER_IMAGE} alt={yacht.name} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 hero-gradient" />
+        <Carousel opts={{ loop: true }} setApi={setCarouselApi} className="h-full">
+          <CarouselContent className="h-full -ml-0">
+            {images.map((src, i) => (
+              <CarouselItem key={i} className="h-full pl-0">
+                <img
+                  src={src}
+                  alt={`${yacht.name} - image ${i + 1}`}
+                  className="w-full h-[50vh] min-h-[400px] object-cover"
+                  referrerPolicy="no-referrer"
+                  crossOrigin="anonymous"
+                  onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE; }}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex left-4 top-1/2 -translate-y-1/2 bg-background/60 border-0 hover:bg-background/80" />
+          <CarouselNext className="hidden md:flex right-4 top-1/2 -translate-y-1/2 bg-background/60 border-0 hover:bg-background/80" />
+        </Carousel>
+
+        {/* Dot indicators */}
+        {slideCount > 1 && (
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            {Array.from({ length: slideCount }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => carouselApi?.scrollTo(i)}
+                className={`w-2.5 h-2.5 rounded-full transition-colors ${i === currentSlide ? "bg-primary" : "bg-foreground/30"}`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="absolute inset-0 hero-gradient pointer-events-none" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
           <div className="container mx-auto">
             <Link to="/yachts" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
