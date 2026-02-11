@@ -82,8 +82,20 @@ const HeroSection = () => {
       }} transition={{
         duration: 0.8,
         delay: 0.6
-      }} className="text-lg md:text-xl mb-3 font-light text-white">
-          Private charters • Dubai Marina • Sunset cruises • VIP service
+      }} <p className="text-lg md:text-xl text-muted-foreground mb-3 font-light">
+  {/* Desktop / tablet */}
+  <span className="hidden sm:inline">
+    Private charters • Dubai Marina • Sunset cruises • VIP service
+  </span>
+
+  {/* Mobile */}
+  <span className="inline sm:hidden">
+    Private charters • Dubai Marina
+    <br />
+    • Sunset cruises • VIP service
+  </span>
+</p>
+
         </motion.p>
 
         
