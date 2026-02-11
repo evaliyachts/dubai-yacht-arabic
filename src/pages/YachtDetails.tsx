@@ -1,4 +1,3 @@
-import { useState, useCallback, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
@@ -7,34 +6,11 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { yachts } from "@/data/yachts";
 import { PLACEHOLDER_IMAGE, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
 import { Users, BedDouble, Bath, Ruler, UserCheck, Check, MessageCircle, Phone, ArrowLeft } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { StaggerImageCarousel } from "@/components/ui/stagger-image-carousel";
 
 const YachtDetails = () => {
   const { slug } = useParams();
   const yacht = yachts.find((y) => y.slug === slug);
-  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [slideCount, setSlideCount] = useState(0);
-
-  const onSelect = useCallback(() => {
-    if (!carouselApi) return;
-    setCurrentSlide(carouselApi.selectedScrollSnap());
-  }, [carouselApi]);
-
-  useEffect(() => {
-    if (!carouselApi) return;
-    setSlideCount(carouselApi.scrollSnapList().length);
-    setCurrentSlide(carouselApi.selectedScrollSnap());
-    carouselApi.on("select", onSelect);
-    return () => { carouselApi.off("select", onSelect); };
-  }, [carouselApi, onSelect]);
 
   if (!yacht) {
     return (
@@ -66,58 +42,28 @@ const YachtDetails = () => {
         keywords={`${yacht.name} dubai, ${yacht.length_ft}ft yacht dubai, ${yacht.max_guests} guests yacht dubai`}
       />
 
-      {/* Hero Carousel */}
-      <div className="relative h-[50vh] min-h-[400px]">
-        <Carousel opts={{ loop: true }} setApi={setCarouselApi} className="h-full">
-          <CarouselContent className="h-full -ml-0">
-            {images.map((src, i) => (
-              <CarouselItem key={i} className="h-full pl-0">
-                <img
-                  src={src}
-                  alt={`${yacht.name} - image ${i + 1}`}
-                  className="w-full h-[50vh] min-h-[400px] object-cover"
-                  referrerPolicy="no-referrer"
-                  crossOrigin="anonymous"
-                  onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE; }}
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="hidden md:flex left-4 top-1/2 -translate-y-1/2 bg-background/60 border-0 hover:bg-background/80" />
-          <CarouselNext className="hidden md:flex right-4 top-1/2 -translate-y-1/2 bg-background/60 border-0 hover:bg-background/80" />
-        </Carousel>
+      {/* Hero with stagger carousel */}
+      <div className="relative pt-28 pb-10 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <Link to="/yachts" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
+            <ArrowLeft className="w-4 h-4" /> Back to Fleet
+          </Link>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl md:text-5xl font-display font-bold text-foreground mb-2"
+          >
+            {yacht.name}
+          </motion.h1>
+          <p className="text-primary font-display text-xl mb-8">
+            From AED {yacht.price_per_hour_from_aed.toLocaleString()}/hour
+          </p>
 
-        {/* Dot indicators */}
-        {slideCount > 1 && (
-          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-            {Array.from({ length: slideCount }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => carouselApi?.scrollTo(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-colors ${i === currentSlide ? "bg-primary" : "bg-foreground/30"}`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
-        )}
-
-        <div className="absolute inset-0 hero-gradient pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-          <div className="container mx-auto">
-            <Link to="/yachts" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
-              <ArrowLeft className="w-4 h-4" /> Back to Fleet
-            </Link>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-3xl md:text-5xl font-display font-bold text-foreground mb-2"
-            >
-              {yacht.name}
-            </motion.h1>
-            <p className="text-primary font-display text-xl">
-              From AED {yacht.price_per_hour_from_aed.toLocaleString()}/hour
-            </p>
-          </div>
+          <StaggerImageCarousel
+            images={images}
+            altPrefix={yacht.name}
+            fallbackSrc={PLACEHOLDER_IMAGE}
+          />
         </div>
       </div>
 
