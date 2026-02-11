@@ -16,7 +16,10 @@ export interface Yacht {
   tags: string[];
 }
 
-export const yachts: Yacht[] = [
+const SUPABASE_BASE = "https://rmkuurzppholugvtgtvk.supabase.co/storage/v1/object/public/yachts/";
+const CDN_BASE = "https://yacht.fra1.cdn.digitaloceanspaces.com/";
+
+const rawYachts: Yacht[] = [
   {
     slug: "evali-55ft-yacht-for-rent-in-dubai",
     name: "55ft Yacht for Rent in Dubai",
@@ -1428,3 +1431,8 @@ export const yachts: Yacht[] = [
     tags: ["anniversary", "atlantis", "birthday", "burj al arab", "corporate", "cruise", "dubai marina", "palm jumeirah"],
   }
 ];
+
+export const yachts: Yacht[] = rawYachts.map((y) => ({
+  ...y,
+  images: y.images.map((url) => url.replace(SUPABASE_BASE, CDN_BASE)),
+}));
