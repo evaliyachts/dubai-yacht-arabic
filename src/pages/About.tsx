@@ -2,7 +2,7 @@ import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Anchor, Heart, Shield, Users } from "lucide-react";
-import { PLACEHOLDER_IMAGE } from "@/lib/constants";
+import { yachts } from "@/data/yachts";
 
 const values = [
   { icon: Anchor, title: "Premium Fleet", desc: "Every yacht in our fleet is maintained to the highest standards of luxury and safety." },
@@ -33,7 +33,7 @@ const About = () => (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           <AnimatedSection direction="left">
             <div className="rounded-2xl overflow-hidden h-80">
-              <img src={PLACEHOLDER_IMAGE} alt="Dubai Yatch fleet" className="w-full h-full object-cover" />
+              <img src={yachts[0]?.images[0]} alt="Dubai Yatch fleet" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             </div>
           </AnimatedSection>
           <AnimatedSection direction="right" className="flex flex-col justify-center">
