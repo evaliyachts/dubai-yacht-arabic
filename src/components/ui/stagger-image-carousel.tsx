@@ -59,7 +59,6 @@ const ImageCard: React.FC<ImageCardProps> = ({
         alt={alt}
         className="w-full h-full object-cover"
         referrerPolicy="no-referrer"
-        crossOrigin="anonymous"
         onError={(e) => {
           if (fallbackSrc) (e.target as HTMLImageElement).src = fallbackSrc;
         }}
@@ -165,7 +164,6 @@ export const StaggerImageCarousel: React.FC<StaggerImageCarouselProps> = ({
               alt={altPrefix}
               className="max-w-full max-h-[90vh] object-contain"
               referrerPolicy="no-referrer"
-              crossOrigin="anonymous"
             />
           )}
         </DialogContent>
