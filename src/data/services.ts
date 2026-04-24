@@ -10,7 +10,7 @@ export interface Service {
   description: string;
 }
 
-const CDN_BASE = "https://services.fra1.cdn.digitaloceanspaces.com/";
+const CDN_BASE = "https://evali.fra1.cdn.digitaloceanspaces.com/";
 const LEGACY_PREFIX =
   "https://rmkuurzppholugvtgtvk.supabase.co/storage/v1/object/public/evali/";
 
