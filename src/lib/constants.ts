@@ -15,6 +15,7 @@ export const NAV_LINKS = [
   { label: "Home", path: "/" },
   { label: "Yachts", path: "/yachts" },
   { label: "Offers", path: "/offers" },
+  { label: "Services", path: "/services" },
   { label: "Occasions", path: "/occasions" },
   { label: "About", path: "/about" },
   { label: "FAQ", path: "/faq" },
