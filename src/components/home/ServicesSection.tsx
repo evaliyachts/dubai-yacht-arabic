@@ -38,7 +38,16 @@ const ServicesSection = () => {
           </p>
         </AnimatedSection>
 
-        <ContainerScroll className="h-[600vh]">
+        <ContainerScroll
+          className="snap-y snap-mandatory"
+          style={{ height: `${SERVICES.length * 100}vh` }}
+        >
+          {/* Snap targets — one per card, each one viewport tall */}
+          <div className="absolute inset-0 pointer-events-none">
+            {SERVICES.map((s, i) => (
+              <div key={s.title} className="h-screen snap-start" />
+            ))}
+          </div>
           <CardsContainer className="h-screen">
             <div className="relative h-[420px] w-full max-w-sm md:max-w-md">
               {SERVICES.map((service, index) => (
