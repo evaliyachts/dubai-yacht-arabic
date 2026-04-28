@@ -1432,7 +1432,30 @@ const yachtsRaw: Yacht[] = [
   }
 ];
 
+// Folders whose images are indexed starting at 0 on the CDN.
+// All other folders start at index 1, so a "...0.webp" URL would 404.
+const ZERO_INDEXED_FOLDERS = new Set<string>([
+  "evali_55_feet_yacht_rental_dubai",
+]);
+
+const rewriteAndFilter = (url: string): string | null => {
+  const cdnUrl = url.replace(SUPABASE_BASE, CDN_BASE);
+  // Match "<folder>/<folder><index>.webp"
+  const m = cdnUrl.match(/\/([^/]+)\/\1(\d+)\.(webp|jpg|jpeg|png)$/i);
+  if (m) {
+    const folder = m[1];
+    const idx = parseInt(m[2], 10);
+    if (idx === 0 && !ZERO_INDEXED_FOLDERS.has(folder)) {
+      // This image does not exist on the CDN — drop it so the next one becomes the cover.
+      return null;
+    }
+  }
+  return cdnUrl;
+};
+
 export const yachts: Yacht[] = yachtsRaw.map((y) => ({
   ...y,
-  images: y.images.map((url) => url.replace(SUPABASE_BASE, CDN_BASE)),
+  images: y.images
+    .map(rewriteAndFilter)
+    .filter((u): u is string => u !== null),
 }));
