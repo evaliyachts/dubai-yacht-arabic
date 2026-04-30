@@ -71,7 +71,7 @@ const HeroSection = () => {
         duration: 0.8,
         delay: 0.4
       }} className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-foreground mb-4 leading-tight">
-          Luxury Yacht Rental <span className="text-gradient-gold">in Dubai</span>
+          Yacht Rental Dubai — <span className="text-gradient-gold">Luxury Yacht Charter Dubai</span>
         </motion.h1>
 
         {/* ✅ Two lines on mobile only */}
