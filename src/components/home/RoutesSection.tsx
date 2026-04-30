@@ -17,10 +17,12 @@ const RoutesSection = () => (
       <AnimatedSection className="text-center mb-14">
         <span className="liquid-pill inline-block">Routes</span>
         <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
-          Where Do Yachts Depart From in Dubai?
+          Yacht Trips Dubai — Departure Points &amp; Routes
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          All our yachts depart from Dubai Marina with flexible routes covering Dubai's most iconic landmarks.
+          Every <strong>yacht rental Dubai</strong> departs from Dubai Marina, with
+          flexible <strong>Dubai yacht trip</strong> routes covering Dubai's most
+          iconic landmarks for your <strong>luxury yacht charter Dubai</strong>.
         </p>
       </AnimatedSection>
 
