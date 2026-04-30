@@ -37,7 +37,7 @@ const FeaturedYachts = () => {
             to="/yachts"
             className="inline-flex items-center gap-2 px-8 py-3 rounded-xl glass-button text-foreground font-medium hover:scale-105 transition-transform"
           >
-            View All Yachts <ArrowRight className="w-4 h-4" />
+            View All Yachts for Rent in Dubai <ArrowRight className="w-4 h-4" />
           </Link>
         </AnimatedSection>
       </div>
