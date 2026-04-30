@@ -71,7 +71,7 @@ const HeroSection = () => {
         duration: 0.8,
         delay: 0.4
       }} className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-foreground mb-4 leading-tight">
-          Luxury Yacht Rental <span className="text-gradient-gold">in Dubai</span>
+          Yacht Rental Dubai — <span className="text-gradient-gold">Luxury Yacht Charter Dubai</span>
         </motion.h1>
 
         {/* ✅ Two lines on mobile only */}
@@ -87,14 +87,14 @@ const HeroSection = () => {
       }} className="text-base sm:text-lg md:text-xl leading-snug text-muted-foreground mb-3 font-light">
           {/* Desktop / tablet */}
           <span className="hidden sm:inline text-white">
-            Private charters • Dubai Marina • Sunset cruises • VIP service
+            <strong>Dubai yacht rental</strong> • Private yacht hire Dubai • Sunset yacht trips Dubai • Book yacht in Dubai
           </span>
 
           {/* Mobile */}
           <span className="inline sm:hidden">
-            Private charters • Dubai Marina
+            <strong>Dubai yacht rental</strong> • Yacht hire Dubai
             <br />
-            • Sunset cruises • VIP service
+            • Yacht trips Dubai • Book yacht Dubai
           </span>
         </motion.p>
 

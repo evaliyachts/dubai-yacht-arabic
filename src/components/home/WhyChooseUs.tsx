@@ -18,10 +18,13 @@ const WhyChooseUs = () => (
       <AnimatedSection className="text-center mb-14">
         <span className="liquid-pill inline-block">Why Us</span>
         <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
-          Why Choose Dubai Yatch
+          Why Choose Dubai Yatch for Your Yacht Rental Dubai
         </h2>
-        <p className="text-muted-foreground max-w-xl mx-auto">
-          Trusted by hundreds of guests for premium yacht rental experiences in Dubai.
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          Trusted by hundreds of guests for premium <strong>Dubai yacht rental</strong>,{" "}
+          <strong>luxury yacht charter Dubai</strong>, and{" "}
+          <strong>private yacht hire Dubai</strong> experiences across Dubai Marina,
+          Palm Jumeirah, and Burj Al Arab.
         </p>
       </AnimatedSection>
 

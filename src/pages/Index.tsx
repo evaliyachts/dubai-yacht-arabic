@@ -10,15 +10,16 @@ import GallerySection from "@/components/home/GallerySection";
 import RoutesSection from "@/components/home/RoutesSection";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import CTAStrip from "@/components/home/CTAStrip";
+import SEOContentSection from "@/components/home/SEOContentSection";
 import SEOHead from "@/components/shared/SEOHead";
 
 const Index = () => (
   <Layout>
     <SEOHead
-      title="Dubai Yatch | Luxury Yacht Rental in Dubai Marina"
-      description="Premium yacht rental in Dubai. Private charters, sunset cruises, birthday parties, corporate events. Licensed crew, luxury fleet. Book on WhatsApp."
+      title="Yacht Rental Dubai | Luxury Yacht Charter Dubai — Dubai Yatch"
+      description="Yacht rental Dubai with Dubai Yatch — luxury yacht charter Dubai, private yacht hire Dubai, Dubai yacht booking & trips. Book yacht in Dubai on WhatsApp."
       path="/"
-      keywords="yacht rental dubai, dubai yacht charter, luxury yacht rental dubai, private yacht dubai marina"
+      keywords="yacht rental dubai, dubai yacht rental, yacht rentals dubai, dubai yacht rentals, yacht for rent dubai, yacht hire dubai, dubai yacht hire, yacht charter dubai, dubai yacht charter, private yacht rental dubai, private yacht charter dubai, luxury yacht rental dubai, luxury yacht charter dubai, dubai luxury yacht rental, book yacht dubai, dubai yacht booking, yacht trip dubai, dubai yacht trips"
     />
     <HeroSection />
     <FeaturedYachts />
@@ -26,6 +27,7 @@ const Index = () => (
     <WhyChooseUs />
     <ExperiencesSection />
     <PackagesSection />
+    <SEOContentSection />
     <TestimonialsSection />
     <GallerySection />
     <RoutesSection />

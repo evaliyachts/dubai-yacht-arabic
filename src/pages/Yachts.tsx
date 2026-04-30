@@ -24,20 +24,23 @@ const Yachts = () => {
   return (
     <Layout>
       <SEOHead
-        title="Yachts for Rent in Dubai | Dubai Yatch Fleet & Prices"
-        description="Browse our luxury yacht fleet in Dubai. Standard, luxury, and superyachts available for private charter. Compare prices and book instantly."
+        title="Yachts for Rent in Dubai | Yacht Rental Dubai Fleet — Dubai Yatch"
+        description="Yacht rental Dubai fleet — standard, luxury yacht charter Dubai, and superyacht hire. Compare yachts for rent in Dubai and book your Dubai yacht charter."
         path="/yachts"
-        keywords="rent a yacht in dubai, book yacht dubai, yacht rental prices dubai, yacht hire dubai"
+        keywords="yacht rental dubai, yachts for rent in dubai, yacht for rent dubai, rent yacht in dubai, yacht hire dubai, dubai yacht charter, luxury yacht rental dubai, luxury yacht charter dubai, book yacht dubai, dubai yacht booking"
       />
 
       <div className="pt-28 pb-10">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-10">
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-              Our Yacht Fleet
+              Yachts for Rent in Dubai — Yacht Rental Dubai Fleet
             </h1>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Find the perfect yacht for your Dubai charter experience. Filter by type, sort by price, and book instantly.
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Find the perfect <strong>yacht for rent in Dubai</strong>. Compare our{" "}
+              <strong>Dubai yacht rental</strong> fleet, filter by{" "}
+              <strong>luxury yacht charter Dubai</strong> type, sort by price, and{" "}
+              <strong>book yacht in Dubai</strong> instantly with Dubai Yatch.
             </p>
           </AnimatedSection>
 

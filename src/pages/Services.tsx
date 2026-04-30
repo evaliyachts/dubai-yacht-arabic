@@ -14,10 +14,10 @@ import { ArrowRight } from "lucide-react";
 const Services = () => (
   <Layout>
     <SEOHead
-      title="Yacht Services & Packages in Dubai | Dubai Yatch"
-      description="Explore yacht services in Dubai — water sports, onboard dining, BBQ, fishing, jet ski, birthday & wedding packages, proposals, and more."
+      title="Yacht Services Dubai | Yacht Rental Dubai Packages — Dubai Yatch"
+      description="Yacht services for your yacht rental Dubai — water sports, BBQ, fishing, jet ski, birthday & wedding packages, proposals on a luxury yacht charter Dubai."
       path="/services"
-      keywords="yacht services dubai, yacht packages dubai, jet ski dubai, yacht bbq dubai, yacht birthday party dubai, yacht proposal dubai"
+      keywords="yacht services dubai, yacht rental dubai packages, luxury yacht charter dubai, yacht hire dubai, jet ski dubai, yacht bbq dubai, yacht birthday party dubai, yacht proposal dubai"
     />
 
     <div className="pt-28 pb-20">
@@ -25,11 +25,13 @@ const Services = () => (
         <AnimatedSection className="text-center mb-14">
           <span className="liquid-pill inline-block">Services</span>
           <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mt-4 mb-4">
-            Yacht Services & Packages
+            Yacht Services &amp; Packages for Yacht Rental Dubai
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Curated experiences, water sports, dining and celebration packages to
-            elevate your Dubai Yatch charter.
+            elevate your <strong>Dubai yacht rental</strong>,{" "}
+            <strong>luxury yacht charter Dubai</strong>, and{" "}
+            <strong>private yacht hire Dubai</strong> trip.
           </p>
         </AnimatedSection>
 

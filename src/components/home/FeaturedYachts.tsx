@@ -15,10 +15,14 @@ const FeaturedYachts = () => {
         <AnimatedSection className="text-center mb-14">
           <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">Our Fleet</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-2 mb-4">
-            Featured Yachts
+            Featured Yachts for Rent in Dubai
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Explore our hand-picked selection of luxury yachts available for private charter in Dubai Marina.
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Hand-picked <strong>luxury yacht rental Dubai</strong> selection — from intimate
+            <strong> private yacht charter Dubai</strong> cruises to grand{" "}
+            <strong>Dubai luxury yacht hire</strong> superyachts. Every{" "}
+            <strong>yacht for rent in Dubai</strong> departs from Dubai Marina with a
+            licensed captain and full hospitality crew.
           </p>
         </AnimatedSection>
 
@@ -33,7 +37,7 @@ const FeaturedYachts = () => {
             to="/yachts"
             className="inline-flex items-center gap-2 px-8 py-3 rounded-xl glass-button text-foreground font-medium hover:scale-105 transition-transform"
           >
-            View All Yachts <ArrowRight className="w-4 h-4" />
+            View All Yachts for Rent in Dubai <ArrowRight className="w-4 h-4" />
           </Link>
         </AnimatedSection>
       </div>
