@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import SitemapSection from "./SitemapSection";
 
 interface LayoutProps {
   children: ReactNode;
@@ -30,6 +31,7 @@ const Layout = ({ children }: LayoutProps) => {
       >
         {children}
       </motion.main>
+      <SitemapSection />
       <Footer />
     </div>
   );
