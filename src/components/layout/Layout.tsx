@@ -31,8 +31,8 @@ const Layout = ({ children }: LayoutProps) => {
       >
         {children}
       </motion.main>
-      <SitemapSection />
       <Footer />
+      <SitemapSection />
     </div>
   );
 };
