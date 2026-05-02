@@ -4,19 +4,19 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { cn } from "@/lib/utils";
 
 const SERVICES = [
-  { title: "Birthday Party", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/birthday-party/IMG-20250404-WA0001-1.webp" },
-  { title: "Wedding Anniversary Celebration", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/wedding-anniversary-celebration/IMG-20250404-WA0002.webp" },
-  { title: "Engagement Party", url: "/occasions", image: "https://evali.fra1.cdn.digitaloceanspaces.com/engagement-party/IMG-20250405-WA0033.webp" },
-  { title: "Marriage Proposal", url: "/occasions", image: "https://evali.fra1.cdn.digitaloceanspaces.com/marriage-proposal-part/IMG-20250405-WA0004-1.webp" },
-  { title: "Graduation Party", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/graduation-party/IMG-20250405-WA0020-1-1.webp" },
-  { title: "Wedding Parties", url: "/occasions", image: "https://evali.fra1.cdn.digitaloceanspaces.com/wedding-celebration-on%20yacht-in-dubai/IMG-20250405-WA0036.webp" },
-  { title: "Jet Ski", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/jet-ski-rental/IMG_7681-1.jpg" },
-  { title: "Donut Ride", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/donut-ride-adventure/photo_2025-04-05_12-30-39-1.webp" },
-  { title: "Banana Boat Ride", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/banana-boat-ride/photo_2025-04-05_12-29-24-1.webp" },
-  { title: "Barbecue on the Yacht", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/bbq-experience/IMG_8252-1.webp" },
-  { title: "Swimming", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/swimming-experience-yacht-trip/IMG_7518-1.webp" },
-  { title: "Food Menu", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/food-menu/photo_2025-04-02_19-40-12.webp" },
-  { title: "Fishing", url: "/yachts", image: "https://evali.fra1.cdn.digitaloceanspaces.com/fishing-trips/IMG_8214-1.webp" },
+  { title: "Birthday Party", url: "/services/birthday-party", image: "https://evali.fra1.cdn.digitaloceanspaces.com/birthday-party/IMG-20250404-WA0001-1.webp" },
+  { title: "Wedding Anniversary Celebration", url: "/services/wedding-anniversary-parties", image: "https://evali.fra1.cdn.digitaloceanspaces.com/wedding-anniversary-celebration/IMG-20250404-WA0002.webp" },
+  { title: "Engagement Party", url: "/services/engagement-parties", image: "https://evali.fra1.cdn.digitaloceanspaces.com/engagement-party/IMG-20250405-WA0033.webp" },
+  { title: "Marriage Proposal", url: "/services/marriage-proposal-party", image: "https://evali.fra1.cdn.digitaloceanspaces.com/marriage-proposal-part/IMG-20250405-WA0004-1.webp" },
+  { title: "Graduation Party", url: "/services/graduation-parties", image: "https://evali.fra1.cdn.digitaloceanspaces.com/graduation-party/IMG-20250405-WA0020-1-1.webp" },
+  { title: "Wedding Parties", url: "/services/wedding-parties", image: "https://evali.fra1.cdn.digitaloceanspaces.com/wedding-celebration-on%20yacht-in-dubai/IMG-20250405-WA0036.webp" },
+  { title: "Jet Ski", url: "/services/jet-ski", image: "https://evali.fra1.cdn.digitaloceanspaces.com/jet-ski-rental/IMG_7681-1.jpg" },
+  { title: "Donut Ride", url: "/services/donut-ride", image: "https://evali.fra1.cdn.digitaloceanspaces.com/donut-ride-adventure/photo_2025-04-05_12-30-39-1.webp" },
+  { title: "Banana Boat Ride", url: "/services/banana-boat-ride", image: "https://evali.fra1.cdn.digitaloceanspaces.com/banana-boat-ride/photo_2025-04-05_12-29-24-1.webp" },
+  { title: "Barbecue on the Yacht", url: "/services/barbecue-on-the-yacht", image: "https://evali.fra1.cdn.digitaloceanspaces.com/bbq-experience/IMG_8252-1.webp" },
+  { title: "Swimming", url: "/services/swimming", image: "https://evali.fra1.cdn.digitaloceanspaces.com/swimming-experience-yacht-trip/IMG_7518-1.webp" },
+  { title: "Food Menu", url: "/services/food-menu", image: "https://evali.fra1.cdn.digitaloceanspaces.com/food-menu/photo_2025-04-02_19-40-12.webp" },
+  { title: "Fishing", url: "/services/fishing", image: "https://evali.fra1.cdn.digitaloceanspaces.com/fishing-trips/IMG_8214-1.webp" },
 ];
 
 const ServicesSection = () => {
