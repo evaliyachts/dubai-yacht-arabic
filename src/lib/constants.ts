@@ -6,7 +6,8 @@ export const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
 export const getWhatsAppLink = (message?: string) => {
   const defaultMsg = `Hi Dubai Yatch, I want to book a yacht in Dubai. Date: __, Hours: __, Guests: __, Budget: __`;
-  return `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${encodeURIComponent(message || defaultMsg)}`;
+  const cleanNumber = WHATSAPP_NUMBER.replace(/[+\s]/g, '');
+  return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message || defaultMsg)}`;
 };
 
 export const getPhoneLink = () => `tel:${PHONE_NUMBER}`;
