@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, MessageCircle, Anchor } from "lucide-react";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { NAV_LINKS, BRAND_NAME, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
+import logoAsset from "@/assets/dubai-yachts-logo.png.asset.json";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
