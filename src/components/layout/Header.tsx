@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { NAV_LINKS, BRAND_NAME, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
-import logoAsset from "@/assets/dubai-yachts-logo.png.asset.json";
+
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,10 +30,9 @@ const Header = () => {
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center group">
           <img
-            src={logoAsset.url}
+            src="/dubai-yachts-logo.png"
             alt={BRAND_NAME}
             className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
-            referrerPolicy="no-referrer"
           />
         </Link>
 

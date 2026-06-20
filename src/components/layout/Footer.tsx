@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MessageCircle, Phone, MapPin, Clock } from "lucide-react";
 import { BRAND_NAME, NAV_LINKS, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
-import logoAsset from "@/assets/dubai-yachts-logo.png.asset.json";
+
 
 const Footer = () => (
   <footer className="liquid-divider pt-16 pb-8 border-t border-border/30">
@@ -10,10 +10,9 @@ const Footer = () => (
         <div>
           <Link to="/" className="flex items-center mb-4">
             <img
-              src={logoAsset.url}
+              src="/dubai-yachts-logo.png"
               alt={BRAND_NAME}
               className="h-8 w-auto"
-              referrerPolicy="no-referrer"
             />
           </Link>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
