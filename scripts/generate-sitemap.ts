@@ -4,7 +4,7 @@ import { resolve } from "path";
 import { yachts } from "../src/data/yachts";
 import { services } from "../src/data/services";
 
-const BASE_URL = "https://dubaiyatch.com";
+const BASE_URL = "https://yachtrentaldxb.com";
 
 interface SitemapEntry {
   path: string;

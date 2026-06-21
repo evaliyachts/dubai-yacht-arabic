@@ -19,4 +19,4 @@ Allow: /offers/
 Allow: /occasions
 Allow: /occasions/
 
-Sitemap: https://dubaiyatch.com/sitemap.xml
+Sitemap: https://yachtrentaldxb.com/sitemap.xml
