@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Cormorant Garamond"', "serif"],
-        body: ['"DM Sans"', "sans-serif"],
+        display: ['"Cairo"', '"Tajawal"', "system-ui", "sans-serif"],
+        body: ['"Tajawal"', '"Cairo"', "system-ui", "sans-serif"],
+        sans: ['"Tajawal"', '"Cairo"', "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

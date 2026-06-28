@@ -2,47 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+/* Fonts are loaded via index.html (Tajawal + Cairo) for the Arabic site. */
 
 @layer base {
   :root {
-    --background: 220 25% 6%;
+    --background: 220 30% 5%;
     --foreground: 210 40% 98%;
 
-    --card: 220 20% 10%;
+    --card: 220 24% 9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 220 20% 10%;
+    --popover: 220 24% 9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 42 70% 55%;
-    --primary-foreground: 220 25% 6%;
+    /* Refined silver/champagne accent (less gold) for a modern luxury feel. */
+    --primary: 40 35% 70%;
+    --primary-foreground: 220 30% 5%;
 
-    --secondary: 215 25% 16%;
+    --secondary: 215 25% 14%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 215 20% 14%;
-    --muted-foreground: 215 15% 55%;
+    --muted: 215 20% 12%;
+    --muted-foreground: 215 15% 65%;
 
-    --accent: 42 70% 55%;
-    --accent-foreground: 220 25% 6%;
+    --accent: 40 35% 70%;
+    --accent-foreground: 220 30% 5%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 215 20% 18%;
-    --input: 215 20% 18%;
-    --ring: 42 70% 55%;
+    --border: 215 20% 16%;
+    --input: 215 20% 16%;
+    --ring: 40 35% 70%;
 
     --radius: 1.25rem;
 
-    --gold: 42 70% 55%;
-    --gold-light: 42 70% 70%;
-    --gold-glow: 42 80% 45%;
+    --gold: 40 35% 70%;
+    --gold-light: 40 35% 82%;
+    --gold-glow: 40 40% 60%;
     --navy: 220 40% 13%;
-    --navy-deep: 220 25% 6%;
-    --glass: 220 20% 12%;
-    --glass-light: 220 15% 18%;
+    --navy-deep: 220 30% 5%;
+    --glass: 220 24% 11%;
+    --glass-light: 220 18% 18%;
     --glass-specular: 210 40% 98%;
   }
 }
@@ -58,221 +59,120 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    font-feature-settings: "ss01", "kern";
   }
 
+  /* Ensure all headings use the display family. */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+  }
+
+  /* Better Arabic readability */
+  [dir="rtl"] {
+    text-align: right;
   }
 }
 
 @layer utilities {
-  /* ── Apple Liquid Glass ── */
   .liquid-glass {
     @apply relative rounded-3xl overflow-hidden;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--glass) / 0.55) 0%,
-      hsl(var(--glass) / 0.35) 50%,
-      hsl(var(--glass) / 0.45) 100%
-    );
+    background: linear-gradient(135deg, hsl(var(--glass) / 0.55) 0%, hsl(var(--glass) / 0.35) 50%, hsl(var(--glass) / 0.45) 100%);
     backdrop-filter: blur(40px) saturate(1.8);
     -webkit-backdrop-filter: blur(40px) saturate(1.8);
     border: 1px solid hsl(var(--glass-specular) / 0.08);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--glass-specular) / 0.06),
-      inset 0 -1px 0 0 hsl(var(--background) / 0.2),
-      0 8px 32px -4px hsl(var(--background) / 0.5),
-      0 2px 8px -2px hsl(var(--background) / 0.3);
+    box-shadow: inset 0 1px 0 0 hsl(var(--glass-specular) / 0.06), inset 0 -1px 0 0 hsl(var(--background) / 0.2), 0 8px 32px -4px hsl(var(--background) / 0.5);
   }
 
   .liquid-glass-gold {
     @apply relative rounded-3xl overflow-hidden;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gold) / 0.08) 0%,
-      hsl(var(--glass) / 0.4) 40%,
-      hsl(var(--gold) / 0.05) 100%
-    );
+    background: linear-gradient(135deg, hsl(var(--gold) / 0.08) 0%, hsl(var(--glass) / 0.4) 40%, hsl(var(--gold) / 0.05) 100%);
     backdrop-filter: blur(40px) saturate(1.8);
     -webkit-backdrop-filter: blur(40px) saturate(1.8);
     border: 1px solid hsl(var(--gold) / 0.15);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--gold-light) / 0.1),
-      inset 0 -1px 0 0 hsl(var(--background) / 0.15),
-      0 8px 32px -4px hsl(var(--background) / 0.5),
-      0 0 20px -4px hsl(var(--gold) / 0.08);
+    box-shadow: inset 0 1px 0 0 hsl(var(--gold-light) / 0.1), 0 8px 32px -4px hsl(var(--background) / 0.5);
   }
 
   .liquid-glass-strong {
     @apply relative rounded-3xl overflow-hidden;
-    background: linear-gradient(
-      145deg,
-      hsl(var(--glass) / 0.7) 0%,
-      hsl(var(--glass) / 0.5) 50%,
-      hsl(var(--glass) / 0.6) 100%
-    );
+    background: linear-gradient(145deg, hsl(var(--glass) / 0.7) 0%, hsl(var(--glass) / 0.5) 50%, hsl(var(--glass) / 0.6) 100%);
     backdrop-filter: blur(60px) saturate(2);
     -webkit-backdrop-filter: blur(60px) saturate(2);
     border: 1px solid hsl(var(--glass-specular) / 0.1);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--glass-specular) / 0.08),
-      inset 0 -1px 0 0 hsl(var(--background) / 0.25),
-      0 16px 48px -8px hsl(var(--background) / 0.6);
+    box-shadow: inset 0 1px 0 0 hsl(var(--glass-specular) / 0.08), 0 16px 48px -8px hsl(var(--background) / 0.6);
   }
 
-  /* Liquid glass button with specular edge highlight */
   .liquid-btn {
     @apply relative rounded-2xl overflow-hidden font-medium;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--glass) / 0.5) 0%,
-      hsl(var(--glass) / 0.3) 100%
-    );
+    background: linear-gradient(135deg, hsl(var(--glass) / 0.5) 0%, hsl(var(--glass) / 0.3) 100%);
     backdrop-filter: blur(20px) saturate(1.5);
     -webkit-backdrop-filter: blur(20px) saturate(1.5);
     border: 1px solid hsl(var(--glass-specular) / 0.08);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--glass-specular) / 0.06),
-      0 4px 16px -4px hsl(var(--background) / 0.4);
+    box-shadow: inset 0 1px 0 0 hsl(var(--glass-specular) / 0.06), 0 4px 16px -4px hsl(var(--background) / 0.4);
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
-
-  .liquid-btn:hover {
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--glass-specular) / 0.1),
-      0 8px 24px -4px hsl(var(--background) / 0.5);
-    border-color: hsl(var(--glass-specular) / 0.12);
-  }
+  .liquid-btn:hover { border-color: hsl(var(--glass-specular) / 0.12); }
 
   .liquid-btn-gold {
     @apply relative rounded-2xl overflow-hidden font-medium;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gold) / 0.2) 0%,
-      hsl(var(--gold) / 0.1) 50%,
-      hsl(var(--gold-light) / 0.15) 100%
-    );
+    background: linear-gradient(135deg, hsl(var(--gold) / 0.2) 0%, hsl(var(--gold) / 0.1) 50%, hsl(var(--gold-light) / 0.15) 100%);
     backdrop-filter: blur(20px) saturate(1.5);
     -webkit-backdrop-filter: blur(20px) saturate(1.5);
     border: 1px solid hsl(var(--gold) / 0.25);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--gold-light) / 0.15),
-      0 4px 16px -4px hsl(var(--gold-glow) / 0.15);
+    box-shadow: inset 0 1px 0 0 hsl(var(--gold-light) / 0.15), 0 4px 16px -4px hsl(var(--gold-glow) / 0.15);
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .liquid-btn-gold:hover {
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--gold-light) / 0.2),
-      0 8px 32px -4px hsl(var(--gold-glow) / 0.25);
-    border-color: hsl(var(--gold) / 0.35);
-  }
-
-  /* Primary solid gold button with liquid feel */
   .liquid-btn-primary {
     @apply relative rounded-2xl overflow-hidden font-semibold;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gold-light)) 0%,
-      hsl(var(--gold)) 50%,
-      hsl(var(--gold-glow)) 100%
-    );
+    background: linear-gradient(135deg, hsl(var(--gold-light)) 0%, hsl(var(--gold)) 50%, hsl(var(--gold-glow)) 100%);
     color: hsl(var(--background));
     border: 1px solid hsl(var(--gold-light) / 0.5);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--gold-light) / 0.4),
-      0 4px 20px -4px hsl(var(--gold-glow) / 0.4),
-      0 0 40px -8px hsl(var(--gold) / 0.2);
+    box-shadow: inset 0 1px 0 0 hsl(var(--gold-light) / 0.4), 0 4px 20px -4px hsl(var(--gold-glow) / 0.3);
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
+  .liquid-btn-primary:hover { transform: translateY(-1px); }
 
-  .liquid-btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--gold-light) / 0.5),
-      0 8px 32px -4px hsl(var(--gold-glow) / 0.5),
-      0 0 60px -8px hsl(var(--gold) / 0.3);
-  }
-
-  /* Icon containers with liquid glass */
   .liquid-icon {
     @apply flex items-center justify-center rounded-2xl;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gold) / 0.12) 0%,
-      hsl(var(--gold) / 0.06) 100%
-    );
+    background: linear-gradient(135deg, hsl(var(--gold) / 0.12) 0%, hsl(var(--gold) / 0.06) 100%);
     border: 1px solid hsl(var(--gold) / 0.15);
-    box-shadow: inset 0 1px 0 0 hsl(var(--gold-light) / 0.08);
   }
 
-  /* Legacy compat */
-  .glass-card {
-    @apply liquid-glass;
-  }
-
-  .glass-button {
-    @apply liquid-btn;
-  }
+  .glass-card { @apply liquid-glass; }
+  .glass-button { @apply liquid-btn; }
 
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(var(--gold-light)), hsl(var(--gold)), hsl(var(--gold-light)));
   }
 
-  .section-padding {
-    @apply py-20 md:py-28 lg:py-32;
-  }
+  .section-padding { @apply py-20 md:py-28 lg:py-32; }
 
   .hero-gradient {
-    background: linear-gradient(
-  0deg,
-  hsl(215 55% 14% / 0.95) 0%,
-  hsl(215 55% 14% / 0.7) 22%,
-  hsl(215 55% 14% / 0.0) 60%,
-  transparent 100%
-);
-
+    background: linear-gradient(0deg, hsl(215 55% 10% / 0.95) 0%, hsl(215 55% 10% / 0.7) 22%, hsl(215 55% 10% / 0.0) 60%, transparent 100%);
   }
 
   .gold-glow {
-    box-shadow: 0 0 40px -5px hsl(var(--gold) / 0.3), 0 0 80px -10px hsl(var(--gold) / 0.15);
+    box-shadow: 0 0 40px -5px hsl(var(--gold) / 0.25), 0 0 80px -10px hsl(var(--gold) / 0.12);
   }
 
-  /* Liquid glass header */
   .liquid-header {
     backdrop-filter: blur(40px) saturate(1.8);
     -webkit-backdrop-filter: blur(40px) saturate(1.8);
-    background: linear-gradient(
-      180deg,
-      hsl(var(--glass) / 0.6) 0%,
-      hsl(var(--glass) / 0.4) 100%
-    );
+    background: linear-gradient(180deg, hsl(var(--glass) / 0.6) 0%, hsl(var(--glass) / 0.4) 100%);
     border-bottom: 1px solid hsl(var(--glass-specular) / 0.06);
-    box-shadow: 0 4px 24px -4px hsl(var(--background) / 0.4);
   }
 
-  /* Liquid pill/badge */
   .liquid-pill {
-    @apply rounded-full px-4 py-1.5 text-xs font-semibold tracking-[0.15em] uppercase;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gold) / 0.12) 0%,
-      hsl(var(--gold) / 0.06) 100%
-    );
+    @apply rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide;
+    background: linear-gradient(135deg, hsl(var(--gold) / 0.12) 0%, hsl(var(--gold) / 0.06) 100%);
     border: 1px solid hsl(var(--gold) / 0.2);
     color: hsl(var(--gold-light));
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
   }
 
-  /* Liquid section divider */
   .liquid-divider {
     @apply relative;
-    background: linear-gradient(
-      180deg,
-      hsl(var(--glass) / 0.15) 0%,
-      transparent 100%
-    );
+    background: linear-gradient(180deg, hsl(var(--glass) / 0.15) 0%, transparent 100%);
   }
 }

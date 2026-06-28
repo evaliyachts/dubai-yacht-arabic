@@ -5,76 +5,90 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const faqGroups = [
   {
-    category: "Booking",
+    category: "الحجز",
     items: [
-      { q: "How do I book a yacht in Dubai?", a: "You can book via WhatsApp, phone, or our contact form. We respond within minutes and confirm availability instantly." },
-      { q: "How far in advance should I book?", a: "We recommend booking at least 48 hours in advance, especially for weekends and holidays. Last-minute bookings are possible subject to availability." },
-      { q: "Is a deposit required?", a: "Yes, a 50% deposit is required to confirm your booking. The balance is due on the day of charter." },
+      { q: "كيف يمكن حجز يخت في دبي؟", a: "عبر واتساب أو الاتصال المباشر أو نموذج التواصل. نرد خلال دقائق ونؤكد التوفر فوراً." },
+      { q: "متى يجب الحجز مسبقاً؟", a: "نوصي بالحجز قبل 48 ساعة على الأقل، خاصة في عطلات نهاية الأسبوع والمناسبات." },
+      { q: "هل العربون مطلوب؟", a: "نعم، عربون 50% لتأكيد الحجز، والباقي يوم الرحلة." },
     ],
   },
   {
-    category: "Pricing",
+    category: "الأسعار",
     items: [
-      { q: "How much does yacht rental in Dubai cost?", a: "Prices start from AED 400/hour for standard yachts, AED 750/hour for luxury yachts, and AED 2,000/hour for superyachts. All prices include captain, crew, and fuel." },
-      { q: "Are there any hidden charges?", a: "No hidden fees. The price includes captain, crew, fuel, and basic amenities. Add-ons like catering and decorations are optional and priced separately." },
+      { q: "كم سعر تأجير يخت في دبي؟", a: "تبدأ الأسعار من 500 درهم/ساعة لليخوت القياسية، 750 درهم للفاخرة، و1800 درهم للسوبر يخوت. السعر يشمل الكابتن والوقود والطاقم." },
+      { q: "هل توجد رسوم خفية؟", a: "لا. السعر شامل للكابتن والوقود والطاقم والمشروبات الأساسية. إضافات الديكور والطعام اختيارية وبسعر منفصل." },
     ],
   },
   {
-    category: "Onboard",
+    category: "على متن اليخت",
     items: [
-      { q: "Can we bring our own food and drinks?", a: "Yes! You're welcome to bring your own food and beverages. We also offer catering packages." },
-      { q: "Is music allowed on the yacht?", a: "Absolutely! All yachts have Bluetooth sound systems. For larger events, we can arrange DJ setups." },
-      { q: "Are children allowed?", a: "Yes, children of all ages are welcome. Life jackets are provided for all sizes." },
+      { q: "هل يمكن إحضار طعام ومشروبات خاصة؟", a: "نعم، يمكن ذلك. كما نوفر باقات ضيافة وعشاء بحسب الطلب." },
+      { q: "هل الموسيقى مسموحة؟", a: "نعم، كل اليخوت تحوي نظام صوتي Bluetooth. يمكن إضافة DJ احترافي للحفلات الكبيرة." },
+      { q: "هل الأطفال مسموح لهم؟", a: "نعم، نرحب بالأطفال من جميع الأعمار. نوفر سترات نجاة لكل الأحجام." },
     ],
   },
   {
-    category: "Weather & Policies",
+    category: "السياسات",
     items: [
-      { q: "What happens in bad weather?", a: "If conditions are unsafe, we offer free rescheduling or a full refund. Light rain rarely affects departures." },
-      { q: "What is the cancellation policy?", a: "Free cancellation up to 48 hours before departure. Within 48 hours, a 50% charge applies." },
-      { q: "Do I need ID?", a: "Yes, a valid passport or Emirates ID is required for all adult guests." },
+      { q: "ماذا يحدث في حال سوء الأحوال الجوية؟", a: "إذا كانت الظروف غير آمنة، نوفر إعادة جدولة مجانية أو استرداد كامل للمبلغ." },
+      { q: "ما سياسة الإلغاء؟", a: "إلغاء مجاني قبل 48 ساعة. خلال أقل من 48 ساعة، يتم احتساب 50% من قيمة الحجز." },
+      { q: "هل أحتاج إلى هوية؟", a: "نعم، نطلب جواز سفر أو هوية إماراتية لكل الضيوف البالغين وفقاً للأنظمة البحرية." },
     ],
   },
 ];
 
-const FAQ = () => (
-  <Layout>
-    <SEOHead
-      title="FAQ - Yacht Rental in Dubai | Dubai Yatch"
-      description="Frequently asked questions about yacht rental in Dubai. Pricing, booking, cancellation, what to bring, and everything you need to know."
-      path="/faq"
-      keywords="yacht rental dubai faq, dubai yacht questions, yacht booking dubai"
-    />
+const FAQ = () => {
+  const allFaqs = faqGroups.flatMap((g) => g.items);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: allFaqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
 
-    <div className="pt-28 pb-20">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <AnimatedSection className="text-center mb-14">
-          <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-muted-foreground">Everything you need to know about yacht rental in Dubai.</p>
-        </AnimatedSection>
+  return (
+    <Layout>
+      <SEOHead
+        title="الأسئلة الشائعة | تأجير يخت في دبي — يخوت دبي"
+        description="الأسئلة الشائعة حول تأجير اليخوت في دبي — الأسعار، الحجز، الإلغاء، الإضافات، وكل ما تريد معرفته."
+        path="/faq"
+        keywords="أسئلة تأجير يخت دبي، حجز يخت دبي، أسعار يخت دبي"
+        jsonLd={jsonLd}
+      />
 
-        {faqGroups.map((group) => (
-          <AnimatedSection key={group.category} className="mb-8">
-            <h2 className="text-xl font-display font-bold text-foreground mb-4">{group.category}</h2>
-            <Accordion type="single" collapsible className="space-y-3">
-              {group.items.map((faq, i) => (
-                <AccordionItem key={i} value={`${group.category}-${i}`} className="glass-card px-6 border-0">
-                  <AccordionTrigger className="text-left text-foreground font-display font-semibold hover:no-underline py-5">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-sm pb-5 leading-relaxed">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+      <div className="pt-28 pb-20" dir="rtl">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <AnimatedSection className="text-center mb-14">
+            <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
+              الأسئلة الشائعة
+            </h1>
+            <p className="text-muted-foreground">كل ما تريد معرفته عن تأجير اليخوت في دبي.</p>
           </AnimatedSection>
-        ))}
+
+          {faqGroups.map((group) => (
+            <AnimatedSection key={group.category} className="mb-8">
+              <h2 className="text-xl font-display font-bold text-foreground mb-4">{group.category}</h2>
+              <Accordion type="single" collapsible className="space-y-3">
+                {group.items.map((faq, i) => (
+                  <AccordionItem key={i} value={`${group.category}-${i}`} className="glass-card px-6 border-0">
+                    <AccordionTrigger className="text-right text-foreground font-display font-semibold hover:no-underline py-5">
+                      {faq.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground text-sm pb-5 leading-relaxed">
+                      {faq.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </AnimatedSection>
+          ))}
+        </div>
       </div>
-    </div>
-  </Layout>
-);
+    </Layout>
+  );
+};
 
 export default FAQ;

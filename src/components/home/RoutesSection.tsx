@@ -1,28 +1,26 @@
-import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { AnimatedSection, ParallaxSection } from "@/components/shared/AnimatedSection";
 import { MapPin } from "lucide-react";
-import { ParallaxSection } from "@/components/shared/AnimatedSection";
 
 const routes = [
-  { name: "Dubai Marina", note: "Primary departure point" },
-  { name: "JBR & Bluewaters", note: "Ain Dubai views" },
-  { name: "Palm Jumeirah", note: "Iconic palm-shaped island" },
-  { name: "Atlantis", note: "Waterpark & resort views" },
-  { name: "Burj Al Arab", note: "Sail-shaped icon" },
-  { name: "Dubai Harbour", note: "Modern marina district" },
+  { name: "دبي مارينا", note: "نقطة الانطلاق الرئيسية" },
+  { name: "JBR وبلوواترز", note: "إطلالات عين دبي" },
+  { name: "نخلة جميرا", note: "الجزيرة الشهيرة" },
+  { name: "أتلانتس", note: "إطلالات الفندق والمنتجع" },
+  { name: "برج العرب", note: "أيقونة دبي البحرية" },
+  { name: "ميناء دبي", note: "مرسى عصري" },
 ];
 
 const RoutesSection = () => (
-  <section className="section-padding">
+  <section className="section-padding" dir="rtl">
     <div className="container mx-auto px-4">
       <AnimatedSection className="text-center mb-14">
-        <span className="liquid-pill inline-block">Routes</span>
+        <span className="liquid-pill inline-block">المسارات</span>
         <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
-          Yacht Trips Dubai — Departure Points &amp; Routes
+          مسارات رحلات اليخوت في دبي
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Every <strong>yacht rental Dubai</strong> departs from Dubai Marina, with
-          flexible <strong>Dubai yacht trip</strong> routes covering Dubai's most
-          iconic landmarks for your <strong>luxury yacht charter Dubai</strong>.
+          تنطلق رحلاتنا من <strong>دبي مارينا</strong> وتمر بأهم معالم دبي البحرية —
+          من نخلة جميرا إلى برج العرب وعين دبي.
         </p>
       </AnimatedSection>
 

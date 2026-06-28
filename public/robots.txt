@@ -1,22 +1,4 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
-Allow: /yachts
-Allow: /yachts/
-Allow: /offers
-Allow: /offers/
-Allow: /occasions
-Allow: /occasions/
 
-Sitemap: https://yachtrentaldxb.com/sitemap.xml
+Sitemap: https://yacht-dxb.com/sitemap.xml

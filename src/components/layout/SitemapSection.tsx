@@ -1,127 +1,83 @@
 import { Link } from "react-router-dom";
 import { yachts } from "@/data/yachts";
-import { services } from "@/data/services";
-import { occasions } from "@/data/occasions";
-import { offers } from "@/data/offers";
+import { YACHT_AR } from "@/data/yachts-ar";
+import { keywordPages, eventPages } from "@/data/landingPages";
+import { ROUTES } from "@/lib/constants";
 
-/**
- * Full HTML sitemap rendered above the footer on every page.
- * Improves internal linking, crawlability, and topical SEO coverage
- * for "yacht rental Dubai", "luxury yacht charter Dubai", etc.
- */
-const SitemapSection = () => {
-  return (
-    <section
-      aria-label="Sitemap"
-      className="border-t border-border/30 bg-background/50 py-12"
-    >
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">
-          Dubai Yatch Sitemap — Yacht Rental Dubai
-        </h2>
-        <p className="text-sm text-muted-foreground mb-8 max-w-3xl">
-          Explore every page on Dubai Yatch — from{" "}
-          <strong>yacht rental Dubai</strong> and{" "}
-          <strong>luxury yacht charter Dubai</strong> to{" "}
-          <strong>Dubai yacht booking</strong> and yacht trips in Dubai.
-        </p>
+const mainPages = [
+  { path: ROUTES.home, label: "الرئيسية" },
+  { path: ROUTES.yachts, label: "اليخوت" },
+  { path: ROUTES.about, label: "من نحن" },
+  { path: ROUTES.faq, label: "الأسئلة الشائعة" },
+  { path: ROUTES.contact, label: "تواصل معنا" },
+  { path: ROUTES.terms, label: "الشروط" },
+  { path: ROUTES.privacy, label: "الخصوصية" },
+];
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm">
-          {/* Main pages */}
-          <div>
-            <h3 className="font-display font-semibold text-foreground mb-3">
-              Main Pages
-            </h3>
-            <ul className="space-y-2">
-              <li><Link to="/" className="text-muted-foreground hover:text-primary transition-colors">Home — Yacht Rental Dubai</Link></li>
-              <li><Link to="/yachts" className="text-muted-foreground hover:text-primary transition-colors">Yachts — Dubai Yacht Rentals</Link></li>
-              <li><Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">Services — Yacht Charter Dubai</Link></li>
-              <li><Link to="/offers" className="text-muted-foreground hover:text-primary transition-colors">Offers — Dubai Yacht Charter Packages</Link></li>
-              <li><Link to="/occasions" className="text-muted-foreground hover:text-primary transition-colors">Occasions — Yacht Trips Dubai</Link></li>
-              <li><Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">About Dubai Yatch</Link></li>
-              <li><Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ — Yacht Rental Dubai</Link></li>
-              <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact — Book Yacht in Dubai</Link></li>
-              <li><Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">Terms</Link></li>
-              <li><Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">Privacy</Link></li>
-            </ul>
-          </div>
+const SitemapSection = () => (
+  <section
+    aria-label="خريطة الموقع"
+    className="border-t border-border/30 bg-background/50 py-12"
+    dir="rtl"
+  >
+    <div className="container mx-auto px-4">
+      <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">
+        خريطة موقع يخوت دبي
+      </h2>
+      <p className="text-sm text-muted-foreground mb-8 max-w-3xl">
+        استعرض جميع صفحات يخوت دبي — من <strong>تأجير يخت في دبي</strong> و
+        <strong> حجز يخت في دبي</strong> إلى صفحات المناسبات المختلفة.
+      </p>
 
-          {/* Yachts */}
-          <div className="md:col-span-2">
-            <h3 className="font-display font-semibold text-foreground mb-3">
-              Yacht Rentals Dubai ({yachts.length})
-            </h3>
-            <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-2">
-              {yachts.map((y) => (
-                <li key={y.slug}>
-                  <Link
-                    to={`/yachts/${y.slug}`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {y.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm">
+        <div>
+          <h3 className="font-display font-semibold text-foreground mb-3">الصفحات الرئيسية</h3>
+          <ul className="space-y-2">
+            {mainPages.map((p) => (
+              <li key={p.path}>
+                <Link to={p.path} className="text-muted-foreground hover:text-primary transition-colors">{p.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="font-display font-semibold text-foreground mb-3">
-              Yacht Services
-            </h3>
-            <ul className="space-y-2">
-              {services.map((s) => (
-                <li key={s.slug}>
-                  <Link
-                    to={`/services/${s.slug}`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {s.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div>
+          <h3 className="font-display font-semibold text-foreground mb-3">صفحات الخدمات</h3>
+          <ul className="space-y-2">
+            {keywordPages.map((p) => (
+              <li key={p.slug}>
+                <Link to={p.slug} className="text-muted-foreground hover:text-primary transition-colors">{p.h1}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          {/* Offers + Occasions */}
-          <div>
-            <h3 className="font-display font-semibold text-foreground mb-3">
-              Charter Packages
-            </h3>
-            <ul className="space-y-2 mb-6">
-              {offers.map((o) => (
-                <li key={o.slug}>
-                  <Link
-                    to={`/offers#${o.slug}`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {o.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <div className="md:col-span-1">
+          <h3 className="font-display font-semibold text-foreground mb-3">المناسبات</h3>
+          <ul className="space-y-2">
+            {eventPages.map((p) => (
+              <li key={p.slug}>
+                <Link to={p.slug} className="text-muted-foreground hover:text-primary transition-colors">{p.h1}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-            <h3 className="font-display font-semibold text-foreground mb-3">
-              Yacht Trips Dubai
-            </h3>
-            <ul className="space-y-2">
-              {occasions.map((o) => (
-                <li key={o.slug}>
-                  <Link
-                    to={`/occasions#${o.slug}`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {o.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="md:col-span-2">
+          <h3 className="font-display font-semibold text-foreground mb-3">أسطول اليخوت ({yachts.length})</h3>
+          <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-2">
+            {yachts.map((y) => (
+              <li key={y.slug}>
+                <Link to={`/yachts/${y.slug}`} className="text-muted-foreground hover:text-primary transition-colors">
+                  {YACHT_AR[y.slug]?.name ?? y.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default SitemapSection;

@@ -1,36 +1,28 @@
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
-  { q: "How much does yacht rental in Dubai cost?", a: "Yacht rental Dubai pricing starts from AED 400/hour for standard yachts, AED 750/hour for luxury yacht rental Dubai, and AED 2,000/hour for superyacht charter. Every Dubai yacht rental price includes captain, crew, and fuel." },
-  { q: "How can I book a yacht in Dubai?", a: "You can book yacht in Dubai with Dubai Yatch in under a minute. Send us your date and group size on WhatsApp and we'll confirm your Dubai yacht booking instantly with the best luxury yacht charter Dubai option." },
-  { q: "What is included in a Dubai yacht charter?", a: "Every Dubai yacht charter includes a licensed captain, crew, fuel, soft drinks, towels, sound system, swimming gear, and safety equipment — perfect for a private yacht hire Dubai trip." },
-  { q: "Is a deposit required for Dubai yacht booking?", a: "A 50% deposit is required to confirm your Dubai yacht bookings. The remaining balance is due on the day of your luxury yacht rental Dubai charter." },
-  { q: "What is the cancellation policy?", a: "Free cancellation up to 48 hours before departure. Cancellations within 48 hours of your yacht trip Dubai are subject to a 50% charge." },
-  { q: "Do I need to bring ID?", a: "Yes, a valid passport or Emirates ID is required for all adult guests on every yacht for rent in Dubai for maritime safety regulations." },
-  { q: "Are children allowed on board?", a: "Absolutely! Children of all ages are welcome on every Dubai yacht rental. We provide life jackets for all sizes and our crew ensures a safe environment." },
-  { q: "Can we bring our own food and drinks?", a: "Yes, you're welcome to bring your own food and beverages on your yacht hire Dubai. We also offer catering packages starting from AED 100/person." },
-  { q: "Is music allowed?", a: "Yes! All yachts have Bluetooth sound systems. For larger yacht trips in Dubai or birthday yacht charters, we can arrange professional DJ setups." },
-  { q: "What happens in bad weather?", a: "Safety is our priority. If conditions are unsafe, we offer free rescheduling or a full refund on your Dubai yacht charter. Light rain rarely affects departures." },
+  { q: "كم سعر تأجير يخت في دبي؟", a: "تبدأ أسعار تأجير اليخوت في دبي من 500 درهم للساعة لليخوت القياسية، 750 درهم لليخوت الفاخرة، و1800 درهم للسوبر يخوت. السعر يشمل الكابتن والوقود والطاقم." },
+  { q: "كيف يمكن حجز يخت في دبي؟", a: "أرسل لنا التاريخ والمدة وعدد الضيوف عبر واتساب، وسنؤكد الحجز فوراً مع أفضل خيارات اليخوت المتاحة." },
+  { q: "هل اليخت خاص أم مشترك؟", a: "جميع رحلاتنا خاصة بالكامل. اليخت لك ولضيوفك فقط طوال مدة الحجز." },
+  { q: "من أين تنطلق رحلة اليخت؟", a: "تنطلق جميع الرحلات من دبي مارينا، مع إمكانية الإبحار حول النخلة وبرج العرب وعين دبي." },
+  { q: "هل يمكن تجهيز اليخت لعيد ميلاد أو خطوبة؟", a: "نعم، نوفر باقات متكاملة مع الديكور والكيك والموسيقى والتصوير حسب نوع المناسبة." },
+  { q: "كم مدة رحلة اليخت المناسبة للمناسبات؟", a: "نوصي بـ 3 إلى 4 ساعات للحصول على تجربة كاملة تشمل الإبحار والاحتفال والصور." },
+  { q: "هل يمكن إضافة BBQ أو جت سكي؟", a: "نعم، تتوفر إضافات اختيارية مثل BBQ (400 درهم) وجت سكي (600 درهم/ساعة) وغيرها." },
+  { q: "ما العربون المطلوب؟", a: "عربون 50% لتأكيد الحجز، والباقي يوم الرحلة. إلغاء مجاني قبل 48 ساعة." },
+  { q: "هل يمكن الحجز عبر واتساب؟", a: "نعم، الحجز عبر واتساب هو الأسرع — نؤكد التوفر ونرسل تفاصيل الحجز خلال دقائق." },
 ];
 
 const HomeFAQ = () => (
-  <section className="section-padding liquid-divider">
+  <section className="section-padding liquid-divider" dir="rtl">
     <div className="container mx-auto px-4 max-w-3xl">
       <AnimatedSection className="text-center mb-14">
-        <span className="liquid-pill inline-block">FAQ</span>
+        <span className="liquid-pill inline-block">أسئلة شائعة</span>
         <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
-          Yacht Rental Dubai — Frequently Asked Questions
+          الأسئلة الأكثر شيوعاً
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Answers about <strong>Dubai yacht rental</strong> pricing,{" "}
-          <strong>yacht hire Dubai</strong> inclusions, and{" "}
-          <strong>Dubai yacht booking</strong>.
+          إجابات سريعة حول <strong>تأجير اليخوت في دبي</strong>، الأسعار، والحجز.
         </p>
       </AnimatedSection>
 
@@ -38,7 +30,7 @@ const HomeFAQ = () => (
         <Accordion type="single" collapsible className="space-y-3">
           {faqs.map((faq, i) => (
             <AccordionItem key={i} value={`faq-${i}`} className="liquid-glass px-6 border-0">
-              <AccordionTrigger className="text-left text-foreground font-display font-semibold text-base hover:no-underline py-5">
+              <AccordionTrigger className="text-right text-foreground font-display font-semibold text-base hover:no-underline py-5">
                 {faq.q}
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-sm pb-5 leading-relaxed">

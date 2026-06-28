@@ -2,43 +2,62 @@ import { useState, FormEvent } from "react";
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import { getWhatsAppLink, getPhoneLink } from "@/lib/constants";
+import { getWhatsAppLink, getPhoneLink, PHONE_DISPLAY } from "@/lib/constants";
 import { MessageCircle, Phone, MapPin, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { yachts } from "@/data/yachts";
+import { YACHT_AR } from "@/data/yachts-ar";
+
+const OCCASIONS = [
+  "عيد ميلاد", "خطوبة", "طلب زواج", "زفاف", "ذكرى زواج",
+  "تخرج", "تحديد جنس المولود", "وداع عزوبية", "حفلة عائلية",
+  "شواء BBQ", "عشاء رومانسي", "رحلة صباحية", "صيد", "أخرى",
+];
 
 const Contact = () => {
   const { toast } = useToast();
   const [honeypot, setHoneypot] = useState("");
-  const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", guests: "", message: "", yacht: "" });
+  const [form, setForm] = useState({
+    name: "", phone: "", date: "", time: "", guests: "",
+    occasion: "", yacht: "", notes: "",
+  });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (honeypot) return;
-    console.log("Contact form submission:", form);
-    toast({ title: "Inquiry Sent!", description: "We'll get back to you within the hour." });
-    setForm({ name: "", phone: "", email: "", date: "", guests: "", message: "", yacht: "" });
+    const msg = `استفسار جديد:
+الاسم: ${form.name}
+الهاتف: ${form.phone}
+التاريخ: ${form.date}
+وقت الرحلة: ${form.time}
+عدد الضيوف: ${form.guests}
+نوع المناسبة: ${form.occasion}
+اختيار اليخت: ${form.yacht}
+ملاحظات: ${form.notes}`;
+    window.open(getWhatsAppLink(msg), "_blank");
+    toast({ title: "تم إرسال الاستفسار", description: "سيتم التواصل معك خلال دقائق." });
   };
 
-  const inputClass = "w-full px-4 py-3 rounded-2xl bg-secondary/40 border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm backdrop-blur-sm";
+  const inputClass = "w-full px-4 py-3 rounded-2xl bg-secondary/40 border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm backdrop-blur-sm text-right";
 
   return (
     <Layout>
       <SEOHead
-        title="Book a Yacht in Dubai | WhatsApp Instant Booking – Dubai Yatch"
-        description="Contact Dubai Yatch to book your luxury yacht charter. WhatsApp, call, or fill out our inquiry form for instant availability."
+        title="احجز يختك في دبي | تواصل عبر واتساب — يخوت دبي"
+        description="احجز يختك في دبي بسرعة عبر واتساب أو الاتصال المباشر. نموذج استفسار مع تفاصيل المناسبة، اليخت، التاريخ، وعدد الضيوف."
         path="/contact"
-        keywords="book yacht dubai, yacht booking dubai, contact dubai yacht rental"
+        keywords="حجز يخت في دبي، تواصل يخوت دبي، نموذج حجز يخت"
       />
 
-      <div className="pt-28 pb-20">
+      <div className="pt-28 pb-20" dir="rtl">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-14">
-            <span className="liquid-pill inline-block mb-4">Contact</span>
+            <span className="liquid-pill inline-block mb-4">تواصل معنا</span>
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-              Get in Touch
+              احجز يختك في دبي
             </h1>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Ready to book? Reach out via WhatsApp for instant response, or fill out the form below.
+              املأ النموذج التالي وسنتواصل معك خلال دقائق عبر واتساب، أو تواصل معنا مباشرة.
             </p>
           </AnimatedSection>
 
@@ -48,18 +67,31 @@ const Contact = () => {
                 <form onSubmit={handleSubmit} className="liquid-glass-gold p-6 md:p-8 space-y-4">
                   <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input required placeholder="Your Name *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
-                    <input required type="tel" placeholder="Phone *" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={inputClass} />
+                    <input required placeholder="الاسم *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
+                    <input required type="tel" placeholder="رقم الهاتف *" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={inputClass} />
                   </div>
-                  <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputClass} />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input type="date" placeholder="Preferred Date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
-                    <input type="number" min="1" placeholder="Number of Guests" value={form.guests} onChange={(e) => setForm({ ...form, guests: e.target.value })} className={inputClass} />
+                    <input type="date" placeholder="التاريخ" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
+                    <input type="time" placeholder="وقت الرحلة" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass} />
                   </div>
-                  <input placeholder="Yacht Interest (optional)" value={form.yacht} onChange={(e) => setForm({ ...form, yacht: e.target.value })} className={inputClass} />
-                  <textarea rows={4} placeholder="Your Message" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={inputClass} />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input type="number" min="1" placeholder="عدد الضيوف" value={form.guests} onChange={(e) => setForm({ ...form, guests: e.target.value })} className={inputClass} />
+                    <select value={form.occasion} onChange={(e) => setForm({ ...form, occasion: e.target.value })} className={inputClass}>
+                      <option value="">نوع المناسبة</option>
+                      {OCCASIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+                    </select>
+                  </div>
+                  <select value={form.yacht} onChange={(e) => setForm({ ...form, yacht: e.target.value })} className={inputClass}>
+                    <option value="">اختيار اليخت (اختياري)</option>
+                    {yachts.map((y) => (
+                      <option key={y.slug} value={YACHT_AR[y.slug]?.name ?? y.name}>
+                        {YACHT_AR[y.slug]?.name ?? y.name}
+                      </option>
+                    ))}
+                  </select>
+                  <textarea rows={4} placeholder="ملاحظات إضافية" value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className={inputClass} />
                   <button type="submit" className="w-full flex items-center justify-center gap-2 py-3 liquid-btn-primary text-base">
-                    <Send className="w-4 h-4" /> Send Inquiry
+                    <Send className="w-4 h-4" /> أرسل الاستفسار عبر واتساب
                   </button>
                 </form>
               </AnimatedSection>
@@ -71,8 +103,8 @@ const Contact = () => {
                   <MessageCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">WhatsApp</p>
-                  <p className="text-xs text-muted-foreground">Instant response</p>
+                  <p className="text-sm font-semibold text-foreground">واتساب</p>
+                  <p className="text-xs text-muted-foreground">رد فوري</p>
                 </div>
               </a>
               <a href={getPhoneLink()} className="liquid-glass p-5 flex items-center gap-4 hover:border-primary/20 transition-colors block">
@@ -80,8 +112,8 @@ const Contact = () => {
                   <Phone className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Call Us</p>
-                  <p className="text-xs text-muted-foreground">+971 50 464 1020</p>
+                  <p className="text-sm font-semibold text-foreground">اتصل بنا</p>
+                  <p className="text-xs text-muted-foreground" dir="ltr">{PHONE_DISPLAY}</p>
                 </div>
               </a>
               <div className="liquid-glass p-5 flex items-center gap-4">
@@ -89,8 +121,8 @@ const Contact = () => {
                   <MapPin className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Pickup Location</p>
-                  <p className="text-xs text-muted-foreground">Dubai Marina Dock</p>
+                  <p className="text-sm font-semibold text-foreground">نقطة الانطلاق</p>
+                  <p className="text-xs text-muted-foreground">مرسى دبي مارينا</p>
                 </div>
               </div>
               <div className="liquid-glass p-5 flex items-center gap-4">
@@ -98,8 +130,8 @@ const Contact = () => {
                   <Clock className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Operating Hours</p>
-                  <p className="text-xs text-muted-foreground">Daily 6AM–11PM • Support 24/7</p>
+                  <p className="text-sm font-semibold text-foreground">ساعات العمل</p>
+                  <p className="text-xs text-muted-foreground">يومياً 6ص – 11م • الحجز 24/7</p>
                 </div>
               </div>
             </AnimatedSection>
