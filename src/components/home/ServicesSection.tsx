@@ -2,10 +2,9 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { AnimatedSection, StaggerContainer, staggerItemVariants } from "@/components/shared/AnimatedSection";
 import { ROUTES } from "@/lib/constants";
-import { Cake, Heart, Ring, Sparkles, GraduationCap, PartyPopper, Gift, Wine, Sunrise, Coffee, Waves, Fish } from "lucide-react";
+import { Cake, Heart, Gem, Sparkles, GraduationCap, PartyPopper, Gift, Wine, Sunrise, Coffee, Waves, Fish } from "lucide-react";
 
-// Use Heart as a fallback for Ring (lucide may not export Ring in all versions)
-const SafeRing = Ring ?? Heart;
+
 
 const PACKAGES = [
   { title: "عيد ميلاد على يخت", path: ROUTES.birthday, icon: Cake },
