@@ -1,74 +1,71 @@
+## Arabic RTL Yacht Rental Website — يخوت دبي
 
-# Why the SEO Simulator shows nothing
+Transform the current English site into a full Arabic RTL experience at `https://yacht-dxb.com`, with event-focused landing pages, native Arabic copy (not literal translation), and luxury minimal design.
 
-The deployed site is a Vite + React SPA. Crawlers/simulators that don't run JavaScript only see `index.html`, which is an empty `<div id="root"></div>` shell. All H1/H2/H3, bold text, links, FAQ, and keyword content are injected by React after page load — so the simulator reports "No Words / No H1 / No H2 / No Bold / No Links."
+### 1. Foundation & RTL Setup
 
-The keyword work we did is correct; it just isn't in the static HTML. We need to fix the static HTML so non-JS crawlers see real content.
+- `index.html`: set `lang="ar-AE"`, `dir="rtl"`, swap meta/title/OG/JSON-LD to Arabic, load Tajawal + Cairo from Google Fonts, replace the static SEO HTML fallback with Arabic copy and Arabic image alt text.
+- `tailwind.config.ts` / `src/index.css`: register Tajawal as default `font-sans` and Cairo as `font-display`, ensure spacing/borders flip naturally under RTL (use logical properties where needed), keep dark navy/black + silver/white accent palette (tone down gold).
+- `src/lib/constants.ts`: 
+  - `BRAND_NAME = "يخوت دبي"` (editable), `BRAND_NAME_EN = "Yacht Rental DXB"`, `DOMAIN = "https://yacht-dxb.com"`.
+  - Arabic `NAV_LINKS` pointing to the new Arabic slugs.
+  - Arabic WhatsApp default message.
 
-## Fix — two parts
+### 2. Data Layer (Arabic)
 
-### Part 1: Update static defaults in `index.html` (quick win, ~2 min)
+- `src/data/yachts.ts`: add Arabic `nameAr`, `taglineAr`, `descriptionAr`, `featuresAr` for all 24 yachts. Keep existing image logic untouched.
+- New `src/data/eventPages.ts`: array of all 18 event/service pages (slug, H1, intro, included, decoration, food, duration, route, FAQ, related slugs).
+- New `src/data/keywordPages.ts`: array of the 9 main keyword landing pages (slug, title, H1, intro, sections, FAQ).
 
-Right now `index.html` ships with the old `<title>Yacht Rental dxb</title>` and `<meta description="#1 Yacht Rental in Dubai">`. That's literally what the simulator displayed.
+### 3. Routing
 
-Change `index.html` to ship the real meta defaults so any crawler immediately sees:
+`src/App.tsx`: register Arabic routes (URL-encoded Arabic slugs work in React Router):
 
-- `<title>Yacht Rental Dubai | Luxury Yacht Charter Dubai — Dubai Yatch</title>`
-- Full keyword-rich `<meta name="description">`
-- `<meta name="keywords">`
-- Open Graph + Twitter tags
-- Plus a `<noscript>` block inside `<body>` containing H1/H2/H3, bold keyword paragraphs, and on-page links — guaranteed to render in raw HTML for ANY scraper, no JS required.
+- `/` — Arabic homepage
+- 9 keyword pages (`/تأجير-يخت-في-دبي`, etc.)
+- 18 event pages (`/عيد-ميلاد-على-يخت-في-دبي`, etc.)
+- `/yachts` and `/yachts/:slug` — Arabic yacht listing + details
+- `/contact`, `/faq`, `/about`, `/offers`, `/privacy`, `/terms` — Arabic versions
 
-This alone will make the SEO simulator immediately show:
-- Title ✓, Description ✓, H1 ✓, H2 ✓, H3 ✓, Bold ✓, Links ✓, Page Text ✓, Two/Three Word Phrases ✓
+### 4. Shared Components
 
-### Part 2: Add prerendering for full SPA SEO (recommended, ~10 min)
+- `Header.tsx` / `Footer.tsx`: Arabic nav, RTL flex order, sticky WhatsApp pill.
+- New `StickyWhatsApp.tsx`: floating WhatsApp button (bottom-left in RTL) on every page via `Layout.tsx`.
+- `SEOHead.tsx`: add `lang`, `dir`, OG locale `ar_AE`, robots `index,follow`, breadcrumb JSON-LD helper.
+- `YachtCard.tsx`: Arabic labels (السعر/الساعة، الضيوف، الطول، احجز الآن).
+- New `BookingForm.tsx`: Arabic fields (الاسم، الهاتف، التاريخ، الوقت، عدد الضيوف، نوع المناسبة، اختيار اليخت، ملاحظات) — submits via WhatsApp deep link.
+- New `EventPageTemplate.tsx` and `KeywordPageTemplate.tsx`: drive landing pages from data so all 27 pages share consistent structure (Hero, included, gallery, prices note, FAQ accordion, internal links block, CTA strip, JSON-LD Service + BreadcrumbList).
 
-Install `vite-plugin-prerender` (or `vite-plugin-ssg`) to prerender these routes at build time into static HTML:
+### 5. Homepage Sections (Arabic rewrite)
 
-- `/`
-- `/yachts`
-- `/yachts/:slug` (all 24 yachts)
-- `/services`
-- `/services/:slug`
-- `/offers`
-- `/occasions`
-- `/about`
-- `/contact`
-- `/faq`
+Rewrite `HeroSection`, `WhyChooseUs` (trust), `FeaturedYachts`, `ServicesSection` (event packages cards linking to event pages), `RoutesSection` (Dubai Marina/JBR/Palm/Burj Al Arab), new `PricesSection`, `HomeFAQ`, `CTAStrip`, `SEOContentSection` — all in natural Arabic with the spelling variations woven in.
 
-After build, every page becomes a fully-formed static HTML file with all headings, content, links, and meta tags baked in — exactly what Google, Bing, and AI search engines (ChatGPT, Perplexity, Gemini) need.
+### 6. Yacht Detail Pages
 
-Netlify will serve these static HTML files directly, then React hydrates on top — so users still get the SPA experience, but crawlers see complete pages.
+Rebuild `YachtDetails.tsx` in Arabic: name, length, capacity, year, price/hr, min duration, gallery carousel (existing), suitable events, included services, WhatsApp CTA, FAQ, internal links to booking/prices/marina/event pages. Add Service JSON-LD + BreadcrumbList.
 
-## Technical details
+### 7. Sitemap, Robots, Canonicals
 
-**Files to edit:**
-- `index.html` — replace title/description, add OG/Twitter/keywords meta, add `<noscript>` SEO block in body
-- `vite.config.ts` — add prerender plugin
-- `package.json` — add `vite-plugin-prerender` (or `react-snap`) as dev dependency
-- `src/App.tsx` — minor tweak so React hydrates instead of replacing prerendered HTML (use `hydrateRoot` when prerendered markup is present)
+- `scripts/generate-sitemap.ts`: `BASE_URL = "https://yacht-dxb.com"`, include all Arabic routes (URL-encoded) + 24 yacht detail URLs.
+- `public/robots.txt`: update `Sitemap:` to new domain, allow all Arabic paths.
+- `SitemapSection.tsx`: Arabic labels, links to Arabic routes.
 
-**Plugin choice:** I recommend `vite-plugin-prerender-spa` or `react-snap` — both run a headless Chromium at build time, visit each route, and dump the rendered HTML to disk. Zero runtime cost, works perfectly with Netlify static hosting.
+### 8. Structured Data
 
-**No backend needed.** No SSR server. No Next.js migration. The site stays a Vite SPA.
+- Homepage: WebSite + Organization + LocalBusiness (name "يخوت دبي", alternateName "Yacht Rental DXB", priceRange AED 500–7500, tel +971504641020, areaServed Dubai/Marina/JBR/Bluewaters/Palm/Burj Al Arab).
+- Event/keyword pages: Service + BreadcrumbList.
+- Yacht pages: Service + BreadcrumbList.
+- Contact: LocalBusiness.
 
-## Expected result after deploy
+### Out of Scope (for this pass)
 
-Re-run the "to the web" SEO simulator on `yachtrentaldxb.netlify.app` and you'll see:
-- Title: full keyword title
-- Description: full keyword description
-- H1/H2/H3: all populated (Yacht Rental Dubai, Luxury Yacht Charter Dubai, FAQ, etc.)
-- Two-word phrases: "yacht rental", "dubai yacht", "luxury yacht"… with high counts
-- Three-word phrases: "yacht rental dubai", "luxury yacht charter", "dubai yacht rental"… with high counts
-- Bold text, on-page links, page text, image alt text — all populated
+- Backend booking storage (CTA opens WhatsApp).
+- Auto-translation of yacht descriptions for any yachts added later — they'd need manual Arabic copy.
+- Switching the build to SSR/prerender; the existing static `index.html` fallback continues to carry SEO content for non-JS crawlers (now in Arabic).
 
-## Order of work
+### Technical Notes
 
-1. Update `index.html` with real defaults + `<noscript>` SEO block (instant fix — solves the simulator immediately even before prerendering is set up)
-2. Install + configure prerender plugin
-3. Verify build outputs static HTML for each route
-4. Republish to Netlify
-5. Re-test in the SEO simulator
-
-Approve and I'll switch to build mode and implement both parts.
+- React Router handles URL-encoded Arabic slugs; we store the raw Arabic slug in a single `slug` constant per page so links + routes stay in sync.
+- Use Tailwind logical utilities (`ps-*`/`pe-*`, `ms-*`/`me-*`) where possible; keep `text-right` defaults via `dir="rtl"` on `<html>`.
+- Keep existing CDN image URLs and `referrerPolicy="no-referrer"` rules — no asset changes.
+- Brand name centralized in `constants.ts` so the user can rename later without touching components.
