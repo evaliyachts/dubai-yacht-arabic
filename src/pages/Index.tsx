@@ -3,37 +3,56 @@ import HeroSection from "@/components/home/HeroSection";
 import FeaturedYachts from "@/components/home/FeaturedYachts";
 import ServicesSection from "@/components/home/ServicesSection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
-import ExperiencesSection from "@/components/home/ExperiencesSection";
-import PackagesSection from "@/components/home/PackagesSection";
-import TestimonialsSection from "@/components/home/TestimonialsSection";
-import GallerySection from "@/components/home/GallerySection";
+import PricesSection from "@/components/home/PricesSection";
 import RoutesSection from "@/components/home/RoutesSection";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import CTAStrip from "@/components/home/CTAStrip";
-import SEOContentSection from "@/components/home/SEOContentSection";
 import SEOHead from "@/components/shared/SEOHead";
+import { BRAND_NAME, DOMAIN } from "@/lib/constants";
 
-const Index = () => (
-  <Layout>
-    <SEOHead
-      title="Yacht Rental Dubai | Luxury Yacht Charter Dubai — Dubai Yatch"
-      description="Yacht rental Dubai with Dubai Yatch — luxury yacht charter Dubai, private yacht hire Dubai, Dubai yacht booking & trips. Book yacht in Dubai on WhatsApp."
-      path="/"
-      keywords="yacht rental dubai, dubai yacht rental, yacht rentals dubai, dubai yacht rentals, yacht for rent dubai, yacht hire dubai, dubai yacht hire, yacht charter dubai, dubai yacht charter, private yacht rental dubai, private yacht charter dubai, luxury yacht rental dubai, luxury yacht charter dubai, dubai luxury yacht rental, book yacht dubai, dubai yacht booking, yacht trip dubai, dubai yacht trips"
-    />
-    <HeroSection />
-    <FeaturedYachts />
-    <ServicesSection />
-    <WhyChooseUs />
-    <ExperiencesSection />
-    <PackagesSection />
-    <SEOContentSection />
-    <TestimonialsSection />
-    <GallerySection />
-    <RoutesSection />
-    <HomeFAQ />
-    <CTAStrip />
-  </Layout>
-);
+const Index = () => {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: BRAND_NAME,
+      alternateName: "Yacht Rental DXB",
+      url: DOMAIN,
+      inLanguage: "ar-AE",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: BRAND_NAME,
+      alternateName: "Yacht Rental DXB",
+      url: DOMAIN,
+      telephone: "+971504641020",
+      priceRange: "AED 500 - AED 7500",
+      address: { "@type": "PostalAddress", addressLocality: "Dubai", addressCountry: "AE" },
+      areaServed: ["Dubai", "Dubai Marina", "JBR", "Bluewaters Island", "Palm Jumeirah", "Burj Al Arab"],
+      description: "تأجير يخت في دبي للمناسبات والرحلات البحرية الخاصة.",
+    },
+  ];
+
+  return (
+    <Layout>
+      <SEOHead
+        title="يخوت دبي | تأجير يخوت فاخرة في دبي للمناسبات"
+        description="يخوت دبي — تأجير يخت في دبي للمناسبات والرحلات البحرية الخاصة. أسطول فاخر، طاقم محترف، انطلاق من دبي مارينا، حجز عبر واتساب."
+        path="/"
+        keywords="تأجير يخت في دبي، حجز يخت في دبي، يخوت للإيجار في دبي، تأجير يخوت فاخرة، يخت دبي مارينا، يخوت للمناسبات في دبي"
+        jsonLd={jsonLd}
+      />
+      <HeroSection />
+      <WhyChooseUs />
+      <FeaturedYachts />
+      <ServicesSection />
+      <PricesSection />
+      <RoutesSection />
+      <HomeFAQ />
+      <CTAStrip />
+    </Layout>
+  );
+};
 
 export default Index;

@@ -1,30 +1,27 @@
 import { motion } from "framer-motion";
 import { Shield, DollarSign, Users, Compass, Calendar, Anchor } from "lucide-react";
-import { StaggerContainer, staggerItemVariants } from "@/components/shared/AnimatedSection";
-import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { StaggerContainer, staggerItemVariants, AnimatedSection } from "@/components/shared/AnimatedSection";
 
 const highlights = [
-  { icon: Anchor, title: "Luxury Fleet", desc: "Hand-picked yachts maintained to the highest standards of comfort and safety." },
-  { icon: DollarSign, title: "Transparent Pricing", desc: "No hidden fees. What you see is what you pay — fuel, crew, and essentials included." },
-  { icon: Users, title: "Professional Crew", desc: "Licensed, experienced captains and hospitality-trained crew for every charter." },
-  { icon: Shield, title: "Safety First", desc: "Full safety equipment, insurance coverage, and maritime compliance on every voyage." },
-  { icon: Calendar, title: "Flexible Packages", desc: "From 2-hour sunset cruises to full-day charters — tailored to your schedule." },
-  { icon: Compass, title: "Prime Routes", desc: "Dubai Marina, Palm Jumeirah, Burj Al Arab, Atlantis — explore Dubai's iconic coastline." },
+  { icon: Anchor, title: "يخوت خاصة", desc: "أسطول من يخوت خاصة بالكامل، لك ولضيوفك فقط." },
+  { icon: Users, title: "طاقم محترف", desc: "كابتن وطاقم ضيافة مرخّص ومُدرّب لكل رحلة." },
+  { icon: Compass, title: "انطلاق من دبي مارينا", desc: "موقع مركزي يسهل الوصول إليه مع مرور بمعالم دبي." },
+  { icon: Calendar, title: "باقات للمناسبات", desc: "ديكور وكيك وطعام مخصصة لكل أنواع الحفلات." },
+  { icon: DollarSign, title: "أسعار واضحة", desc: "لا رسوم خفية — السعر يشمل الكابتن والوقود والطاقم." },
+  { icon: Shield, title: "حجز عبر واتساب", desc: "تأكيد سريع خلال دقائق، دعم 24/7." },
 ];
 
 const WhyChooseUs = () => (
-  <section className="section-padding liquid-divider">
+  <section className="section-padding liquid-divider" dir="rtl">
     <div className="container mx-auto px-4">
       <AnimatedSection className="text-center mb-14">
-        <span className="liquid-pill inline-block">Why Us</span>
+        <span className="liquid-pill inline-block">لماذا نحن</span>
         <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
-          Why Choose Dubai Yatch for Your Yacht Rental Dubai
+          لماذا يخوت دبي؟
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Trusted by hundreds of guests for premium <strong>Dubai yacht rental</strong>,{" "}
-          <strong>luxury yacht charter Dubai</strong>, and{" "}
-          <strong>private yacht hire Dubai</strong> experiences across Dubai Marina,
-          Palm Jumeirah, and Burj Al Arab.
+          نقدّم لك تجربة <strong>تأجير يخت في دبي</strong> متكاملة بكل التفاصيل: خصوصية،
+          فخامة، طاقم محترف، وأسعار شفافة بدون رسوم خفية.
         </p>
       </AnimatedSection>
 

@@ -1,175 +1,60 @@
-import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { AnimatedSection, StaggerContainer, staggerItemVariants } from "@/components/shared/AnimatedSection";
+import { ROUTES } from "@/lib/constants";
+import { Cake, Heart, Ring, Sparkles, GraduationCap, PartyPopper, Gift, Wine, Sunrise, Coffee, Waves, Fish } from "lucide-react";
 
-const SERVICES = [
-  { title: "Birthday Party", url: "/services/birthday-party", image: "https://evali.fra1.cdn.digitaloceanspaces.com/birthday-party/IMG-20250404-WA0001-1.webp" },
-  { title: "Wedding Anniversary Celebration", url: "/services/wedding-anniversary-parties", image: "https://evali.fra1.cdn.digitaloceanspaces.com/wedding-anniversary-celebration/IMG-20250404-WA0002.webp" },
-  { title: "Engagement Party", url: "/services/engagement-parties", image: "https://evali.fra1.cdn.digitaloceanspaces.com/engagement-party/IMG-20250405-WA0033.webp" },
-  { title: "Marriage Proposal", url: "/services/marriage-proposal-party", image: "https://evali.fra1.cdn.digitaloceanspaces.com/marriage-proposal-part/IMG-20250405-WA0004-1.webp" },
-  { title: "Graduation Party", url: "/services/graduation-parties", image: "https://evali.fra1.cdn.digitaloceanspaces.com/graduation-party/IMG-20250405-WA0020-1-1.webp" },
-  { title: "Wedding Parties", url: "/services/wedding-parties", image: "https://evali.fra1.cdn.digitaloceanspaces.com/wedding-celebration-on%20yacht-in-dubai/IMG-20250405-WA0036.webp" },
-  { title: "Jet Ski", url: "/services/jet-ski", image: "https://evali.fra1.cdn.digitaloceanspaces.com/jet-ski-rental/IMG_7681-1.jpg" },
-  { title: "Donut Ride", url: "/services/donut-ride", image: "https://evali.fra1.cdn.digitaloceanspaces.com/donut-ride-adventure/photo_2025-04-05_12-30-39-1.webp" },
-  { title: "Banana Boat Ride", url: "/services/banana-boat-ride", image: "https://evali.fra1.cdn.digitaloceanspaces.com/banana-boat-ride/photo_2025-04-05_12-29-24-1.webp" },
-  { title: "Barbecue on the Yacht", url: "/services/barbecue-on-the-yacht", image: "https://evali.fra1.cdn.digitaloceanspaces.com/bbq-experience/IMG_8252-1.webp" },
-  { title: "Swimming", url: "/services/swimming", image: "https://evali.fra1.cdn.digitaloceanspaces.com/swimming-experience-yacht-trip/IMG_7518-1.webp" },
-  { title: "Food Menu", url: "/services/food-menu", image: "https://evali.fra1.cdn.digitaloceanspaces.com/food-menu/photo_2025-04-02_19-40-12.webp" },
-  { title: "Fishing", url: "/services/fishing", image: "https://evali.fra1.cdn.digitaloceanspaces.com/fishing-trips/IMG_8214-1.webp" },
+// Use Heart as a fallback for Ring (lucide may not export Ring in all versions)
+const SafeRing = Ring ?? Heart;
+
+const PACKAGES = [
+  { title: "عيد ميلاد على يخت", path: ROUTES.birthday, icon: Cake },
+  { title: "حفلة خطوبة على يخت", path: ROUTES.engagement, icon: SafeRing },
+  { title: "طلب زواج على يخت", path: ROUTES.proposal, icon: Heart },
+  { title: "حفلة زفاف على يخت", path: ROUTES.wedding, icon: Sparkles },
+  { title: "حفلة تخرج على يخت", path: ROUTES.graduation, icon: GraduationCap },
+  { title: "حفلة خاصة على يخت", path: ROUTES.privateParty, icon: PartyPopper },
+  { title: "تحديد جنس المولود", path: ROUTES.genderReveal, icon: Gift },
+  { title: "عشاء على يخت", path: ROUTES.dinner, icon: Wine },
+  { title: "رحلة يخت صباحية", path: ROUTES.morning, icon: Sunrise },
+  { title: "افترنون تي على يخت", path: ROUTES.afternoonTea, icon: Coffee },
+  { title: "سباحة على يخت", path: ROUTES.swimming, icon: Waves },
+  { title: "رحلة صيد على يخت", path: ROUTES.fishing, icon: Fish },
 ];
 
-const ServicesSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(0);
-  const lockRef = useRef(false);
-  const touchStartY = useRef<number | null>(null);
+const ServicesSection = () => (
+  <section className="section-padding liquid-divider" dir="rtl">
+    <div className="container mx-auto px-4">
+      <AnimatedSection className="text-center mb-12">
+        <span className="liquid-pill inline-block">باقات المناسبات</span>
+        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
+          تأجير يخت لكل المناسبات في دبي
+        </h2>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          اختر باقة المناسبة التي تناسبك واحصل على تجربة لا تُنسى على يخت خاص في دبي.
+        </p>
+      </AnimatedSection>
 
-  useEffect(() => {
-    const isInView = () => {
-      const el = sectionRef.current;
-      if (!el) return false;
-      const r = el.getBoundingClientRect();
-      // Section is "engaged" when its sticky stage roughly fills the viewport
-      return r.top <= 1 && r.bottom >= window.innerHeight - 1;
-    };
-
-    const step = (dir: 1 | -1) => {
-      setActive((prev) => {
-        const next = prev + dir;
-        if (next < 0 || next > SERVICES.length - 1) return prev;
-        return next;
-      });
-    };
-
-    const onWheel = (e: WheelEvent) => {
-      if (!isInView()) return;
-      const dir: 1 | -1 = e.deltaY > 0 ? 1 : -1;
-      const atStart = active === 0 && dir === -1;
-      const atEnd = active === SERVICES.length - 1 && dir === 1;
-      if (atStart || atEnd) return; // let page scroll past
-      e.preventDefault();
-      if (lockRef.current) return;
-      lockRef.current = true;
-      step(dir);
-      window.setTimeout(() => {
-        lockRef.current = false;
-      }, 600);
-    };
-
-    const onTouchStart = (e: TouchEvent) => {
-      touchStartY.current = e.touches[0]?.clientY ?? null;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      if (!isInView() || touchStartY.current == null) return;
-      const dy = touchStartY.current - (e.touches[0]?.clientY ?? 0);
-      if (Math.abs(dy) < 40) return;
-      const dir: 1 | -1 = dy > 0 ? 1 : -1;
-      const atStart = active === 0 && dir === -1;
-      const atEnd = active === SERVICES.length - 1 && dir === 1;
-      if (atStart || atEnd) return;
-      e.preventDefault();
-      if (lockRef.current) return;
-      lockRef.current = true;
-      step(dir);
-      touchStartY.current = e.touches[0]?.clientY ?? null;
-      window.setTimeout(() => {
-        lockRef.current = false;
-      }, 600);
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-    };
-  }, [active]);
-
-  return (
-    <section ref={sectionRef} className="liquid-divider relative" style={{ height: "200vh" }}>
-      <div className="sticky top-0 h-screen w-full flex flex-col">
-        <div className="container mx-auto px-4 pt-16">
-          <AnimatedSection className="text-center mb-8">
-            <span className="liquid-pill inline-block">Our Services</span>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
-              Experiences We Offer
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              From private charters to grand celebrations, discover the perfect
-              yacht experience tailored to your occasion.
-            </p>
-          </AnimatedSection>
-        </div>
-
-        <div className="flex-1 flex items-center justify-center [perspective:1200px]">
-          <div className="relative w-[88vw] max-w-md h-[55vh] max-h-[480px]">
-            {SERVICES.map((service, index) => {
-              const offset = index - active;
-              const isActive = offset === 0;
-              const isPast = offset < 0;
-              // Stack: active in front; upcoming behind with slight Y/scale offsets
-              const translateY = isPast ? -120 : offset * 12;
-              const translateZ = isPast ? 0 : -offset * 30;
-              const rotate = isPast ? -8 : 0;
-              const scale = isPast ? 0.9 : 1 - Math.min(offset, 3) * 0.04;
-              const opacity = isPast ? 0 : offset > 4 ? 0 : 1;
-              const z = SERVICES.length - Math.abs(offset);
-
-              return (
-                <div
-                  key={service.title}
-                  className={cn(
-                    "absolute inset-0 rounded-3xl overflow-hidden transition-all duration-500 ease-out will-change-transform",
-                    "border border-border/40 shadow-[0_20px_60px_-20px_hsl(var(--background)/0.8)]"
-                  )}
-                  style={{
-                    transform: `translateY(${translateY}px) translateZ(${translateZ}px) rotate(${rotate}deg) scale(${scale})`,
-                    opacity,
-                    zIndex: z,
-                    pointerEvents: isActive ? "auto" : "none",
-                  }}
-                >
-                  <Link to={service.url} className="block w-full h-full relative group">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-5">
-                      <h3 className="text-xl font-display font-bold text-foreground">
-                        {service.title}
-                      </h3>
-                    </div>
-                  </Link>
+      <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {PACKAGES.map((pkg) => {
+          const Icon = pkg.icon;
+          return (
+            <motion.div key={pkg.path} variants={staggerItemVariants}>
+              <Link
+                to={pkg.path}
+                className="liquid-glass-gold p-5 flex flex-col items-center text-center group hover:border-primary/30 transition-all block h-full"
+              >
+                <div className="w-12 h-12 liquid-icon rounded-xl mb-3 group-hover:scale-110 transition-transform">
+                  <Icon className="w-6 h-6 text-primary" />
                 </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Progress dots */}
-        <div className="pb-8 flex justify-center gap-1.5">
-          {SERVICES.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              aria-label={`Go to slide ${i + 1}`}
-              className={cn(
-                "h-1.5 rounded-full transition-all",
-                i === active ? "w-6 bg-primary" : "w-1.5 bg-foreground/30"
-              )}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
+                <h3 className="text-sm font-display font-semibold text-foreground">{pkg.title}</h3>
+              </Link>
+            </motion.div>
+          );
+        })}
+      </StaggerContainer>
+    </div>
+  </section>
+);
 
 export default ServicesSection;

@@ -1,11 +1,17 @@
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import YachtCard from "@/components/shared/YachtCard";
 import { AnimatedSection, StaggerContainer } from "@/components/shared/AnimatedSection";
-import { yachts, Yacht } from "@/data/yachts";
+import { yachts } from "@/data/yachts";
 import { SlidersHorizontal } from "lucide-react";
+
+const TYPES = [
+  { key: "All", label: "الكل" },
+  { key: "Standard", label: "قياسي" },
+  { key: "Luxury", label: "فاخر" },
+  { key: "Superyacht", label: "سوبر يخت" },
+];
 
 const Yachts = () => {
   const [typeFilter, setTypeFilter] = useState<string>("All");
@@ -24,38 +30,36 @@ const Yachts = () => {
   return (
     <Layout>
       <SEOHead
-        title="Yachts for Rent in Dubai | Yacht Rental Dubai Fleet — Dubai Yatch"
-        description="Yacht rental Dubai fleet — standard, luxury yacht charter Dubai, and superyacht hire. Compare yachts for rent in Dubai and book your Dubai yacht charter."
+        title="أسطول اليخوت للإيجار في دبي | يخوت دبي"
+        description="استعرض أسطول اليخوت للإيجار في دبي — قياسية، فاخرة، وسوبر يخوت. قارن الأسعار والمواصفات واحجز يختك بسهولة."
         path="/yachts"
-        keywords="yacht rental dubai, yachts for rent in dubai, yacht for rent dubai, rent yacht in dubai, yacht hire dubai, dubai yacht charter, luxury yacht rental dubai, luxury yacht charter dubai, book yacht dubai, dubai yacht booking"
+        keywords="يخوت للإيجار في دبي، تأجير يخت في دبي، يخت دبي مارينا، أسطول يخوت دبي"
       />
 
-      <div className="pt-28 pb-10">
+      <div className="pt-28 pb-10" dir="rtl">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-10">
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-              Yachts for Rent in Dubai — Yacht Rental Dubai Fleet
+              يخوت للإيجار في دبي
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Find the perfect <strong>yacht for rent in Dubai</strong>. Compare our{" "}
-              <strong>Dubai yacht rental</strong> fleet, filter by{" "}
-              <strong>luxury yacht charter Dubai</strong> type, sort by price, and{" "}
-              <strong>book yacht in Dubai</strong> instantly with Dubai Yatch.
+              تصفّح أسطولاً واسعاً من اليخوت للإيجار في دبي. قارن الأنواع، رتّب حسب السعر،
+              واحجز يختك المثالي خلال دقائق عبر واتساب.
             </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2} className="flex flex-wrap items-center justify-between gap-4 mb-8">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <SlidersHorizontal className="w-4 h-4 text-muted-foreground" />
-              {["All", "Standard", "Luxury", "Superyacht"].map((t) => (
+              {TYPES.map((t) => (
                 <button
-                  key={t}
-                  onClick={() => setTypeFilter(t)}
+                  key={t.key}
+                  onClick={() => setTypeFilter(t.key)}
                   className={`px-4 py-2 text-sm rounded-lg transition-colors ${
-                    typeFilter === t ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-secondary"
+                    typeFilter === t.key ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-secondary"
                   }`}
                 >
-                  {t}
+                  {t.label}
                 </button>
               ))}
             </div>
@@ -64,11 +68,11 @@ const Yachts = () => {
               onChange={(e) => setSortBy(e.target.value)}
               className="px-4 py-2 text-sm rounded-lg bg-secondary text-foreground border border-border"
             >
-              <option value="recommended">Recommended</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="guests">Most Guests</option>
-              <option value="length">Longest</option>
+              <option value="recommended">مقترح</option>
+              <option value="price-low">الأقل سعراً</option>
+              <option value="price-high">الأعلى سعراً</option>
+              <option value="guests">الأكثر ضيوفاً</option>
+              <option value="length">الأكبر طولاً</option>
             </select>
           </AnimatedSection>
 
@@ -79,7 +83,7 @@ const Yachts = () => {
           </StaggerContainer>
 
           {filtered.length === 0 && (
-            <p className="text-center text-muted-foreground py-16">No yachts match your filters.</p>
+            <p className="text-center text-muted-foreground py-16">لا توجد يخوت تطابق الفلترة.</p>
           )}
         </div>
       </div>
