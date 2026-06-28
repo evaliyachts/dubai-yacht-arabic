@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { offers } from "@/data/offers";
 import { StaggerContainer, staggerItemVariants, AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Check } from "lucide-react";
-import { getWhatsAppLink } from "@/lib/constants";
+import { getWhatsAppLink, ROUTES } from "@/lib/constants";
 
 const PackagesSection = () => (
   <section className="section-padding liquid-divider">
@@ -58,7 +58,7 @@ const PackagesSection = () => (
       <AnimatedSection className="text-center">
         <p className="text-sm text-muted-foreground">
           Need a custom package?{" "}
-          <Link to="/contact" className="text-primary hover:underline">Contact us</Link> for a tailored experience.
+          <Link to={ROUTES.contact} className="text-primary hover:underline">تواصل معنا</Link> لتجربة مصممة حسب طلبك.
         </p>
       </AnimatedSection>
     </div>

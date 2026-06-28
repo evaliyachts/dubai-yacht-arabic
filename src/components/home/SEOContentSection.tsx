@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { SERVICE_INDEX_PATH_AR } from "@/data/services-ar";
+import { ROUTES } from "@/lib/constants";
 
 /**
  * Keyword-rich SEO content section for the homepage.
@@ -114,11 +116,11 @@ const SEOContentSection = () => (
             We curate <strong>yacht trips in Dubai</strong> and{" "}
             <strong>Dubai yacht trips</strong> for sunsets, BBQ cruises, fishing,
             jet ski sessions, swimming stops, and birthday parties — see our{" "}
-            <Link to="/services" className="text-primary hover:underline font-semibold">
+            <Link to={SERVICE_INDEX_PATH_AR} className="text-primary hover:underline font-semibold">
               full yacht services
             </Link>{" "}
             and{" "}
-            <Link to="/offers" className="text-primary hover:underline font-semibold">
+            <Link to={ROUTES.offers} className="text-primary hover:underline font-semibold">
               charter packages
             </Link>
             .
@@ -139,10 +141,10 @@ const SEOContentSection = () => (
             <Link to="/yachts" className="liquid-pill hover:scale-105 transition-transform">
               Yacht Rentals Dubai
             </Link>
-            <Link to="/offers" className="liquid-pill hover:scale-105 transition-transform">
+            <Link to={ROUTES.offers} className="liquid-pill hover:scale-105 transition-transform">
               Dubai Yacht Charter Packages
             </Link>
-            <Link to="/services" className="liquid-pill hover:scale-105 transition-transform">
+            <Link to={SERVICE_INDEX_PATH_AR} className="liquid-pill hover:scale-105 transition-transform">
               Luxury Yacht Services
             </Link>
             <Link to="/occasions" className="liquid-pill hover:scale-105 transition-transform">

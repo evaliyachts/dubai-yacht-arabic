@@ -2,6 +2,7 @@ import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { ROUTES } from "@/lib/constants";
 
 const faqGroups = [
   {
@@ -54,7 +55,7 @@ const FAQ = () => {
       <SEOHead
         title="الأسئلة الشائعة | تأجير يخت في دبي — يخوت دبي"
         description="الأسئلة الشائعة حول تأجير اليخوت في دبي — الأسعار، الحجز، الإلغاء، الإضافات، وكل ما تريد معرفته."
-        path="/faq"
+        path={ROUTES.faq}
         keywords="أسئلة تأجير يخت دبي، حجز يخت دبي، أسعار يخت دبي"
         jsonLd={jsonLd}
       />

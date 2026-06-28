@@ -4,9 +4,15 @@ import LandingPageTemplate from "@/components/landing/LandingPageTemplate";
 import NotFound from "./NotFound";
 
 const LandingPage = () => {
-  // React Router decodes the pathname, so this matches Arabic slugs directly.
   const { pathname } = useLocation();
-  const page = getLandingBySlug(pathname);
+  let decodedPathname = pathname;
+  try {
+    decodedPathname = decodeURIComponent(pathname);
+  } catch {
+    decodedPathname = pathname;
+  }
+
+  const page = getLandingBySlug(decodedPathname);
   if (!page) return <NotFound />;
   return <LandingPageTemplate page={page} />;
 };

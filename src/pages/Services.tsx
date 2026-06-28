@@ -8,30 +8,35 @@ import {
   staggerItemVariants,
 } from "@/components/shared/AnimatedSection";
 import { services, SERVICE_CATEGORIES } from "@/data/services";
+import {
+  getServiceCategoryLabelAr,
+  getServiceDescriptionAr,
+  getServicePathAr,
+  SERVICE_INDEX_PATH_AR,
+  getServiceTitleAr,
+} from "@/data/services-ar";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 const Services = () => (
   <Layout>
     <SEOHead
-      title="Yacht Services Dubai | Yacht Rental Dubai Packages — Dubai Yatch"
-      description="Yacht services for your yacht rental Dubai — water sports, BBQ, fishing, jet ski, birthday & wedding packages, proposals on a luxury yacht charter Dubai."
-      path="/services"
-      keywords="yacht services dubai, yacht rental dubai packages, luxury yacht charter dubai, yacht hire dubai, jet ski dubai, yacht bbq dubai, yacht birthday party dubai, yacht proposal dubai"
+      title="خدمات تأجير اليخوت في دبي | باقات ومناسبات وأنشطة بحرية"
+      description="اكتشف خدمات تأجير اليخوت في دبي: مناسبات خاصة، رحلات صيد، سباحة، شواء، جت سكي، وفعاليات على متن يخت خاص."
+      path={SERVICE_INDEX_PATH_AR}
+      keywords="خدمات تأجير اليخوت في دبي، باقات يخوت دبي، حفلات على يخت في دبي، جت سكي دبي، شواء على يخت دبي، رحلة صيد يخت دبي"
     />
 
-    <div className="pt-28 pb-20">
+    <div className="pt-28 pb-20" dir="rtl">
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-14">
-          <span className="liquid-pill inline-block">Services</span>
+          <span className="liquid-pill inline-block">الخدمات</span>
           <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mt-4 mb-4">
-            Yacht Services &amp; Packages for Yacht Rental Dubai
+            خدمات وباقات تأجير اليخوت في دبي
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Curated experiences, water sports, dining and celebration packages to
-            elevate your <strong>Dubai yacht rental</strong>,{" "}
-            <strong>luxury yacht charter Dubai</strong>, and{" "}
-            <strong>private yacht hire Dubai</strong> trip.
+            تجارب مخصصة ومناسبات وأنشطة مائية وخدمات ضيافة تجعل رحلتك على اليخت
+            في دبي أكثر فخامة وتميزاً.
           </p>
         </AnimatedSection>
 
@@ -42,7 +47,7 @@ const Services = () => (
             <section key={cat.key} className="mb-16">
               <AnimatedSection className="mb-6">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-                  {cat.label}
+                  {getServiceCategoryLabelAr(cat.key)}
                 </h2>
               </AnimatedSection>
 
@@ -54,11 +59,11 @@ const Services = () => (
                     whileHover={{ y: -6, transition: { duration: 0.3 } }}
                     className="liquid-glass overflow-hidden group"
                   >
-                    <Link to={`/services/${s.slug}`} className="block">
+                    <Link to={getServicePathAr(s.slug)} className="block">
                       <div className="relative h-56 overflow-hidden">
                         <img
                           src={s.cover_image}
-                          alt={`${s.title} - yacht service in Dubai`}
+                          alt={`${getServiceTitleAr(s.slug, s.title)} - خدمة يخت في دبي`}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                           loading="lazy"
                           referrerPolicy="no-referrer"
@@ -67,19 +72,19 @@ const Services = () => (
                           }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                        <span className="absolute top-4 left-4 liquid-pill capitalize">
-                          {s.category}
+                        <span className="absolute top-4 right-4 liquid-pill">
+                          {getServiceCategoryLabelAr(s.category)}
                         </span>
                       </div>
                       <div className="p-5">
                         <h3 className="text-xl font-display font-semibold text-foreground mb-2">
-                          {s.title}
+                          {getServiceTitleAr(s.slug, s.title)}
                         </h3>
                         <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
-                          {s.description}
+                          {getServiceDescriptionAr(s.slug, s.description)}
                         </p>
                         <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                          View details <ArrowRight className="w-4 h-4" />
+                          عرض التفاصيل <ArrowLeft className="w-4 h-4" />
                         </span>
                       </div>
                     </Link>

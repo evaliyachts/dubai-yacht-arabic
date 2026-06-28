@@ -4,10 +4,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { NAV_LINKS, BRAND_NAME, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
 
+const normalizePath = (path: string) => {
+  try {
+    return decodeURIComponent(path);
+  } catch {
+    return path;
+  }
+};
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const pathname = normalizePath(location.pathname);
+
+  const isActive = (path: string) => {
+    if (path === "/") return pathname === path;
+    return pathname === path || pathname.startsWith(`${path}/`);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -45,7 +59,7 @@ const Header = () => {
               key={link.path}
               to={link.path}
               className={`px-3 py-2 text-sm font-medium rounded-xl transition-all duration-300 ${
-                location.pathname === link.path
+                isActive(link.path)
                   ? "text-primary liquid-btn-gold"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary/30"
               }`}
@@ -102,7 +116,7 @@ const Header = () => {
                   <Link
                     to={link.path}
                     className={`block px-4 py-3 text-lg font-display rounded-2xl transition-all ${
-                      location.pathname === link.path ? "text-primary liquid-glass-gold" : "text-foreground hover:bg-secondary/30"
+                      isActive(link.path) ? "text-primary liquid-glass-gold" : "text-foreground hover:bg-secondary/30"
                     }`}
                   >
                     {link.label}

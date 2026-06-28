@@ -45,11 +45,13 @@ export const ROUTES = {
   fishing: "/رحلة-صيد-على-يخت-في-دبي",
   swimming: "/سباحة-على-يخت-في-دبي",
   // Core utility pages
+  services: "/الخدمات",
+  offers: "/العروض",
   yachts: "/yachts",
   yachtDetails: "/yachts/:slug",
   about: "/about",
   contact: "/contact",
-  faq: "/faq",
+  faq: "/الأسئلة-الشائعة",
   terms: "/terms",
   privacy: "/privacy",
 } as const;
@@ -66,9 +68,10 @@ export const getPhoneLink = () => `tel:${PHONE_NUMBER.replace(/\s/g, "")}`;
 export const NAV_LINKS = [
   { label: "الرئيسية", path: ROUTES.home },
   { label: "اليخوت", path: ROUTES.yachts },
-  { label: "تأجير يخت", path: ROUTES.rentYacht },
+  { label: "العروض", path: ROUTES.offers },
+  { label: "الخدمات", path: ROUTES.services },
   { label: "المناسبات", path: ROUTES.events },
-  { label: "الأسعار", path: ROUTES.prices },
-  { label: "دبي مارينا", path: ROUTES.marina },
+  { label: "من نحن", path: ROUTES.about },
+  { label: "الأسئلة الشائعة", path: ROUTES.faq },
   { label: "اتصل بنا", path: ROUTES.contact },
 ];

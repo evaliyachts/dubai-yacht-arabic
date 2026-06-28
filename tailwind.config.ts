@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Cairo"', '"Tajawal"', "system-ui", "sans-serif"],
-        body: ['"Tajawal"', '"Cairo"', "system-ui", "sans-serif"],
-        sans: ['"Tajawal"', '"Cairo"', "system-ui", "sans-serif"],
+        display: ['"IBM Plex Sans Arabic"', '"Tajawal"', "system-ui", "sans-serif"],
+        body: ['"IBM Plex Sans Arabic"', '"Tajawal"', "system-ui", "sans-serif"],
+        sans: ['"IBM Plex Sans Arabic"', '"Tajawal"', "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
