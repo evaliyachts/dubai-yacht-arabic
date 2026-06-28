@@ -8,7 +8,7 @@ import { Cake, Heart, Gem, Sparkles, GraduationCap, PartyPopper, Gift, Wine, Sun
 
 const PACKAGES = [
   { title: "عيد ميلاد على يخت", path: ROUTES.birthday, icon: Cake },
-  { title: "حفلة خطوبة على يخت", path: ROUTES.engagement, icon: SafeRing },
+  { title: "حفلة خطوبة على يخت", path: ROUTES.engagement, icon: Gem },
   { title: "طلب زواج على يخت", path: ROUTES.proposal, icon: Heart },
   { title: "حفلة زفاف على يخت", path: ROUTES.wedding, icon: Sparkles },
   { title: "حفلة تخرج على يخت", path: ROUTES.graduation, icon: GraduationCap },
