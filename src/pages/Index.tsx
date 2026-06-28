@@ -44,9 +44,9 @@ const Index = () => {
         jsonLd={jsonLd}
       />
       <HeroSection />
-      <WhyChooseUs />
       <FeaturedYachts />
       <ServicesSection />
+      <WhyChooseUs />
       <PricesSection />
       <RoutesSection />
       <HomeFAQ />
