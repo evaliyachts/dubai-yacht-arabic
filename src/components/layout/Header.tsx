@@ -30,12 +30,11 @@ const Header = () => {
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <img
-            src="/dubai-yachts-logo.png"
+            src="/favicon.png"
             alt={BRAND_NAME}
-            className="h-9 w-auto transition-transform duration-300 group-hover:scale-105"
-            onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
+            className="h-9 w-9 rounded-md transition-transform duration-300 group-hover:scale-105"
           />
-          <span className="font-display font-bold text-lg text-foreground hidden sm:inline">
+          <span className="font-display font-bold text-lg text-foreground">
             {BRAND_NAME}
           </span>
         </Link>
