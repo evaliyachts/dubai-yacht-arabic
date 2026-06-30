@@ -11,9 +11,20 @@ import { StaggerImageCarousel } from "@/components/ui/stagger-image-carousel";
 
 const TYPE_AR: Record<string, string> = { Standard: "قياسي", Luxury: "فاخر", Superyacht: "سوبر يخت" };
 
+const normalizeSlug = (slug?: string) => {
+  if (!slug) return "";
+
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+};
+
 const YachtDetails = () => {
   const { slug } = useParams();
-  const yacht = yachts.find((y) => y.slug === slug);
+  const normalizedSlug = normalizeSlug(slug);
+  const yacht = yachts.find((y) => y.slug === normalizedSlug);
 
   if (!yacht) {
     return (
