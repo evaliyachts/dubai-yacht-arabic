@@ -58,21 +58,21 @@ export interface Yacht {
 }
 
 const STANDARD_INCLUSIONS = [
-  "Captain and crew",
-  "Fuel for standard route",
-  "Water and soft drinks",
-  "Bluetooth sound system",
-  "Safety equipment",
-  "Ice box",
+  "كابتن وطاقم",
+  "وقود للمسار القياسي",
+  "ماء ومشروبات غازية",
+  "نظام صوتي بلوتوث",
+  "معدات السلامة",
+  "صندوق ثلج",
 ];
 
 const STANDARD_ADD_ONS = [
-  "Birthday decoration",
-  "BBQ menu",
-  "Cake",
-  "Jet ski",
-  "Photography",
-  "Live catering",
+  "ديكور عيد ميلاد",
+  "قائمة شواء",
+  "كيك",
+  "جت سكي",
+  "تصوير",
+  "ضيافة مباشرة",
 ];
 
 const getYachtType = (yacht: RawYachtData): Yacht["type"] => {
