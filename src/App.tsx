@@ -17,6 +17,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
+import ScrollToTop from "./components/shared/ScrollToTop";
 import { allLandingPages } from "./data/landingPages";
 import { ROUTES } from "./lib/constants";
 import { LEGACY_SERVICE_INDEX_PATH_AR, SERVICE_INDEX_PATH_AR } from "./data/services-ar";
@@ -30,6 +31,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/yachts" element={<Yachts />} />
