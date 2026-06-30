@@ -41,7 +41,7 @@ const Header = () => {
       }`}
       dir="rtl"
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
+      <div className="container mx-auto px-4 flex items-center justify-between relative z-50">
         <Link to="/" className="flex items-center gap-2 group">
           <img
             src="/favicon.png"
@@ -86,7 +86,7 @@ const Header = () => {
           </a>
         </div>
 
-        <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2 text-foreground" aria-label="القائمة">
+        <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2 text-foreground relative z-50" aria-label="القائمة">
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
