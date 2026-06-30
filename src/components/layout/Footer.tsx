@@ -9,9 +9,9 @@ const Footer = () => (
         <div>
           <Link to="/" className="flex items-center gap-2 mb-4">
             <img
-              src="/dubai-yachts-logo.png"
+              src="/favicon.png"
               alt={BRAND_NAME}
-              className="h-9 w-auto"
+              className="h-9 w-9 rounded-md"
               onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
             />
             <span className="font-display font-bold text-lg text-foreground">{BRAND_NAME}</span>
