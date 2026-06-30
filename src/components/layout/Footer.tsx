@@ -55,7 +55,7 @@ const Footer = () => (
             <div>
               <p>يومياً: 6:00 صباحاً – 11:00 مساءً</p>
               <p>الحجز: 24/7</p>
-              <p className="mt-1">{PHONE_DISPLAY}</p>
+              <p className="mt-1" dir="ltr">{PHONE_DISPLAY}</p>
             </div>
           </div>
           <p className="text-sm text-muted-foreground">الانطلاق: مرسى دبي مارينا</p>
