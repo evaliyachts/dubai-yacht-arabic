@@ -145,6 +145,8 @@ const canonicals: Array<{ route: string; value: string }> = [];
 const h1Values: Array<{ route: string; value: string }> = [];
 const jsonLdPattern = /<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi;
 const yachtByPath = new Map(yachts.map((yacht) => [`/yachts/${yacht.slug}/`, yacht]));
+const heroOrigin = "https://dubai-yacht.fra1.cdn.digitaloceanspaces.com";
+const yachtOrigin = "https://yacht.fra1.cdn.digitaloceanspaces.com";
 
 for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus === 200 && item.indexable)) {
   const filePath = outputFileForRoute(expectation.path);
@@ -182,6 +184,15 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   if (html.includes("yacht-dxb.netlify.app")) fail(expectation.path, "preview hostname in output");
   if (/<meta[^>]*name=["']keywords["']/i.test(html)) fail(expectation.path, "meta keywords output is prohibited");
   if (/\bhreflang\s*=/i.test(html)) fail(expectation.path, "live hreflang is prohibited until reciprocal rollout");
+  const heroPreconnectCount = [...html.matchAll(new RegExp(`<link[^>]+rel=["']preconnect["'][^>]+href=["']${heroOrigin.replaceAll(".", "\\.")}["']`, "gi"))].length;
+  if (expectation.path === "/" && heroPreconnectCount !== 1) fail(expectation.path, "homepage requires exactly one hero-origin preconnect");
+  if (expectation.path !== "/" && heroPreconnectCount !== 0) fail(expectation.path, "hero-origin preconnect must remain homepage-specific");
+  if (new RegExp(`<link[^>]+rel=["']preconnect["'][^>]+href=["']${yachtOrigin.replaceAll(".", "\\.")}["']`, "i").test(html)) {
+    fail(expectation.path, "below-fold yacht origin must not use a global preconnect");
+  }
+  if (!/<link[^>]+rel=["']dns-prefetch["'][^>]+href=["']\/\/yacht\.fra1\.cdn\.digitaloceanspaces\.com["']/i.test(html)) {
+    fail(expectation.path, "shared yacht-origin DNS prefetch is missing");
+  }
 
   for (const [label, mediaUrl] of [["og:image", ogImage], ["twitter:image", twitterImage]] as const) {
     if (!mediaUrl) continue;

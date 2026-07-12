@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { BRAND_NAME, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
 import { NAVIGATION_TARGETS } from "@/seo/route-manifest";
@@ -32,15 +33,6 @@ const Header = () => {
 
   useEffect(() => setIsOpen(false), [location]);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsOpen(false);
-    };
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [isOpen]);
-
   return (
     <motion.header
       initial={false}
@@ -52,8 +44,9 @@ const Header = () => {
       dir="rtl"
       data-analytics-region="header"
     >
-      <div className="container mx-auto px-4 flex items-center justify-between relative z-50">
-        <Link to="/" className="flex items-center gap-2 group">
+      <DialogPrimitive.Root open={isOpen} onOpenChange={setIsOpen} modal>
+        <div className="container mx-auto px-4 flex items-center justify-between relative z-50">
+          <Link to="/" className="flex items-center gap-2 group">
           <img
             src="/favicon.png"
             alt={BRAND_NAME}
@@ -65,63 +58,68 @@ const Header = () => {
           <span className="font-display font-bold text-lg text-foreground">
             {BRAND_NAME}
           </span>
-        </Link>
+          </Link>
 
-        <nav className="hidden lg:flex items-center gap-1" aria-label="التنقل الرئيسي">
-          {NAVIGATION_TARGETS.map((link) => (
-            <Link
-              key={link.route.path}
-              to={link.route.path}
-              className={`px-3 py-2 text-sm font-medium rounded-xl transition-all duration-300 ${
-                isActive(link.route.path)
-                  ? "text-primary liquid-btn-gold"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/30"
-              }`}
+          <nav className="hidden lg:flex items-center gap-1" aria-label="التنقل الرئيسي">
+            {NAVIGATION_TARGETS.map((link) => (
+              <Link
+                key={link.route.path}
+                to={link.route.path}
+                className={`px-3 py-2 text-sm font-medium rounded-xl transition-all duration-300 ${
+                  isActive(link.route.path)
+                    ? "text-primary liquid-btn-gold"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/30"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden lg:flex items-center gap-2">
+            <a
+              href={getWhatsAppLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-placement="header_desktop"
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium liquid-btn text-green-400 border-green-500/20"
             >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+              <MessageCircle className="w-4 h-4" /> واتساب
+            </a>
+            <a
+              href={getPhoneLink()}
+              data-analytics-placement="header_desktop"
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium liquid-btn-gold text-primary"
+            >
+              <Phone className="w-4 h-4" /> اتصل الآن
+            </a>
+          </div>
 
-        <div className="hidden lg:flex items-center gap-2">
-          <a
-            href={getWhatsAppLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-analytics-placement="header_desktop"
-            className="flex items-center gap-2 px-3 py-2 text-sm font-medium liquid-btn text-green-400 border-green-500/20"
-          >
-            <MessageCircle className="w-4 h-4" /> واتساب
-          </a>
-          <a
-            href={getPhoneLink()}
-            data-analytics-placement="header_desktop"
-            className="flex items-center gap-2 px-3 py-2 text-sm font-medium liquid-btn-gold text-primary"
-          >
-            <Phone className="w-4 h-4" /> اتصل الآن
-          </a>
+          <DialogPrimitive.Trigger asChild>
+            <button className="lg:hidden p-2 text-foreground relative z-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl" aria-label="فتح القائمة" aria-expanded={isOpen} aria-controls="mobile-navigation">
+              <Menu className="w-6 h-6" />
+            </button>
+          </DialogPrimitive.Trigger>
         </div>
 
-        <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2 text-foreground relative z-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl" aria-label={isOpen ? "إغلاق القائمة" : "فتح القائمة"} aria-expanded={isOpen} aria-controls="mobile-navigation">
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay className="fixed inset-0 z-[55] bg-background/90 backdrop-blur-xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 lg:hidden" />
+          <DialogPrimitive.Content
             id="mobile-navigation"
-            initial={{ opacity: 0, x: "-100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "-100%" }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 top-0 z-40 lg:hidden flex flex-col pt-20 px-6"
+            className="fixed inset-0 z-[60] lg:hidden flex flex-col overflow-y-auto pt-20 px-6 outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:slide-in-from-left-full data-[state=closed]:slide-out-to-left-full duration-300 motion-reduce:animate-none"
             style={{
               background: "linear-gradient(180deg, hsl(220 30% 5% / 0.97) 0%, hsl(220 30% 5% / 0.99) 100%)",
               backdropFilter: "blur(60px) saturate(2)",
             }}
             dir="rtl"
           >
+            <DialogPrimitive.Title className="sr-only">قائمة التنقل عبر الهاتف</DialogPrimitive.Title>
+            <DialogPrimitive.Description className="sr-only">روابط صفحات يخوت دبي ووسائل التواصل</DialogPrimitive.Description>
+            <DialogPrimitive.Close asChild>
+              <button className="absolute left-4 top-4 rounded-xl p-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="إغلاق القائمة">
+                <X className="h-6 w-6" />
+              </button>
+            </DialogPrimitive.Close>
             <nav className="flex flex-col gap-2" aria-label="التنقل عبر الهاتف">
               {NAVIGATION_TARGETS.map((link, i) => (
                 <motion.div
@@ -132,6 +130,7 @@ const Header = () => {
                 >
                   <Link
                     to={link.route.path}
+                    onClick={() => setIsOpen(false)}
                     className={`block px-4 py-3 text-lg font-display rounded-2xl transition-all ${
                       isActive(link.route.path) ? "text-primary liquid-glass-gold" : "text-foreground hover:bg-secondary/30"
                     }`}
@@ -142,16 +141,16 @@ const Header = () => {
               ))}
             </nav>
             <div className="mt-8 flex flex-col gap-3">
-              <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" data-analytics-placement="mobile_menu" className="flex items-center justify-center gap-2 px-6 py-3 liquid-btn text-green-400 font-medium">
+              <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} data-analytics-placement="mobile_menu" className="flex items-center justify-center gap-2 px-6 py-3 liquid-btn text-green-400 font-medium">
                 <MessageCircle className="w-5 h-5" /> واتساب
               </a>
-              <a href={getPhoneLink()} data-analytics-placement="mobile_menu" className="flex items-center justify-center gap-2 px-6 py-3 liquid-btn-gold text-primary font-medium">
+              <a href={getPhoneLink()} onClick={() => setIsOpen(false)} data-analytics-placement="mobile_menu" className="flex items-center justify-center gap-2 px-6 py-3 liquid-btn-gold text-primary font-medium">
                 <Phone className="w-5 h-5" /> اتصل الآن
               </a>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </motion.header>
   );
 };

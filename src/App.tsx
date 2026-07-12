@@ -18,6 +18,7 @@ import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
 import ScrollToTop from "./components/shared/ScrollToTop";
 import ConversionTracking from "./components/shared/ConversionTracking";
+import { isAnalyticsEnabled } from "./lib/analytics";
 import { MotionConfig } from "framer-motion";
 import { allLandingPages } from "./data/landingPages";
 import { ROUTES } from "./lib/constants";
@@ -54,7 +55,7 @@ interface AppRoutesProps {
 export const AppRoutes = ({ enableClientEffects = true }: AppRoutesProps) => (
   <>
     {enableClientEffects && <ScrollToTop />}
-    {enableClientEffects && <ConversionTracking />}
+    {enableClientEffects && isAnalyticsEnabled() && <ConversionTracking />}
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/yachts" element={<Yachts />} />

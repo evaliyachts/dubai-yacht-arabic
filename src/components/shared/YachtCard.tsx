@@ -44,11 +44,11 @@ const YachtCard = ({ yacht }: YachtCardProps) => {
       <div className="p-5">
         <h2 className="text-xl font-display font-semibold text-foreground mb-3">{yacht.name}</h2>
         <dl className="grid grid-cols-2 gap-3 text-sm text-muted-foreground mb-4">
-          <div className="flex items-center gap-1"><Ruler className="w-3.5 h-3.5" /><dt className="sr-only">الطول</dt><dd>{yacht.lengthFt} قدم</dd></div>
-          <div className="flex items-center gap-1"><Users className="w-3.5 h-3.5" /><dt className="sr-only">السعة</dt><dd>{yacht.guestCapacity} ضيفاً</dd></div>
-          <div className="flex items-center gap-1"><CalendarDays className="w-3.5 h-3.5" /><dt className="sr-only">سنة البناء</dt><dd>{yacht.yearBuilt}</dd></div>
-          <div className="flex items-center gap-1"><Clock3 className="w-3.5 h-3.5" /><dt className="sr-only">الحد الأدنى</dt><dd>{yacht.minimumDuration} ساعات</dd></div>
-          {yacht.numberOfBedrooms && <div className="flex items-center gap-1"><BedDouble className="w-3.5 h-3.5" /><dt className="sr-only">غرف النوم</dt><dd>{yacht.numberOfBedrooms === 1 ? "غرفة واحدة" : yacht.numberOfBedrooms === 2 ? "غرفتان" : `${yacht.numberOfBedrooms} غرف`}</dd></div>}
+          <div><dt className="sr-only">الطول</dt><dd className="flex items-center gap-1"><Ruler className="w-3.5 h-3.5" aria-hidden="true" />{yacht.lengthFt} قدم</dd></div>
+          <div><dt className="sr-only">السعة</dt><dd className="flex items-center gap-1"><Users className="w-3.5 h-3.5" aria-hidden="true" />{yacht.guestCapacity} ضيفاً</dd></div>
+          <div><dt className="sr-only">سنة البناء</dt><dd className="flex items-center gap-1"><CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />{yacht.yearBuilt}</dd></div>
+          <div><dt className="sr-only">الحد الأدنى</dt><dd className="flex items-center gap-1"><Clock3 className="w-3.5 h-3.5" aria-hidden="true" />{yacht.minimumDuration} ساعات</dd></div>
+          {yacht.numberOfBedrooms && <div><dt className="sr-only">غرف النوم</dt><dd className="flex items-center gap-1"><BedDouble className="w-3.5 h-3.5" aria-hidden="true" />{yacht.numberOfBedrooms === 1 ? "غرفة واحدة" : yacht.numberOfBedrooms === 2 ? "غرفتان" : `${yacht.numberOfBedrooms} غرف`}</dd></div>}
         </dl>
         <div className="flex items-center justify-between gap-3">
           <p className="text-primary font-display text-lg font-semibold">

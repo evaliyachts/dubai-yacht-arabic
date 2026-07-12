@@ -28,6 +28,11 @@ const safeToken = (value: string, fallback: string) => {
   return normalized.slice(0, 64) || fallback;
 };
 
+const GA_MEASUREMENT_ID = /^G-[A-Z0-9]{10,}$/;
+
+export const isAnalyticsEnabled = (measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID) =>
+  typeof measurementId === "string" && GA_MEASUREMENT_ID.test(measurementId.trim().toUpperCase());
+
 const currentRoute = () => {
   if (typeof window === "undefined") return "/";
   try {
@@ -37,11 +42,19 @@ const currentRoute = () => {
   }
 };
 
+const safeRoute = (route: string) => {
+  try {
+    return decodeURI(new URL(route, "https://yacht-dxb.com").pathname) || "/";
+  } catch {
+    return "/";
+  }
+};
+
 export const trackConversionEvent = (event: ConversionEventName, context: ConversionEventContext) => {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !isAnalyticsEnabled()) return;
   const payload: ConversionDataLayerEvent = {
     event,
-    route: context.route ?? currentRoute(),
+    route: safeRoute(context.route ?? currentRoute()),
     placement: safeToken(context.placement, "content"),
     ...(context.formId ? { form_id: safeToken(context.formId, "booking_form") } : {}),
   };

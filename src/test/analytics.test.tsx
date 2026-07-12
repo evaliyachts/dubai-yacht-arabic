@@ -1,20 +1,48 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { beforeEach, vi } from "vitest";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { afterEach, beforeEach, vi } from "vitest";
 import App from "@/App";
 import ConversionTracking from "@/components/shared/ConversionTracking";
-import { trackConversionEvent } from "@/lib/analytics";
+import { isAnalyticsEnabled, trackConversionEvent } from "@/lib/analytics";
+
+const VALID_MEASUREMENT_ID = "G-TEST123456";
+
+const completeRequiredFields = () => {
+  fireEvent.change(screen.getByLabelText("الاسم *"), { target: { value: "اسم شخصي لا يرسل للتحليلات" } });
+  fireEvent.change(screen.getByLabelText("رقم الهاتف *"), { target: { value: "+971500000000" } });
+  fireEvent.change(screen.getByLabelText("ملاحظات إضافية"), { target: { value: "رسالة شخصية" } });
+};
 
 describe("privacy-safe conversion analytics", () => {
   beforeEach(() => {
-    window.dataLayer = [];
+    vi.stubEnv("VITE_GA_MEASUREMENT_ID", VALID_MEASUREMENT_ID);
+    delete window.dataLayer;
     window.history.pushState({}, "", "/contact/");
   });
 
-  it("pushes only allowlisted route, placement, and form identifier fields", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.restoreAllMocks();
+    delete window.dataLayer;
+  });
+
+  it("enables only valid GA4 measurement IDs and creates no queue while disabled", () => {
+    expect(isAnalyticsEnabled()).toBe(true);
+    vi.stubEnv("VITE_GA_MEASUREMENT_ID", "UA-invalid");
+    expect(isAnalyticsEnabled()).toBe(false);
+
+    trackConversionEvent("booking_form_start", { placement: "contact_form" });
+    expect(window.dataLayer).toBeUndefined();
+
+    vi.stubEnv("VITE_GA_MEASUREMENT_ID", "");
+    trackConversionEvent("phone_click", { placement: "header" });
+    expect(window.dataLayer).toBeUndefined();
+  });
+
+  it("pushes only allowlisted route, placement, and form identifier fields when enabled", () => {
     trackConversionEvent("booking_form_start", {
       placement: "Contact Form",
       formId: "booking_contact",
-      route: "/contact/",
+      route: "/contact/?message=private",
       name: "Must not escape",
       phone: "+971500000000",
     } as never);
@@ -48,29 +76,60 @@ describe("privacy-safe conversion analytics", () => {
     expect(JSON.stringify(window.dataLayer)).not.toContain("private-message");
   });
 
-  it("fires form start once and form submit only after valid required fields", async () => {
-    const open = vi.spyOn(window, "open").mockImplementation(() => null);
+  it("records a valid submit and WhatsApp click only after a successful named-window open", async () => {
+    const replace = vi.fn();
+    const popup = { opener: window, location: { replace }, close: vi.fn() } as unknown as Window;
+    const open = vi.spyOn(window, "open").mockReturnValue(popup);
     render(<App />);
 
     const form = document.querySelector<HTMLFormElement>("#booking-contact")!;
     fireEvent.submit(form);
-    expect(window.dataLayer).toEqual([]);
+    expect(window.dataLayer).toBeUndefined();
 
-    fireEvent.change(screen.getByLabelText("الاسم *"), { target: { value: "اسم شخصي لا يرسل للتحليلات" } });
-    fireEvent.change(screen.getByLabelText("رقم الهاتف *"), { target: { value: "+971500000000" } });
-    fireEvent.change(screen.getByLabelText("ملاحظات إضافية"), { target: { value: "رسالة شخصية" } });
-
-    expect(window.dataLayer?.filter((event) => event.event === "booking_form_start")).toHaveLength(1);
+    completeRequiredFields();
     fireEvent.submit(form);
 
     await waitFor(() => expect(open).toHaveBeenCalledOnce());
+    expect(open).toHaveBeenCalledWith("about:blank", expect.stringMatching(/^yacht_dxb_whatsapp_/));
+    expect(popup.opener).toBeNull();
+    expect(replace).toHaveBeenCalledWith(expect.stringContaining("https://wa.me/971504641020?text="));
     expect(window.dataLayer?.map((event) => event.event)).toEqual([
       "booking_form_start",
       "booking_form_submit",
       "whatsapp_click",
     ]);
     expect(JSON.stringify(window.dataLayer)).not.toMatch(/اسم شخصي|971500000000|رسالة شخصية/);
-    expect(screen.getByText("تم فتح واتساب. راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار.")).toBeInTheDocument();
-    open.mockRestore();
+    expect(screen.getByText("تم فتح نافذة واتساب. راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار.")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "افتح رسالة واتساب الجاهزة" })).not.toBeInTheDocument();
+  });
+
+  it("announces a blocked popup, focuses the prepared fallback, and waits for its real click", async () => {
+    vi.spyOn(window, "open").mockReturnValue(null);
+    render(<App />);
+
+    completeRequiredFields();
+    fireEvent.submit(document.querySelector<HTMLFormElement>("#booking-contact")!);
+
+    const status = await waitFor(() => document.querySelector<HTMLElement>("#booking-form-status")!);
+    expect(within(status).getByText("تعذر فتح واتساب تلقائياً. استخدم رابط واتساب أدناه لإكمال الاستفسار.")).toBeInTheDocument();
+    expect(status).not.toHaveTextContent("تم فتح");
+    const fallback = within(status).getByRole("link", { name: "افتح رسالة واتساب الجاهزة" });
+    await waitFor(() => expect(fallback).toHaveFocus());
+    const prepared = new URL(fallback.getAttribute("href")!);
+    expect(prepared.hostname).toBe("wa.me");
+    expect(prepared.searchParams.get("text")).toContain("اسم شخصي لا يرسل للتحليلات");
+    expect(window.dataLayer?.map((event) => event.event)).toEqual([
+      "booking_form_start",
+      "booking_form_submit",
+    ]);
+
+    fallback.addEventListener("click", (event) => event.preventDefault(), { once: true });
+    fireEvent.click(fallback);
+    expect(window.dataLayer?.map((event) => event.event)).toEqual([
+      "booking_form_start",
+      "booking_form_submit",
+      "whatsapp_click",
+    ]);
+    expect(JSON.stringify(window.dataLayer)).not.toMatch(/اسم شخصي|971500000000|رسالة شخصية/);
   });
 });

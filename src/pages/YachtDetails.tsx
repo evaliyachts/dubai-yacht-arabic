@@ -62,7 +62,7 @@ const YachtDetails = () => {
                 <h2 className="text-2xl font-display font-bold mb-4">نظرة موثقة على اليخت</h2>
                 <p className="text-muted-foreground leading-relaxed">{yachtOverview(yacht)}</p>
                 <dl className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-7">
-                  {facts.map(({ icon: Icon, label, value }) => <div key={label} className="liquid-glass p-4"><Icon className="w-5 h-5 text-primary mb-2" /><dt className="text-xs text-muted-foreground">{label}</dt><dd className="font-semibold mt-1">{value}</dd></div>)}
+                  {facts.map(({ icon: Icon, label, value }) => <div key={label} className="liquid-glass p-4"><dt className="flex items-center gap-2 text-xs text-muted-foreground"><Icon className="w-5 h-5 text-primary" aria-hidden="true" />{label}</dt><dd className="font-semibold mt-1">{value}</dd></div>)}
                 </dl>
               </AnimatedSection>
 

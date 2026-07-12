@@ -1,4 +1,4 @@
-import { useRef, useState, FormEvent } from "react";
+import { useEffect, useRef, useState, FormEvent } from "react";
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
@@ -9,6 +9,7 @@ import { yachts } from "@/data/yachts";
 import { requireRouteRecord } from "@/seo/route-manifest";
 import { breadcrumbEntity, contactPointEntity, organizationEntity } from "@/seo/entities";
 import { trackConversionEvent } from "@/lib/analytics";
+import { openPreparedWhatsApp } from "@/lib/open-whatsapp";
 
 const route = requireRouteRecord("/contact/");
 
@@ -22,11 +23,17 @@ const Contact = () => {
   const { toast } = useToast();
   const [honeypot, setHoneypot] = useState("");
   const [formStatus, setFormStatus] = useState("");
+  const [fallbackUrl, setFallbackUrl] = useState<string | null>(null);
   const hasStarted = useRef(false);
+  const fallbackLink = useRef<HTMLAnchorElement>(null);
   const [form, setForm] = useState({
     name: "", phone: "", date: "", time: "", guests: "",
     occasion: "", yacht: "", notes: "",
   });
+
+  useEffect(() => {
+    if (fallbackUrl) fallbackLink.current?.focus();
+  }, [fallbackUrl]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,7 +43,6 @@ const Contact = () => {
       return;
     }
     trackConversionEvent("booking_form_submit", { placement: "contact_form", formId: "booking_contact" });
-    trackConversionEvent("whatsapp_click", { placement: "contact_form_submit", formId: "booking_contact" });
     const msg = `استفسار جديد:
 الاسم: ${form.name}
 الهاتف: ${form.phone}
@@ -46,9 +52,19 @@ const Contact = () => {
 نوع المناسبة: ${form.occasion}
 اختيار اليخت: ${form.yacht}
 ملاحظات: ${form.notes}`;
-    window.open(getWhatsAppLink(msg), "_blank", "noopener,noreferrer");
-    setFormStatus("تم فتح واتساب. راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار.");
-    toast({ title: "تم فتح واتساب", description: "راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار." });
+    const preparedUrl = getWhatsAppLink(msg);
+    setFallbackUrl(null);
+
+    if (openPreparedWhatsApp(preparedUrl)) {
+      trackConversionEvent("whatsapp_click", { placement: "contact_form_submit", formId: "booking_contact" });
+      setFormStatus("تم فتح نافذة واتساب. راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار.");
+      toast({ title: "تم فتح نافذة واتساب", description: "راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار." });
+      return;
+    }
+
+    setFallbackUrl(preparedUrl);
+    setFormStatus("تعذر فتح واتساب تلقائياً. استخدم رابط واتساب أدناه لإكمال الاستفسار.");
+    toast({ title: "تعذر فتح واتساب تلقائياً", description: "استخدم رابط واتساب الظاهر لإكمال الاستفسار." });
   };
 
   const handleFormStart = (target: EventTarget | null) => {
@@ -142,9 +158,21 @@ const Contact = () => {
                   <button type="submit" className="w-full flex items-center justify-center gap-2 py-3 liquid-btn-primary text-base">
                     <Send className="w-4 h-4" /> أرسل الاستفسار عبر واتساب
                   </button>
-                  <p id="booking-form-status" role="status" aria-live="polite" className="min-h-6 text-sm text-muted-foreground">
-                    {formStatus}
-                  </p>
+                  <div id="booking-form-status" role="status" aria-live="polite" aria-atomic="true" className="min-h-6 text-sm text-muted-foreground">
+                    <p>{formStatus}</p>
+                    {fallbackUrl && (
+                      <a
+                        ref={fallbackLink}
+                        href={fallbackUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-analytics-placement="contact_form_fallback"
+                        className="mt-2 inline-flex rounded-lg font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      >
+                        افتح رسالة واتساب الجاهزة
+                      </a>
+                    )}
+                  </div>
                 </form>
               </AnimatedSection>
             </div>
