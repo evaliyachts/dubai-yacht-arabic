@@ -87,6 +87,7 @@ const coreRecords: RouteManifestRecord[] = [
     h1: "تأجير يخت خاص في دبي مع يخوت دبي",
     primaryIntent: "اختيار وحجز يخت خاص في دبي",
     lastSignificantUpdate: "2026-07-12",
+    englishEquivalent: "https://yachtrentaldxb.com/",
     schema: ["WebSite", "Organization", "ContactPoint"],
   },
   {
@@ -132,9 +133,9 @@ const coreRecords: RouteManifestRecord[] = [
     path: toCanonicalPath(ROUTES.about),
     indexable: true,
     pageType: "support",
-    title: "من نحن | يخوت دبي — شركة تأجير يخوت في دبي",
+    title: "من نحن | يخوت دبي — مقارنة وحجز يخوت في دبي",
     description:
-      "تعرّف على يخوت دبي — شركتك الموثوقة لتأجير اليخوت في دبي. قصتنا، قيمنا، والتزامنا بتقديم تجربة بحرية فاخرة.",
+      "تعرّف على يخوت دبي، موقع عربي لمقارنة بيانات اليخوت الخاصة وطلب تأكيد الحجز والسعر والموعد في دبي.",
     h1: "من نحن",
     primaryIntent: "التعريف بعلامة يخوت دبي",
     schema: ["Organization", "BreadcrumbList"],
@@ -158,7 +159,7 @@ const coreRecords: RouteManifestRecord[] = [
     pageType: "support",
     title: "احجز يختك في دبي | تواصل عبر واتساب — يخوت دبي",
     description:
-      "احجز يختك في دبي بسرعة عبر واتساب أو الاتصال المباشر. نموذج استفسار مع تفاصيل المناسبة، اليخت، التاريخ، وعدد الضيوف.",
+      "أرسل استفسار تأجير يخت في دبي عبر واتساب أو الهاتف. شارك اليخت والتاريخ والمدة وعدد الضيوف لطلب التأكيد.",
     h1: "احجز يختك في دبي",
     primaryIntent: "التواصل وحجز يخت في دبي",
     schema: ["Organization", "ContactPoint", "BreadcrumbList"],

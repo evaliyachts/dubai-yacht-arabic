@@ -4,10 +4,11 @@ import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Check, MessageCircle, Phone, Clock, Map, Tag, ListChecks, CircleDollarSign } from "lucide-react";
-import { BRAND_NAME, DOMAIN, getPhoneLink, getWhatsAppLink, PLACEHOLDER_IMAGE, ROUTES } from "@/lib/constants";
+import { DOMAIN, getPhoneLink, getWhatsAppLink, PLACEHOLDER_IMAGE, ROUTES } from "@/lib/constants";
 import type { LandingPage } from "@/data/landingPages";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
 import VerifiedYachtSelection from "@/components/landing/VerifiedYachtSelection";
+import { organizationReference } from "@/seo/entities";
 
 interface LandingPageTemplateProps {
   page: LandingPage;
@@ -27,12 +28,7 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
       "@context": "https://schema.org",
       "@type": "Service",
       name: route.h1,
-      provider: {
-        "@type": "Organization",
-        name: BRAND_NAME,
-        url: `${DOMAIN}/`,
-        telephone: "+971504641020",
-      },
+      provider: organizationReference(),
       areaServed: { "@type": "City", name: "Dubai" },
       serviceType: page.serviceType,
       description: route.description,

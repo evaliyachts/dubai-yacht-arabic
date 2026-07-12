@@ -7,6 +7,7 @@ import { yachts } from "@/data/yachts";
 import { FLEET_RANGES } from "@/data/fleet";
 import { SlidersHorizontal } from "lucide-react";
 import { requireRouteRecord } from "@/seo/route-manifest";
+import { breadcrumbEntity } from "@/seo/entities";
 
 const route = requireRouteRecord("/yachts/");
 
@@ -25,7 +26,7 @@ const Yachts = () => {
 
   return (
     <Layout>
-      <SEOHead route={route} />
+      <SEOHead route={route} jsonLd={breadcrumbEntity(route)} />
       <main className="pt-28 pb-16" dir="rtl">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-10">

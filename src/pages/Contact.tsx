@@ -7,6 +7,7 @@ import { MessageCircle, Phone, MapPin, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { yachts } from "@/data/yachts";
 import { requireRouteRecord } from "@/seo/route-manifest";
+import { breadcrumbEntity, contactPointEntity, organizationEntity } from "@/seo/entities";
 
 const route = requireRouteRecord("/contact/");
 
@@ -37,14 +38,14 @@ const Contact = () => {
 اختيار اليخت: ${form.yacht}
 ملاحظات: ${form.notes}`;
     window.open(getWhatsAppLink(msg), "_blank");
-    toast({ title: "تم إرسال الاستفسار", description: "سيتم التواصل معك خلال دقائق." });
+    toast({ title: "تم فتح واتساب", description: "راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار." });
   };
 
   const inputClass = "w-full px-4 py-3 rounded-2xl bg-secondary/40 border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm backdrop-blur-sm text-right";
 
   return (
     <Layout>
-      <SEOHead route={route} />
+      <SEOHead route={route} jsonLd={[organizationEntity(), contactPointEntity(), breadcrumbEntity(route)]} />
 
       <div className="pt-28 pb-20" dir="rtl">
         <div className="container mx-auto px-4">
@@ -54,7 +55,7 @@ const Contact = () => {
               {route.h1}
             </h1>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              املأ النموذج التالي وسنتواصل معك خلال دقائق عبر واتساب، أو تواصل معنا مباشرة.
+              املأ التفاصيل لفتح رسالة واتساب جاهزة للمراجعة، أو تواصل معنا مباشرة عبر الهاتف.
             </p>
           </AnimatedSection>
 
@@ -101,7 +102,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">واتساب</p>
-                  <p className="text-xs text-muted-foreground">رد فوري</p>
+                  <p className="text-xs text-muted-foreground">إرسال تفاصيل الاستفسار</p>
                 </div>
               </a>
               <a href={getPhoneLink()} className="liquid-glass p-5 flex items-center gap-4 hover:border-primary/20 transition-colors block">

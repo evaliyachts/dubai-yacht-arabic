@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
+import { breadcrumbEntity } from "@/seo/entities";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { requireRouteRecord } from "@/seo/route-manifest";
 
@@ -7,7 +8,7 @@ const route = requireRouteRecord("/terms/");
 
 const Terms = () => (
   <Layout>
-    <SEOHead route={route} />
+    <SEOHead route={route} jsonLd={breadcrumbEntity(route)} />
     <div className="pt-28 pb-20">
       <div className="container mx-auto px-4 max-w-3xl">
         <AnimatedSection>

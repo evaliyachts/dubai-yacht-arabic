@@ -1,6 +1,7 @@
 import type { YachtRecord } from "./yachts";
 import { yachtOverview } from "./fleet";
-import { BRAND_NAME, DOMAIN } from "@/lib/constants";
+import { DOMAIN } from "@/lib/constants";
+import { organizationReference } from "@/seo/entities";
 
 const occurrences = (value: string, phrase: string) => value.split(phrase).length - 1;
 
@@ -32,7 +33,7 @@ export const buildYachtJsonLd = (yacht: YachtRecord, canonical: string) => [
     serviceType: "تأجير يخت خاص في دبي",
     description: yachtOverview(yacht),
     url: canonical,
-    provider: { "@type": "Organization", name: BRAND_NAME, url: `${DOMAIN}/`, telephone: "+971504641020" },
+    provider: organizationReference(),
     areaServed: { "@type": "City", name: "Dubai" },
     offers: {
       "@type": "Offer",

@@ -1,51 +1,64 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Dialog, DialogContent, DialogClose, DialogTitle } from '@/components/ui/dialog';
+import React, { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import type { YachtMediaRecord } from "@/data/yachts";
 
 interface StaggerImageCarouselProps {
-  images: string[];
+  images: YachtMediaRecord[];
   altPrefix?: string;
-  fallbackSrc?: string;
+  fallbackSrc: string;
 }
 
 interface ImageCardProps {
   position: number;
-  src: string;
-  alt: string;
-  fallbackSrc?: string;
+  media: YachtMediaRecord;
+  isInitialPrimary: boolean;
   handleMove: (steps: number) => void;
   handleOpen: () => void;
+  handleFailure: (path: string) => void;
   cardSize: number;
 }
 
-const ImageCard: React.FC<ImageCardProps> = ({
+const ImageCard = ({
   position,
-  src,
-  alt,
-  fallbackSrc,
+  media,
+  isInitialPrimary,
   handleMove,
   handleOpen,
+  handleFailure,
   cardSize,
-}) => {
+}: ImageCardProps) => {
   const isCenter = position === 0;
+  const activate = () => (isCenter ? handleOpen() : handleMove(position));
 
   return (
-    <div
-      onClick={() => (isCenter ? handleOpen() : handleMove(position))}
+    <button
+      type="button"
+      onClick={activate}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activate();
+        }
+      }}
+      aria-label={isCenter ? `فتح ${media.altAr} بالحجم الكامل` : `اختيار ${media.altAr}`}
+      aria-current={isCenter ? "true" : undefined}
       className={cn(
         "absolute left-1/2 top-1/2 cursor-pointer border-2 overflow-hidden transition-all duration-500 ease-in-out rounded-xl",
+        "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "motion-reduce:transition-none",
         isCenter
           ? "z-10 border-primary/60 shadow-[0_8px_30px_-10px_hsl(var(--primary)/0.4)]"
-          : "z-0 border-border/40 hover:border-primary/30"
+          : "z-0 border-border/40 hover:border-primary/30",
       )}
       style={{
         width: cardSize,
         height: cardSize * 0.65,
         transform: `
-          translate(-50%, -50%) 
+          translate(-50%, -50%)
           translateX(${(cardSize / 1.5) * position}px)
           translateY(${isCenter ? -30 : position % 2 ? 15 : -15}px)
           rotate(${isCenter ? 0 : position % 2 ? 2.5 : -2.5}deg)
@@ -54,115 +67,162 @@ const ImageCard: React.FC<ImageCardProps> = ({
       }}
     >
       <img
-        src={src}
-        alt={alt}
+        src={media.path}
+        alt={media.altAr}
+        width={media.width}
+        height={media.height}
         className="w-full h-full object-cover"
         referrerPolicy="no-referrer"
-        onError={(e) => {
-          if (fallbackSrc) (e.target as HTMLImageElement).src = fallbackSrc;
-        }}
+        loading={isInitialPrimary ? "eager" : "lazy"}
+        {...(isInitialPrimary ? { fetchpriority: "high" } : {})}
+        onError={() => handleFailure(media.path)}
       />
-    </div>
+    </button>
   );
 };
 
-export const StaggerImageCarousel: React.FC<StaggerImageCarouselProps> = ({
+const carouselPosition = (index: number, length: number) => {
+  if (index === 0) return 0;
+  return index <= Math.ceil((length - 1) / 2) ? index : index - length;
+};
+
+export const StaggerImageCarousel = ({
   images,
-  altPrefix = "Image",
+  altPrefix = "صورة اليخت",
   fallbackSrc,
-}) => {
+}: StaggerImageCarouselProps) => {
   const [cardSize, setCardSize] = useState(365);
-  const [imageList, setImageList] = useState(images.map((src, i) => ({ src, id: i })));
-  const [fullscreenSrc, setFullscreenSrc] = useState<string | null>(null);
+  const failedSources = useRef(new Set<string>());
+  const fallbackMedia: YachtMediaRecord = {
+    type: "image",
+    path: fallbackSrc,
+    altAr: `صورة بديلة محايدة لـ ${altPrefix}`,
+    width: 1200,
+    height: 1200,
+    rightsRecordId: "media-neutral-placeholder-001",
+    featured: true,
+    priority: 0,
+  };
+  const availableImages = images.filter((media) => !failedSources.current.has(media.path));
+  const [imageList, setImageList] = useState<YachtMediaRecord[]>(
+    availableImages.length > 0 ? availableImages : [fallbackMedia],
+  );
+  const [fullscreenMedia, setFullscreenMedia] = useState<YachtMediaRecord | null>(null);
+  const initialPrimaryPath = images[0]?.path ?? fallbackSrc;
 
   useEffect(() => {
-    setImageList(images.map((src, i) => ({ src, id: i })));
-  }, [images]);
+    const usable = images.filter((media) => !failedSources.current.has(media.path));
+    setImageList(usable.length > 0 ? usable : [fallbackMedia]);
+    setFullscreenMedia((current) =>
+      current && usable.some((media) => media.path === current.path) ? current : null,
+    );
+    // fallbackMedia is derived from stable scalar props; listing the object would reset on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [images, altPrefix, fallbackSrc]);
 
   const handleMove = (steps: number) => {
-    const newList = [...imageList];
-    if (steps > 0) {
-      for (let i = steps; i > 0; i--) {
-        const item = newList.shift();
-        if (!item) return;
-        newList.push({ ...item, id: Math.random() });
-      }
-    } else {
-      for (let i = steps; i < 0; i++) {
-        const item = newList.pop();
-        if (!item) return;
-        newList.unshift({ ...item, id: Math.random() });
-      }
-    }
-    setImageList(newList);
+    setImageList((current) => {
+      if (current.length < 2 || steps === 0) return current;
+      const normalized = ((steps % current.length) + current.length) % current.length;
+      return [...current.slice(normalized), ...current.slice(0, normalized)];
+    });
+  };
+
+  const handleFailure = (path: string) => {
+    if (failedSources.current.has(path)) return;
+    failedSources.current.add(path);
+    if (path === fallbackSrc) return;
+    setFullscreenMedia((current) => (current?.path === path ? null : current));
+    setImageList((current) => {
+      const remaining = current.filter((media) => media.path !== path);
+      return remaining.length > 0 ? remaining : [fallbackMedia];
+    });
   };
 
   useEffect(() => {
-    const updateSize = () => {
-      const { matches } = window.matchMedia("(min-width: 640px)");
-      setCardSize(matches ? 420 : 300);
-    };
+    const updateSize = () => setCardSize(window.matchMedia("(min-width: 640px)").matches ? 420 : 300);
     updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      handleMove(-1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      handleMove(1);
+    }
+  };
+
   return (
     <>
-      <div className="relative w-full" style={{ height: cardSize * 0.65 + 80 }}>
-        {imageList.map((img, index) => {
-          const position =
-            imageList.length % 2
-              ? index - (imageList.length + 1) / 2
-              : index - imageList.length / 2;
+      <div
+        className="relative w-full overflow-hidden"
+        style={{ height: cardSize * 0.65 + 80 }}
+        onKeyDown={handleKeyDown}
+        aria-label={`معرض صور ${altPrefix}`}
+      >
+        {imageList.map((media, index) => {
+          const position = carouselPosition(index, imageList.length);
           return (
             <ImageCard
-              key={img.id}
+              key={media.path}
               position={position}
-              src={img.src}
-              alt={`${altPrefix} ${index + 1}`}
-              fallbackSrc={fallbackSrc}
+              media={media}
+              isInitialPrimary={media.path === initialPrimaryPath}
               handleMove={handleMove}
-              handleOpen={() => setFullscreenSrc(img.src)}
+              handleOpen={() => setFullscreenMedia(media)}
+              handleFailure={handleFailure}
               cardSize={cardSize}
             />
           );
         })}
 
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-3 z-20">
-          <button
-            onClick={() => handleMove(-1)}
-            className={cn(
-              "flex h-12 w-12 items-center justify-center rounded-full transition-colors",
-              "bg-background/80 backdrop-blur border border-border hover:bg-primary hover:text-primary-foreground"
-            )}
-            aria-label="Previous image"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => handleMove(1)}
-            className={cn(
-              "flex h-12 w-12 items-center justify-center rounded-full transition-colors",
-              "bg-background/80 backdrop-blur border border-border hover:bg-primary hover:text-primary-foreground"
-            )}
-            aria-label="Next image"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
+        {imageList.length > 1 && (
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+            <button
+              type="button"
+              onClick={() => handleMove(-1)}
+              className={cn(
+                "flex h-12 w-12 items-center justify-center rounded-full transition-colors",
+                "bg-background/80 backdrop-blur border border-border hover:bg-primary hover:text-primary-foreground",
+                "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary motion-reduce:transition-none",
+              )}
+              aria-label="الصورة السابقة"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => handleMove(1)}
+              className={cn(
+                "flex h-12 w-12 items-center justify-center rounded-full transition-colors",
+                "bg-background/80 backdrop-blur border border-border hover:bg-primary hover:text-primary-foreground",
+                "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary motion-reduce:transition-none",
+              )}
+              aria-label="الصورة التالية"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Fullscreen dialog */}
-      <Dialog open={!!fullscreenSrc} onOpenChange={() => setFullscreenSrc(null)}>
+      <Dialog open={Boolean(fullscreenMedia)} onOpenChange={(open) => !open && setFullscreenMedia(null)}>
         <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 border-0 bg-black/95 flex items-center justify-center">
-          <DialogTitle className="sr-only">Image preview</DialogTitle>
-          {fullscreenSrc && (
+          <DialogTitle className="sr-only">عرض صورة {altPrefix} بالحجم الكامل</DialogTitle>
+          <DialogDescription className="sr-only">معاينة الصورة المحددة دون تغيير ترتيب معرض اليخت.</DialogDescription>
+          {fullscreenMedia && (
             <img
-              src={fullscreenSrc}
-              alt={altPrefix}
+              src={fullscreenMedia.path}
+              alt={fullscreenMedia.altAr}
+              width={fullscreenMedia.width}
+              height={fullscreenMedia.height}
               className="max-w-full max-h-[90vh] object-contain"
               referrerPolicy="no-referrer"
+              onError={() => handleFailure(fullscreenMedia.path)}
             />
           )}
         </DialogContent>

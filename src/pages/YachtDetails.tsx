@@ -10,6 +10,7 @@ import { buildYachtJsonLd } from "@/data/yacht-page";
 import { ROUTES, getPhoneLink, getWhatsAppLink } from "@/lib/constants";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
 import { socialImageForYachtMedia } from "@/seo/social-image";
+import { StaggerImageCarousel } from "@/components/ui/stagger-image-carousel";
 
 const normalizeYachtSlug = (slug?: string) => {
   if (!slug) return "";
@@ -47,10 +48,13 @@ const YachtDetails = () => {
           <h1 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-3">{route.h1}</h1>
           <p className="text-xl font-display text-primary mb-8">{yacht.pricePerHour.toLocaleString("ar-AE")} د.إ / ساعة — حد أدنى {yacht.minimumDuration} ساعات</p>
 
-          <figure className="liquid-glass overflow-hidden bg-muted mb-12">
-            <img src={image.path} alt={image.altAr} width={image.width} height={image.height} className="w-full max-h-[560px] object-cover" />
-            <figcaption className="px-4 py-3 text-sm text-muted-foreground">صورة بديلة محايدة؛ لا تُستخدم صور خارجية دون توثيق حقوق الاستخدام.</figcaption>
-          </figure>
+          <section className="mb-12" aria-label={`صور ${yacht.name}`}>
+            <StaggerImageCarousel
+              images={yacht.media}
+              altPrefix={yacht.name}
+              fallbackSrc="/media/yacht-placeholder.svg"
+            />
+          </section>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2 space-y-12">

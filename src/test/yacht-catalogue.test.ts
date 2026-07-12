@@ -4,6 +4,7 @@ import { FLEET_RANGES, relatedYachts, yachtFaqs, yachtOverview } from "@/data/fl
 import { validateYachtRecords } from "@/data/yacht-schema";
 import { yachts, type YachtRecord } from "@/data/yachts";
 import { buildYachtJsonLd, validateYachtServiceName, yachtSeoTitle } from "@/data/yacht-page";
+import { ATTACHED_GALLERY_YACHT_IDS, galleryCountForYacht, isNeutralYachtMedia } from "@/data/yacht-media";
 import {
   INDEXABLE_ROUTE_RECORDS,
   LEGACY_REDIRECTS,
@@ -37,7 +38,8 @@ describe("PR 5 verified yacht catalogue", () => {
       expect(yacht.media.length).toBeGreaterThan(0);
       for (const media of yacht.media) {
         expect(Object.keys(media).sort()).toEqual(mediaKeys);
-        expect(existsSync(resolve("public", media.path.replace(/^\//, "")))).toBe(true);
+        if (media.path.startsWith("/")) expect(existsSync(resolve("public", media.path.replace(/^\//, "")))).toBe(true);
+        else expect(new URL(media.path).protocol).toBe("https:");
         expect(rightsRegister).toContain(`\`${media.rightsRecordId}\``);
       }
     }
@@ -90,6 +92,27 @@ describe("PR 5 verified yacht catalogue", () => {
     });
     expect(benetti?.media).toEqual([expect.objectContaining({ path: "/media/yacht-placeholder.svg", rightsRecordId: "media-neutral-placeholder-001" })]);
     expect(JSON.stringify(benetti)).not.toMatch(/https?:|supabase|evali/i);
+  });
+
+  it("restores the 23 approved galleries while keeping Benetti placeholder-only", () => {
+    expect(ATTACHED_GALLERY_YACHT_IDS).toHaveLength(23);
+    expect(yachts.filter((yacht) => !isNeutralYachtMedia(yacht.media[0]))).toHaveLength(23);
+    expect(galleryCountForYacht("yacht-02")).toBe(10);
+    expect(galleryCountForYacht("yacht-03")).toBe(9);
+    expect(galleryCountForYacht("yacht-06")).toBe(7);
+    expect(galleryCountForYacht("yacht-07")).toBe(6);
+    expect(galleryCountForYacht("yacht-08")).toBe(7);
+    expect(yachts.find((yacht) => yacht.id === "yacht-08")?.media.every((media) => !media.path.startsWith("hhttps://"))).toBe(true);
+
+    for (const yacht of yachts.filter((candidate) => candidate.id !== "yacht-14")) {
+      expect(yacht.media).toHaveLength(galleryCountForYacht(yacht.id));
+      expect(yacht.media[0].featured).toBe(true);
+      expect(new Set(yacht.media.map((media) => media.path)).size).toBe(yacht.media.length);
+      expect(yacht.media.every((media) => media.altAr.startsWith(yacht.name))).toBe(true);
+    }
+    expect(JSON.stringify(yachts.map(({ name, slug, media }) => ({ name, slug, alt: media.map((item) => item.altAr) })))).not.toMatch(
+      /evali|evaliyacht|إڤالي|إيفالي|ايفالي/i,
+    );
   });
 
   it("renames the former 55-foot record and owns one direct permanent redirect", () => {

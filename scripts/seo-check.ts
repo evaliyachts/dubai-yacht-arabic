@@ -1,8 +1,11 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { yachts } from "../src/data/yachts";
+import { APPROVED_ATTACHED_MEDIA_URLS } from "../src/data/yacht-media";
 import { validateYachtRecords } from "../src/data/yacht-schema";
 import { socialImageForYachtMedia, validateSocialImageUrl } from "../src/seo/social-image";
+import { PHONE_NUMBER } from "../src/lib/constants";
+import { CONTACT_POINT_ID, ORGANIZATION_ID, WEBSITE_ID } from "../src/seo/entities";
 import { generateRedirects, generateRobotsTxt } from "../src/seo/output-generators";
 import {
   assertValidRouteManifest,
@@ -56,6 +59,32 @@ const productionUrlsIn = (value: unknown): string[] => {
   if (value && typeof value === "object") return Object.values(value).flatMap(productionUrlsIn);
   return [];
 };
+
+const schemaNodesIn = (value: unknown): Array<Record<string, unknown>> => {
+  if (Array.isArray(value)) return value.flatMap(schemaNodesIn);
+  if (!value || typeof value !== "object") return [];
+  const node = value as Record<string, unknown>;
+  return [node, ...Object.values(node).flatMap(schemaNodesIn)];
+};
+
+const forbiddenSchemaTypes = new Set([
+  "LocalBusiness",
+  "Product",
+  "Event",
+  "FAQPage",
+  "AggregateRating",
+  "Review",
+]);
+const forbiddenEntityProperties = new Set([
+  "address",
+  "geo",
+  "sameAs",
+  "aggregateRating",
+  "review",
+  "openingHours",
+  "award",
+  "foundingDate",
+]);
 
 try {
   assertValidRouteManifest();
@@ -181,8 +210,29 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
       }
       for (const schemaUrl of productionUrlsIn(parsed)) {
         const parsedUrl = new URL(schemaUrl);
-        if (schemaUrl === "https://yacht-dxb.com" || (parsedUrl.pathname !== "/" && !parsedUrl.pathname.endsWith("/"))) {
+        const isAssetUrl = /\.[a-z0-9]{2,8}$/i.test(parsedUrl.pathname);
+        if (!isAssetUrl && (schemaUrl === "https://yacht-dxb.com" || (parsedUrl.pathname !== "/" && !parsedUrl.pathname.endsWith("/")))) {
           fail(expectation.path, `schema URL is missing its canonical trailing slash (${schemaUrl})`);
+        }
+      }
+      for (const node of schemaNodesIn(parsed)) {
+        const type = node["@type"];
+        if (typeof type === "string" && forbiddenSchemaTypes.has(type)) {
+          fail(expectation.path, `prohibited schema type (${type})`);
+        }
+        if (node.telephone !== undefined && node.telephone !== PHONE_NUMBER) {
+          fail(expectation.path, `schema telephone drifts from centralized phone (${String(node.telephone)})`);
+        }
+        if (type === "Organization" || type === "ContactPoint") {
+          for (const property of forbiddenEntityProperties) {
+            if (property in node) fail(expectation.path, `${type} contains unapproved property (${property})`);
+          }
+        }
+        if (type === "Service") {
+          const provider = node.provider;
+          if (JSON.stringify(provider) !== JSON.stringify({ "@id": ORGANIZATION_ID })) {
+            fail(expectation.path, "Service provider must reference the centralized Organization @id only");
+          }
         }
       }
     } catch (error) {
@@ -191,6 +241,26 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
     }
   }
   if (expectation.path === "/" && jsonLdBlocks.length === 0) fail(expectation.path, "homepage requires valid WebSite JSON-LD");
+  if (expectation.path === "/") {
+    const websiteNodes = parsedJsonLd.filter((node) => node["@type"] === "WebSite");
+    const organizationNodes = parsedJsonLd.filter((node) => node["@type"] === "Organization");
+    const contactNodes = parsedJsonLd.filter((node) => node["@type"] === "ContactPoint");
+    if (websiteNodes.length !== 1 || websiteNodes[0]["@id"] !== WEBSITE_ID) {
+      fail(expectation.path, "homepage must emit exactly one stable WebSite identity");
+    }
+    if (organizationNodes.length !== 1 || organizationNodes[0]["@id"] !== ORGANIZATION_ID) {
+      fail(expectation.path, "homepage must emit exactly one stable Organization identity");
+    }
+    if (contactNodes.length !== 1 || contactNodes[0]["@id"] !== CONTACT_POINT_ID) {
+      fail(expectation.path, "homepage must emit exactly one stable ContactPoint identity");
+    }
+    if (JSON.stringify(websiteNodes[0]?.publisher) !== JSON.stringify({ "@id": ORGANIZATION_ID })) {
+      fail(expectation.path, "WebSite publisher must reference the centralized Organization");
+    }
+    if (JSON.stringify(organizationNodes[0]?.contactPoint) !== JSON.stringify({ "@id": CONTACT_POINT_ID })) {
+      fail(expectation.path, "Organization contactPoint must reference the centralized ContactPoint");
+    }
+  }
 
   const yacht = yachtByPath.get(expectation.path);
   if (yacht) {
@@ -277,7 +347,11 @@ for (const file of outputFiles(distDir)) {
   if (relative.endsWith(".map")) failures.push(`${relative}: production source map is prohibited`);
   if (!/\.(?:html|js|css|xml|txt|json|svg)$/i.test(relative) && relative !== "_redirects") continue;
   const source = readFileSync(file, "utf8");
-  if (prohibitedOutput.test(source)) failures.push(`${relative}: production output exposes prohibited branding or runtime provenance`);
+  const sourceWithoutApprovedMedia = APPROVED_ATTACHED_MEDIA_URLS.reduce(
+    (current, mediaUrl) => current.replaceAll(mediaUrl, "[approved-yacht-media]"),
+    source,
+  );
+  if (prohibitedOutput.test(sourceWithoutApprovedMedia)) failures.push(`${relative}: production output exposes prohibited branding or runtime provenance`);
   if (inheritedSchema.test(source)) failures.push(`${relative}: production output contains inherited product/rating schema`);
   if (malformedYachtWording.test(source)) failures.push(`${relative}: production output contains malformed yacht wording`);
 }
