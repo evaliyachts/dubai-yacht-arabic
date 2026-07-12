@@ -1,27 +1,26 @@
 import { motion } from "framer-motion";
-import { Shield, DollarSign, Users, Compass, Calendar, Anchor } from "lucide-react";
+import { Clock3, DollarSign, Users, Compass, Calendar, Anchor } from "lucide-react";
 import { StaggerContainer, staggerItemVariants, AnimatedSection } from "@/components/shared/AnimatedSection";
 
 const highlights = [
-  { icon: Anchor, title: "يخوت خاصة", desc: "أسطول من يخوت خاصة بالكامل، لك ولضيوفك فقط." },
-  { icon: Users, title: "طاقم محترف", desc: "كابتن وطاقم ضيافة مرخّص ومُدرّب لكل رحلة." },
-  { icon: Compass, title: "انطلاق من دبي مارينا", desc: "موقع مركزي يسهل الوصول إليه مع مرور بمعالم دبي." },
-  { icon: Calendar, title: "باقات للمناسبات", desc: "ديكور وكيك وطعام مخصصة لكل أنواع الحفلات." },
-  { icon: DollarSign, title: "أسعار واضحة", desc: "لا رسوم خفية — السعر يشمل الكابتن والوقود والطاقم." },
-  { icon: Shield, title: "حجز عبر واتساب", desc: "تأكيد سريع خلال دقائق، دعم 24/7." },
+  { icon: Anchor, title: "حجز خاص", desc: "اختر يختاً خاصاً لمجموعتك بدلاً من رحلة مشتركة بتذاكر منفصلة." },
+  { icon: Users, title: "السعة أولاً", desc: "قارن سعة الضيوف المسجلة بكل يخت مع العدد الإجمالي لمجموعتك." },
+  { icon: Compass, title: "انطلاق من دبي مارينا", desc: "يُرسل موقع الالتقاء الدقيق بعد تأكيد اليخت والموعد." },
+  { icon: Calendar, title: "موعد محدد", desc: "أرسل التاريخ والوقت المطلوبين واطلب تأكيدهما قبل ترتيب الرحلة." },
+  { icon: DollarSign, title: "سعر ومدة مسجلان", desc: "اقرأ سعر الساعة مع الحد الأدنى للمدة عند مقارنة الخيارات." },
+  { icon: Clock3, title: "إضافات اختيارية", desc: "اطلب تجهيزات المناسبة بصورة منفصلة ولا تفترض أنها مشمولة تلقائياً." },
 ];
 
 const WhyChooseUs = () => (
   <section className="section-padding liquid-divider" dir="rtl">
     <div className="container mx-auto px-4">
       <AnimatedSection className="text-center mb-14">
-        <span className="liquid-pill inline-block">لماذا نحن</span>
+        <span className="liquid-pill inline-block">طريقة الاختيار</span>
         <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
-          لماذا يخوت دبي؟
+          ست نقاط لحجز أوضح
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          نقدّم لك تجربة <strong>تأجير يخت في دبي</strong> متكاملة بكل التفاصيل: خصوصية،
-          فخامة، طاقم محترف، وأسعار شفافة بدون رسوم خفية.
+          استخدم البيانات المسجلة لكل يخت واطلب تأكيد التفاصيل التشغيلية التي تهم رحلتك قبل الحجز.
         </p>
       </AnimatedSection>
 

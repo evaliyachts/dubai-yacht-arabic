@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { MessageCircle, Compass, Phone } from "lucide-react";
 import { getWhatsAppLink, getPhoneLink, ROUTES } from "@/lib/constants";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { requireRouteRecord } from "@/seo/route-manifest";
 
 const HERO_DESKTOP = "https://dubai-yacht.fra1.cdn.digitaloceanspaces.com/dubai_yacht_luxury_dt.avif";
 const HERO_MOBILE = "https://dubai-yacht.fra1.cdn.digitaloceanspaces.com/dubai_yacht_luxury_mob.avif";
@@ -40,8 +41,8 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-foreground mb-4 leading-tight"
         >
-          تأجير يخوت فاخرة في دبي <br className="hidden sm:block" />
-          <span className="text-gradient-gold">للمناسبات والرحلات الخاصة</span>
+          تأجير يخت خاص في دبي <br className="hidden sm:block" />
+          <span className="text-gradient-gold">مع يخوت دبي</span>
         </motion.h1>
 
         <motion.p
@@ -50,8 +51,8 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-base sm:text-lg md:text-xl leading-snug text-white/85 mb-7 font-light max-w-2xl mx-auto"
         >
-          أسطول من اليخوت الخاصة لكل المناسبات — أعياد الميلاد، الخطوبة، طلب الزواج،
-          والرحلات البحرية الفاخرة من دبي مارينا.
+          قارن الطول والسعة والسعر والحد الأدنى للمدة، ثم أرسل تاريخ الرحلة وعدد الضيوف
+          للحصول على خيارات مناسبة تنطلق من دبي مارينا.
         </motion.p>
 
         <motion.div
@@ -66,11 +67,11 @@ const HeroSection = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 liquid-btn-primary text-base hover:scale-105 transition-transform"
           >
-            <MessageCircle className="w-5 h-5" /> احجز يختك الآن
+            <MessageCircle className="w-5 h-5" /> أرسل تفاصيل الرحلة
           </a>
 
           <Link
-            to={ROUTES.yachts}
+            to={requireRouteRecord(ROUTES.yachts).path}
             className="inline-flex items-center justify-center gap-2 px-6 py-3 liquid-btn text-foreground text-base hover:scale-105 transition-transform"
           >
             <Compass className="w-5 h-5" /> شاهد اليخوت

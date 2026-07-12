@@ -9,10 +9,10 @@ describe("application baseline", () => {
     expect(
       await screen.findByRole("heading", {
         level: 1,
-        name: /تأجير يخوت فاخرة في دبي/,
+        name: /تأجير يخت خاص في دبي مع يخوت دبي/,
       }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /احجز يختك الآن/ })).toHaveAttribute(
+    expect(screen.getAllByRole("link", { name: /أرسل تفاصيل الرحلة/ })[0]).toHaveAttribute(
       "href",
       expect.stringContaining("https://wa.me/971504641020"),
     );

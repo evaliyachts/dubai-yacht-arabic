@@ -7,6 +7,7 @@ import { Check, MessageCircle, Phone, Clock, Map, Tag } from "lucide-react";
 import { BRAND_NAME, DOMAIN, getPhoneLink, getWhatsAppLink, ROUTES } from "@/lib/constants";
 import type { LandingPage } from "@/data/landingPages";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
+import VerifiedYachtSelection from "@/components/landing/VerifiedYachtSelection";
 
 interface LandingPageTemplateProps {
   page: LandingPage;
@@ -79,7 +80,7 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
                 <Phone className="w-5 h-5" /> اتصل الآن
               </a>
               <Link
-                to={ROUTES.yachts}
+                to={requireRouteRecord(ROUTES.yachts).path}
                 className="inline-flex items-center gap-2 px-7 py-3 liquid-btn text-foreground"
               >
                 شاهد اليخوت
@@ -102,11 +103,22 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
             </AnimatedSection>
           )}
 
+          {page.directAnswer && (
+            <AnimatedSection className="mb-10">
+              <section className="liquid-glass-gold p-6 md:p-8" aria-labelledby="direct-answer-heading">
+                <h2 id="direct-answer-heading" className="text-2xl font-display font-bold text-foreground mb-4">
+                  الجواب المباشر
+                </h2>
+                <p className="text-foreground/90 leading-8 text-lg">{page.directAnswer}</p>
+              </section>
+            </AnimatedSection>
+          )}
+
           {/* Highlights */}
           <AnimatedSection className="mb-10">
             <div className="liquid-glass p-6 md:p-8">
               <h2 className="text-2xl font-display font-bold text-foreground mb-5">
-                ما يشمله الحجز
+                {page.highlightsTitle ?? "ما يشمله الحجز"}
               </h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {page.highlights.map((item) => (
@@ -134,6 +146,43 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
                   ))}
                 </div>
               </div>
+            </AnimatedSection>
+          )}
+
+          {page.contentSections?.map((section) => (
+            <AnimatedSection className="mb-10" key={section.heading}>
+              <section className="liquid-glass p-6 md:p-8">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
+                  {section.heading}
+                </h2>
+                <div className="space-y-4 text-muted-foreground leading-8">
+                  {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                </div>
+                {section.points && (
+                  <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {section.points.map((point) => (
+                      <li key={point} className="flex items-start gap-3 text-muted-foreground">
+                        <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" aria-hidden="true" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {section.links && (
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {section.links.map((link) => {
+                      const linkedRoute = requireRouteRecord(link.path);
+                      return <Link key={linkedRoute.path} to={linkedRoute.path} className="liquid-pill hover:scale-105 transition-transform">{link.label}</Link>;
+                    })}
+                  </div>
+                )}
+              </section>
+            </AnimatedSection>
+          ))}
+
+          {page.featuredYachtSlugs && (
+            <AnimatedSection>
+              <VerifiedYachtSelection slugs={page.featuredYachtSlugs} />
             </AnimatedSection>
           )}
 
@@ -191,9 +240,7 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
               <h2 className="text-2xl font-display font-bold text-foreground mb-3">صفحات ذات صلة</h2>
               <div className="flex flex-wrap justify-center gap-3 mt-4">
                 {page.related.map((r) => (
-                  <Link key={r.path} to={r.path} className="liquid-pill hover:scale-105 transition-transform">
-                    {r.label}
-                  </Link>
+                  <Link key={r.path} to={requireRouteRecord(r.path).path} className="liquid-pill hover:scale-105 transition-transform">{r.label}</Link>
                 ))}
               </div>
             </div>
@@ -206,7 +253,7 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
                 جاهز للحجز؟
               </h2>
               <p className="text-muted-foreground mb-6">
-                تواصل معنا الآن للحصول على عرض سعر مخصص وتأكيد التوفر فوراً.
+                أرسل التاريخ والوقت والمدة وعدد الضيوف للحصول على خيارات مناسبة وعرض واضح قبل التأكيد.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a

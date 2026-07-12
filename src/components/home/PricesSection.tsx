@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { ROUTES, getWhatsAppLink } from "@/lib/constants";
-import { Anchor, Crown, Ship, MessageCircle } from "lucide-react";
+import { Ruler, Clock3, Users, MessageCircle } from "lucide-react";
+import { requireRouteRecord } from "@/seo/route-manifest";
 
-const tiers = [
-  { icon: Anchor, type: "يخوت قياسية", price: "من 500 د.إ/ساعة", note: "42 – 50 قدم، 10–15 ضيف" },
-  { icon: Ship, type: "يخوت فاخرة", price: "من 750 د.إ/ساعة", note: "50 – 70 قدم، 15–30 ضيف" },
-  { icon: Crown, type: "سوبر يخوت", price: "من 1800 د.إ/ساعة", note: "80 – 151 قدم، حتى 130 ضيف" },
+const facts = [
+  { icon: Ruler, type: "نطاق الطول", value: "42–150 قدماً", note: "بحسب الأطوال المسجلة في الكتالوج الحالي" },
+  { icon: Users, type: "سعة الضيوف", value: "12–130 ضيفاً", note: "لا تتجاوز السعة المسجلة لليخت المختار" },
+  { icon: Clock3, type: "السعر والمدة", value: "400–5,000 د.إ/ساعة", note: "والحد الأدنى بين ساعتين وأربع ساعات" },
 ];
 
 const PricesSection = () => (
@@ -18,13 +19,13 @@ const PricesSection = () => (
           أسعار تأجير اليخوت في دبي
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          أسعارنا واضحة وشفافة. تختلف بحسب حجم اليخت، مدة الرحلة، عدد الضيوف، وإضافات
-          الديكور والطعام.
+          السعر بالساعة جزء واحد من المقارنة. راجع معه الحد الأدنى للمدة، ثم اطلب عرضاً
+          نهائياً لليخت والتاريخ والوقت المحددين.
         </p>
       </AnimatedSection>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8 max-w-5xl mx-auto">
-        {tiers.map((t) => {
+        {facts.map((t) => {
           const Icon = t.icon;
           return (
             <div key={t.type} className="liquid-glass-gold p-6 text-center">
@@ -32,7 +33,7 @@ const PricesSection = () => (
                 <Icon className="w-7 h-7 text-primary" />
               </div>
               <h3 className="text-lg font-display font-bold text-foreground mb-1">{t.type}</h3>
-              <p className="text-primary font-display text-xl font-semibold mb-2">{t.price}</p>
+              <p className="text-primary font-display text-xl font-semibold mb-2">{t.value}</p>
               <p className="text-xs text-muted-foreground">{t.note}</p>
             </div>
           );
@@ -41,7 +42,7 @@ const PricesSection = () => (
 
       <AnimatedSection className="text-center">
         <div className="flex flex-wrap gap-3 justify-center">
-          <Link to={ROUTES.prices} className="inline-flex items-center gap-2 px-6 py-3 liquid-btn-gold text-primary font-medium">
+          <Link to={requireRouteRecord(ROUTES.prices).path} className="inline-flex items-center gap-2 px-6 py-3 liquid-btn-gold text-primary font-medium">
             تفاصيل الأسعار
           </Link>
           <a

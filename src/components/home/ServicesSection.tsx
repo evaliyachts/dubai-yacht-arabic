@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import { PLACEHOLDER_IMAGE } from "@/lib/constants";
-import { getServiceBySlug } from "@/data/services";
-import { getServicePathAr } from "@/data/services-ar";
+import { PLACEHOLDER_IMAGE, ROUTES } from "@/lib/constants";
+import { yachts } from "@/data/yachts";
 import { cn } from "@/lib/utils";
+import { requireRouteRecord } from "@/seo/route-manifest";
 
 interface ServiceCard {
   title: string;
@@ -14,31 +14,30 @@ interface ServiceCard {
 }
 
 const buildCards = (): ServiceCard[] => {
-  const map: Array<{ slug: string; title: string; subtitle: string }> = [
-    { slug: "birthday-party", title: "عيد ميلاد على يخت", subtitle: "احتفل بيومك المميز في عرض البحر" },
-    { slug: "marriage-proposal-party", title: "طلب زواج على يخت", subtitle: "لحظة لا تُنسى مع غروب دبي" },
-    { slug: "engagement-parties", title: "حفلة خطوبة على يخت", subtitle: "أجواء فاخرة لبداية جديدة" },
-    { slug: "wedding-parties", title: "حفلة زفاف على يخت", subtitle: "زفاف فريد على الماء" },
-    { slug: "graduation-parties", title: "حفلة تخرج على يخت", subtitle: "احتفل بإنجازك بأسلوب فاخر" },
-    { slug: "wedding-anniversary-parties", title: "ذكرى زواج على يخت", subtitle: "جدد أجمل اللحظات" },
-    { slug: "bachelor-parties", title: "حفلة وداع العزوبية", subtitle: "ليلة لا تُنسى مع الأصدقاء" },
-    { slug: "gender-reveal-party", title: "تحديد جنس المولود", subtitle: "مفاجأة العائلة على البحر" },
-    { slug: "afternoon-tea-trip", title: "افترنون تي على يخت", subtitle: "استرخاء بعد الظهر" },
-    { slug: "morning-yacht-trips", title: "رحلة يخت صباحية", subtitle: "ابدأ يومك بهدوء البحر" },
-    { slug: "swimming", title: "سباحة على يخت", subtitle: "مياه الخليج الصافية" },
-    { slug: "fishing", title: "رحلة صيد على يخت", subtitle: "صيد عميق في الخليج العربي" },
+  const map: Array<{ path: string; title: string; subtitle: string; yachtSlug: string }> = [
+    { path: ROUTES.birthday, title: "عيد ميلاد على يخت", subtitle: "حجز خاص مع إضافات اختيارية تُؤكد منفصلة", yachtSlug: "رحلة-يخت-50-قدم-رويال-ماجستي" },
+    { path: ROUTES.proposal, title: "طلب زواج على يخت", subtitle: "خطط لرحلة خاصة واذكر الإضافات المطلوبة", yachtSlug: "رحلة-يخت-55-قدم-ازيموت" },
+    { path: ROUTES.engagement, title: "حفلة خطوبة على يخت", subtitle: "اختر السعة والمدة قبل تجهيز المناسبة", yachtSlug: "رحلة-يخت-56-قدم-ماجستي" },
+    { path: ROUTES.wedding, title: "حفلة زفاف على يخت", subtitle: "قارن اليخوت المناسبة لعدد الضيوف", yachtSlug: "ايجار-يخت-ماجستي-88-قدم-جاكوزي" },
+    { path: ROUTES.graduation, title: "حفلة تخرج على يخت", subtitle: "يخت خاص للمجموعة حسب السعة والمدة", yachtSlug: "يخت-64-قدم-ازيموت-إيطالي" },
+    { path: ROUTES.anniversary, title: "ذكرى زواج على يخت", subtitle: "رحلة خاصة بتفاصيل مؤكدة قبل الانطلاق", yachtSlug: "يخت-64-قدم-هاترس-للإيجار" },
+    { path: ROUTES.bachelor, title: "حفلة وداع العزوبية", subtitle: "حجز خاص وإضافات اختيارية عند الطلب", yachtSlug: "يخت-ماجستي-101-قدم-جاكوزي-للإيجار" },
+    { path: ROUTES.genderReveal, title: "تحديد جنس المولود", subtitle: "ناقش متطلبات المناسبة واحصل على تأكيد", yachtSlug: "استأجار-يخت-50-قدم-ازيموت" },
+    { path: ROUTES.afternoonTea, title: "افترنون تي على يخت", subtitle: "اختر اليخت والوقت والمدة المناسبة", yachtSlug: "أجار-يخت-50-قدم-اوركس" },
+    { path: ROUTES.morning, title: "رحلة يخت صباحية", subtitle: "رحلة خاصة تبدأ من دبي مارينا", yachtSlug: "يجار-يخت-50-قدم-فيريتتي" },
+    { path: ROUTES.swimming, title: "سباحة على يخت", subtitle: "اطلب تأكيد تفاصيل النشاط قبل الحجز", yachtSlug: "يخت-95-قدم-دوريتتي-مع-جاكوزي" },
+    { path: ROUTES.fishing, title: "رحلة صيد على يخت", subtitle: "راجع الخدمة والمتطلبات قبل التأكيد", yachtSlug: "تأجير-يخت-سنسيكر-90-قدم" },
   ];
 
-  return map
-    .map((m) => {
-      const svc = getServiceBySlug(m.slug);
-      return {
-        title: m.title,
-        subtitle: m.subtitle,
-        image: svc?.cover_image || PLACEHOLDER_IMAGE,
-        path: getServicePathAr(m.slug),
-      };
-    });
+  return map.map((item) => {
+    const yacht = yachts.find((candidate) => candidate.slug === item.yachtSlug);
+    return {
+      title: item.title,
+      subtitle: item.subtitle,
+      image: yacht?.image_url || PLACEHOLDER_IMAGE,
+      path: requireRouteRecord(item.path).path,
+    };
+  });
 };
 
 const ServicesSection = () => {
@@ -121,7 +120,7 @@ const ServicesSection = () => {
               تجارب نقدمها لك
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              من الرحلات الخاصة إلى الاحتفالات الكبرى — اكتشف تجربة اليخت المناسبة لمناسبتك.
+              ابدأ باختيار اليخت الخاص، ثم اطلب أي تجهيزات للمناسبة كإضافات اختيارية مؤكدة ومسعّرة بوضوح.
             </p>
           </AnimatedSection>
         </div>

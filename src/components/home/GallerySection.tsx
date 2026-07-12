@@ -5,22 +5,33 @@ import { motion } from "framer-motion";
 
 const GallerySection = () => {
   const heights = ["h-48", "h-64", "h-56", "h-72", "h-52", "h-60", "h-44", "h-68"];
+  const gallerySlugs = [
+    "رحلة-يخت-50-قدم-رويال-ماجستي",
+    "يخت-42-قدم-ازيموت-للايجار",
+    "رحلة-يخت-56-قدم-ماجستي",
+    "يخت-64-قدم-ازيموت-إيطالي",
+    "يخت-64-قدم-هاترس-للإيجار",
+    "ايجار-يخت-ماجستي-88-قدم-جاكوزي",
+    "يخت-ماجستي-101-قدم-جاكوزي-للإيجار",
+    "اوشن-دريم-يخت-143-قدم-للايجار",
+  ];
 
-  const galleryImages = yachts
-    .filter((y) => y.images.length > 0)
-    .slice(0, heights.length)
-    .map((y) => ({ src: y.images[0], name: YACHT_AR[y.slug]?.name ?? y.name }));
+  const galleryImages = gallerySlugs.map((slug) => {
+    const yacht = yachts.find((candidate) => candidate.slug === slug);
+    if (!yacht?.images[0]) throw new Error(`Missing homepage gallery yacht: ${slug}`);
+    return { src: yacht.images[0], name: YACHT_AR[yacht.slug]?.name ?? yacht.name };
+  });
 
   return (
     <section className="section-padding liquid-divider" dir="rtl">
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-14">
-          <span className="liquid-pill inline-block">معرض الصور</span>
+          <span className="liquid-pill inline-block">نماذج مصورة</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-4 mb-4">
-            لحظات من الحياة على البحر
+            نماذج من اليخوت المعروضة
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            شاهد أجواء الرحلات والمناسبات على متن يخوتنا في دبي.
+            صور مرتبطة بخيارات محددة في الكتالوج للمساعدة على المقارنة البصرية؛ راجع صفحة اليخت لبياناته المسجلة.
           </p>
         </AnimatedSection>
 

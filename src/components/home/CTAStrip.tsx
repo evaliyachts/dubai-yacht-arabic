@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { MessageCircle, Phone, Send } from "lucide-react";
-import { getWhatsAppLink, getPhoneLink } from "@/lib/constants";
+import { getWhatsAppLink, getPhoneLink, ROUTES } from "@/lib/constants";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { requireRouteRecord } from "@/seo/route-manifest";
 
 const CTAStrip = () => (
   <section className="section-padding relative overflow-hidden" dir="rtl">
@@ -12,7 +13,7 @@ const CTAStrip = () => (
           جاهز لحجز يختك في دبي؟
         </h2>
         <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-          تواصل معنا الآن للحصول على التوفر الفوري وأفضل الأسعار لتأجير اليخوت الفاخرة.
+          أرسل التاريخ والوقت والمدة وعدد الضيوف لنراجع الخيارات المناسبة ونشارك سعراً واضحاً قبل التأكيد.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
@@ -30,7 +31,7 @@ const CTAStrip = () => (
             <Phone className="w-5 h-5" /> اتصل الآن
           </a>
           <Link
-            to="/contact"
+            to={requireRouteRecord(ROUTES.contact).path}
             className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn-gold text-primary hover:scale-105 transition-transform"
           >
             <Send className="w-5 h-5" /> نموذج الاستفسار
