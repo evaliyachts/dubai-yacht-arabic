@@ -3,6 +3,7 @@ import { Check, MessageCircle, Phone } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { getPhoneLink, getWhatsAppLink, ROUTES } from "@/lib/constants";
 import { requireRouteRecord } from "@/seo/route-manifest";
+import { FLEET_RANGES } from "@/data/fleet";
 
 const planningSteps = [
   {
@@ -37,8 +38,8 @@ const HomeOverviewSection = () => (
           </h2>
           <p className="text-lg leading-8 text-foreground/90 max-w-4xl mx-auto">
             اختر اليخت وفق عدد الضيوف والمدة والميزانية، ثم أرسل التاريخ ووقت الانطلاق عبر واتساب أو الهاتف.
-            تعرض الخيارات الحالية أطوالاً مسجلة من 42 إلى 150 قدماً، وسعات من 12 إلى 130 ضيفاً،
-            وأسعاراً من 400 إلى 5,000 درهم للساعة. يحتاج الموعد والسعر النهائي إلى تأكيد مباشر.
+            تعرض الخيارات الحالية أطوالاً مسجلة من {FLEET_RANGES.lengthFt.min} إلى {FLEET_RANGES.lengthFt.max} قدماً، وسعات من {FLEET_RANGES.guestCapacity.min} إلى {FLEET_RANGES.guestCapacity.max} ضيفاً،
+            وأسعاراً من {FLEET_RANGES.pricePerHour.min.toLocaleString("ar-AE")} إلى {FLEET_RANGES.pricePerHour.max.toLocaleString("ar-AE")} درهم للساعة. يحتاج الموعد والسعر النهائي إلى تأكيد مباشر.
           </p>
         </div>
       </AnimatedSection>
@@ -61,7 +62,7 @@ const HomeOverviewSection = () => (
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-muted-foreground mb-6">
             <li className="flex gap-3"><Check className="w-5 h-5 text-primary shrink-0" />الحجز ليخت خاص لمجموعتك.</li>
             <li className="flex gap-3"><Check className="w-5 h-5 text-primary shrink-0" />الانطلاق المعتمد من دبي مارينا.</li>
-            <li className="flex gap-3"><Check className="w-5 h-5 text-primary shrink-0" />الحد الأدنى المسجل بين ساعتين وأربع ساعات بحسب اليخت.</li>
+            <li className="flex gap-3"><Check className="w-5 h-5 text-primary shrink-0" />الحد الأدنى المسجل بين {FLEET_RANGES.minimumDuration.min} و{FLEET_RANGES.minimumDuration.max} ساعات بحسب اليخت.</li>
             <li className="flex gap-3"><Check className="w-5 h-5 text-primary shrink-0" />إضافات المناسبات اختيارية وتحتاج إلى تأكيد وتسعير منفصلين.</li>
           </ul>
           <nav className="flex flex-wrap gap-3 mb-7" aria-label="روابط التخطيط الرئيسية">

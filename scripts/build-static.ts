@@ -4,6 +4,8 @@ import { pathToFileURL } from "node:url";
 import { build } from "vite";
 import { PRERENDER_ROUTES } from "../src/lib/static-routes";
 import { assertValidRouteManifest } from "../src/seo/route-manifest";
+import { yachts } from "../src/data/yachts";
+import { validateYachtRecords } from "../src/data/yacht-schema";
 
 const rootDir = resolve(".");
 const distDir = resolve(rootDir, "dist");
@@ -11,6 +13,7 @@ const ssrDir = resolve(rootDir, ".ssr");
 const serverEntry = resolve(ssrDir, "entry-server.mjs");
 
 assertValidRouteManifest();
+validateYachtRecords(yachts);
 
 const outputFileForRoute = (route: string) => {
   if (route === "/") return resolve(distDir, "index.html");

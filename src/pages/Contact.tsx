@@ -6,7 +6,6 @@ import { getWhatsAppLink, getPhoneLink, PHONE_DISPLAY } from "@/lib/constants";
 import { MessageCircle, Phone, MapPin, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { yachts } from "@/data/yachts";
-import { YACHT_AR } from "@/data/yachts-ar";
 import { requireRouteRecord } from "@/seo/route-manifest";
 
 const route = requireRouteRecord("/contact/");
@@ -82,8 +81,8 @@ const Contact = () => {
                   <select value={form.yacht} onChange={(e) => setForm({ ...form, yacht: e.target.value })} className={inputClass}>
                     <option value="">اختيار اليخت (اختياري)</option>
                     {yachts.map((y) => (
-                      <option key={y.slug} value={YACHT_AR[y.slug]?.name ?? y.name}>
-                        {YACHT_AR[y.slug]?.name ?? y.name}
+                      <option key={y.slug} value={y.name}>
+                        {y.name}
                       </option>
                     ))}
                   </select>

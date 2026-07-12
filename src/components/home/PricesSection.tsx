@@ -3,11 +3,12 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { ROUTES, getWhatsAppLink } from "@/lib/constants";
 import { Ruler, Clock3, Users, MessageCircle } from "lucide-react";
 import { requireRouteRecord } from "@/seo/route-manifest";
+import { FLEET_RANGES } from "@/data/fleet";
 
 const facts = [
-  { icon: Ruler, type: "نطاق الطول", value: "42–150 قدماً", note: "بحسب الأطوال المسجلة في الكتالوج الحالي" },
-  { icon: Users, type: "سعة الضيوف", value: "12–130 ضيفاً", note: "لا تتجاوز السعة المسجلة لليخت المختار" },
-  { icon: Clock3, type: "السعر والمدة", value: "400–5,000 د.إ/ساعة", note: "والحد الأدنى بين ساعتين وأربع ساعات" },
+  { icon: Ruler, type: "نطاق الطول", value: `${FLEET_RANGES.lengthFt.min}–${FLEET_RANGES.lengthFt.max} قدماً`, note: "بحسب الأطوال المسجلة في الكتالوج الحالي" },
+  { icon: Users, type: "سعة الضيوف", value: `${FLEET_RANGES.guestCapacity.min}–${FLEET_RANGES.guestCapacity.max} ضيفاً`, note: "لا تتجاوز السعة المسجلة لليخت المختار" },
+  { icon: Clock3, type: "السعر والمدة", value: `${FLEET_RANGES.pricePerHour.min.toLocaleString("en-US")}–${FLEET_RANGES.pricePerHour.max.toLocaleString("en-US")} د.إ/ساعة`, note: `والحد الأدنى بين ${FLEET_RANGES.minimumDuration.min} و${FLEET_RANGES.minimumDuration.max} ساعات` },
 ];
 
 const PricesSection = () => (

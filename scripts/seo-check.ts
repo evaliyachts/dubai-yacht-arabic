@@ -1,5 +1,7 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
+import { yachts } from "../src/data/yachts";
+import { validateYachtRecords } from "../src/data/yacht-schema";
 import { generateRedirects, generateRobotsTxt } from "../src/seo/output-generators";
 import {
   assertValidRouteManifest,
@@ -8,6 +10,7 @@ import {
   LEGACY_REDIRECTS,
   NON_INDEXABLE_ROUTE_RECORDS,
   QA_EXPECTATIONS,
+  getRouteRecord,
 } from "../src/seo/route-manifest";
 
 const distDir = resolve("dist");
@@ -55,6 +58,7 @@ const productionUrlsIn = (value: unknown): string[] => {
 
 try {
   assertValidRouteManifest();
+  validateYachtRecords(yachts);
 } catch (error) {
   failures.push(error instanceof Error ? error.message : String(error));
 }
@@ -110,6 +114,7 @@ const descriptions: Array<{ route: string; value: string }> = [];
 const canonicals: Array<{ route: string; value: string }> = [];
 const h1Values: Array<{ route: string; value: string }> = [];
 const jsonLdPattern = /<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi;
+const yachtByPath = new Map(yachts.map((yacht) => [`/yachts/${yacht.slug}/`, yacht]));
 
 for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus === 200 && item.indexable)) {
   const filePath = outputFileForRoute(expectation.path);
@@ -154,9 +159,11 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   }
 
   const jsonLdBlocks = [...html.matchAll(jsonLdPattern)];
+  const parsedJsonLd: Array<Record<string, unknown>> = [];
   for (const [index, block] of jsonLdBlocks.entries()) {
     try {
       const parsed = JSON.parse(block[1]) as { "@type"?: string };
+      parsedJsonLd.push(parsed as Record<string, unknown>);
       if (!parsed["@type"] || !expectation.schema.includes(parsed["@type"] as (typeof expectation.schema)[number])) {
         fail(expectation.path, `JSON-LD block ${index + 1} is not owned by the route (${parsed["@type"] ?? "missing type"})`);
       }
@@ -172,6 +179,41 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
     }
   }
   if (expectation.path === "/" && jsonLdBlocks.length === 0) fail(expectation.path, "homepage requires valid WebSite JSON-LD");
+
+  const yacht = yachtByPath.get(expectation.path);
+  if (yacht) {
+    const schemaTypes = parsedJsonLd.map((node) => node["@type"]);
+    if (schemaTypes.length !== 2 || schemaTypes[0] !== "Service" || schemaTypes[1] !== "BreadcrumbList") {
+      fail(expectation.path, `yacht schema must be Service then BreadcrumbList (${schemaTypes.join(", ")})`);
+    }
+    const service = parsedJsonLd[0] as { offers?: { price?: number; priceCurrency?: string; url?: string } } | undefined;
+    if (service?.offers?.price !== yacht.pricePerHour || service.offers.priceCurrency !== "AED" || service.offers.url !== canonical) {
+      fail(expectation.path, "yacht Offer does not match the verified hourly price and canonical URL");
+    }
+    if (/Product|AggregateRating|Review|Event|LocalBusiness|FAQPage/.test(JSON.stringify(parsedJsonLd))) {
+      fail(expectation.path, "yacht page contains prohibited or inherited schema");
+    }
+    for (const requiredText of [yacht.name, `${yacht.lengthFt} قدم`, `${yacht.guestCapacity} ضيفاً`, `${yacht.minimumDuration} ساعات`, "خطوات طلب الحجز", "روابط أساسية", "ثلاثة يخوت قريبة للمقارنة"]) {
+      if (!textContent(html).includes(requiredText)) fail(expectation.path, `missing factual yacht content: ${requiredText}`);
+    }
+  }
+
+  for (const match of html.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)) {
+    const source = decodeHtml(match[1]).split(/[?#]/, 1)[0];
+    if (source.startsWith("/") && !source.startsWith("//")) {
+      const localPath = resolve(distDir, decodeURI(source).replace(/^\/+/, ""));
+      if (!existsSync(localPath)) fail(expectation.path, `broken local image: ${source}`);
+    }
+  }
+
+  for (const match of html.matchAll(/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)) {
+    const href = decodeHtml(match[1]);
+    if (!href.startsWith("/") || href.startsWith("//")) continue;
+    const path = decodeURI(new URL(href, "https://yacht-dxb.com").pathname);
+    const linkedRoute = getRouteRecord(path);
+    if (!linkedRoute || !linkedRoute.indexable) fail(expectation.path, `internal link does not target an indexable manifest route: ${href}`);
+    else if (path !== linkedRoute.path) fail(expectation.path, `internal link is not canonical: ${href}`);
+  }
 
   if (title) titles.push({ route: expectation.path, value: title });
   if (description) descriptions.push({ route: expectation.path, value: description });
@@ -201,6 +243,22 @@ if (!existsSync(notFoundPath)) {
   if (!/<h1(?:\s[^>]*)?>[\s\S]*?404[\s\S]*?<\/h1>/i.test(html)) fail("404.html", "missing 404 H1");
   if (/\bhreflang\s*=/i.test(html)) fail("404.html", "must not contain hreflang");
   if (/<meta[^>]*name=["']keywords["']/i.test(html)) fail("404.html", "must not contain meta keywords");
+}
+
+const outputFiles = (directory: string): string[] => readdirSync(directory).flatMap((entry) => {
+  const path = resolve(directory, entry);
+  return statSync(path).isDirectory() ? outputFiles(path) : [path];
+});
+const prohibitedOutput = /evaliyacht(?:s)?\.com|\bevali\b|إڤالي|إيفالي|ايفالي|supabase(?:\.co)?/i;
+const inheritedSchema = /AggregateRating|ratingValue|reviewCount|"@type"\s*:\s*"Product"/i;
+for (const file of outputFiles(distDir)) {
+  const relative = file.slice(distDir.length + 1);
+  if (prohibitedOutput.test(relative)) failures.push(`${relative}: production path exposes prohibited branding or provenance`);
+  if (relative.endsWith(".map")) failures.push(`${relative}: production source map is prohibited`);
+  if (!/\.(?:html|js|css|xml|txt|json|svg)$/i.test(relative) && relative !== "_redirects") continue;
+  const source = readFileSync(file, "utf8");
+  if (prohibitedOutput.test(source)) failures.push(`${relative}: production output exposes prohibited branding or runtime provenance`);
+  if (inheritedSchema.test(source)) failures.push(`${relative}: production output contains inherited product/rating schema`);
 }
 
 if (failures.length > 0) {

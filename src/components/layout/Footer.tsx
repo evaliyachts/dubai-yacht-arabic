@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MessageCircle, Phone, MapPin, Clock, Globe } from "lucide-react";
-import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY } from "@/lib/constants";
-import { NAVIGATION_TARGETS } from "@/seo/route-manifest";
+import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY, ROUTES } from "@/lib/constants";
+import { NAVIGATION_TARGETS, requireRouteRecord } from "@/seo/route-manifest";
 
 const Footer = () => (
   <footer className="liquid-divider pt-16 pb-8 border-t border-border/30" dir="rtl">
@@ -74,8 +74,8 @@ const Footer = () => (
       <div className="border-t border-border/30 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} {BRAND_NAME}. جميع الحقوق محفوظة.</p>
         <div className="flex gap-4 text-xs text-muted-foreground">
-          <Link to="/terms" className="hover:text-primary transition-colors">الشروط</Link>
-          <Link to="/privacy" className="hover:text-primary transition-colors">الخصوصية</Link>
+          <Link to={requireRouteRecord(ROUTES.terms).path} className="hover:text-primary transition-colors">الشروط</Link>
+          <Link to={requireRouteRecord(ROUTES.privacy).path} className="hover:text-primary transition-colors">الخصوصية</Link>
         </div>
       </div>
     </div>
