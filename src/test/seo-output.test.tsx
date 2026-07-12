@@ -62,7 +62,7 @@ describe("manifest-owned metadata output", () => {
   });
 
   it("omits neutral yacht placeholders from Open Graph and Twitter media", async () => {
-    const yacht = yachts[0];
+    const yacht = yachts.find((candidate) => candidate.id === "yacht-14")!;
     const route = requireRouteRecord(`/yachts/${yacht.slug}`);
     window.history.pushState({}, "", route.path);
     render(<App />);
@@ -71,6 +71,20 @@ describe("manifest-owned metadata output", () => {
     expect(document.head.querySelector('meta[property="og:image"]')).toBeNull();
     expect(document.head.querySelector('meta[name="twitter:image"]')).toBeNull();
     expect(document.head.querySelector('meta[name="twitter:card"]')).toHaveAttribute("content", "summary");
+  });
+
+  it("uses the approved primary gallery image for yacht social metadata", async () => {
+    const yacht = yachts.find((candidate) => candidate.id === "yacht-06")!;
+    const route = requireRouteRecord(`/yachts/${yacht.slug}`);
+    window.history.pushState({}, "", route.path);
+    render(<App />);
+
+    await waitFor(() => expect(document.title).toBe(route.title));
+    expect(document.head.querySelector('meta[property="og:image"]')).toHaveAttribute("content", yacht.media[0].path);
+    expect(document.head.querySelector('meta[name="twitter:image"]')).toHaveAttribute("content", yacht.media[0].path);
+    expect(document.head.querySelector('meta[property="og:image:alt"]')).toHaveAttribute("content", yacht.media[0].altAr);
+    expect(document.head.querySelector('meta[property="og:image:width"]')).toHaveAttribute("content", yacht.media[0].width.toString());
+    expect(document.head.querySelector('meta[property="og:image:height"]')).toHaveAttribute("content", yacht.media[0].height.toString());
   });
 
   it("converts authorized local yacht media to absolute production social URLs with media details", async () => {

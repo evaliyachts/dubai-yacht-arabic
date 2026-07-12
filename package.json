@@ -16,6 +16,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "seo:check": "tsx scripts/seo-check.ts",
+    "media:verify": "tsx scripts/media-verify.ts",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

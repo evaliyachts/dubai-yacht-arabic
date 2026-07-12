@@ -1,4 +1,5 @@
 import type { YachtRecord } from "./yachts";
+import { isApprovedAttachedMediaPath } from "./yacht-media";
 
 const YACHT_KEYS = new Set(["id", "slug", "name", "lengthFt", "guestCapacity", "yearBuilt", "pricePerHour", "minimumDuration", "numberOfBedrooms", "availability", "featured", "priority", "media"]);
 const MEDIA_KEYS = new Set(["type", "path", "altAr", "width", "height", "rightsRecordId", "featured", "priority"]);
@@ -64,10 +65,13 @@ export const validateYachtRecords = (input: unknown): YachtRecord[] => {
       const altAr = stringValue(media.altAr, `${mediaLabel}.altAr`);
       positive(media.width, `${mediaLabel}.width`);
       positive(media.height, `${mediaLabel}.height`);
-      stringValue(media.rightsRecordId, `${mediaLabel}.rightsRecordId`);
+      const rightsRecordId = stringValue(media.rightsRecordId, `${mediaLabel}.rightsRecordId`);
       optionalBoolean(media.featured, `${mediaLabel}.featured`);
       optionalPriority(media.priority, `${mediaLabel}.priority`);
-      if (PROHIBITED_PUBLIC_TEXT.test(`${path} ${altAr}`)) throw new Error(`${mediaLabel} exposes prohibited branding`);
+      if (PROHIBITED_PUBLIC_TEXT.test(altAr)) throw new Error(`${mediaLabel} exposes prohibited branding`);
+      if (PROHIBITED_PUBLIC_TEXT.test(path) && !isApprovedAttachedMediaPath(id, rightsRecordId, path)) {
+        throw new Error(`${mediaLabel} exposes prohibited branding outside the approved attached media set`);
+      }
     });
     return record as unknown as YachtRecord;
   });

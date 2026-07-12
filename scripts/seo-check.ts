@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { yachts } from "../src/data/yachts";
+import { APPROVED_ATTACHED_MEDIA_URLS } from "../src/data/yacht-media";
 import { validateYachtRecords } from "../src/data/yacht-schema";
 import { socialImageForYachtMedia, validateSocialImageUrl } from "../src/seo/social-image";
 import { PHONE_NUMBER } from "../src/lib/constants";
@@ -346,7 +347,11 @@ for (const file of outputFiles(distDir)) {
   if (relative.endsWith(".map")) failures.push(`${relative}: production source map is prohibited`);
   if (!/\.(?:html|js|css|xml|txt|json|svg)$/i.test(relative) && relative !== "_redirects") continue;
   const source = readFileSync(file, "utf8");
-  if (prohibitedOutput.test(source)) failures.push(`${relative}: production output exposes prohibited branding or runtime provenance`);
+  const sourceWithoutApprovedMedia = APPROVED_ATTACHED_MEDIA_URLS.reduce(
+    (current, mediaUrl) => current.replaceAll(mediaUrl, "[approved-yacht-media]"),
+    source,
+  );
+  if (prohibitedOutput.test(sourceWithoutApprovedMedia)) failures.push(`${relative}: production output exposes prohibited branding or runtime provenance`);
   if (inheritedSchema.test(source)) failures.push(`${relative}: production output contains inherited product/rating schema`);
   if (malformedYachtWording.test(source)) failures.push(`${relative}: production output contains malformed yacht wording`);
 }

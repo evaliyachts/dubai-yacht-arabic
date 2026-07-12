@@ -1,3 +1,5 @@
+import { mediaForYacht } from "./yacht-media";
+
 export interface YachtMediaRecord {
   type: "image";
   path: string;
@@ -26,16 +28,6 @@ export interface YachtRecord {
 }
 
 type VerifiedYachtInput = Omit<YachtRecord, "media">;
-const fallbackMedia = (name: string): YachtMediaRecord[] => [{
-  type: "image",
-  path: "/media/yacht-placeholder.svg",
-  altAr: `صورة بديلة محايدة لليخت ${name}`,
-  width: 1200,
-  height: 1200,
-  rightsRecordId: "media-neutral-placeholder-001",
-  featured: true,
-  priority: 0,
-}];
 
 const verifiedYachtData: VerifiedYachtInput[] = [
   { id: "yacht-02", slug: "عوامة-خاصة-55-قدم-للإيجار-في-دبي", name: "عوامة خاصة 55 قدم للإيجار في دبي", lengthFt: 55, guestCapacity: 15, yearBuilt: 2025, pricePerHour: 1000, minimumDuration: 2, availability: "available", featured: true, priority: 0 },
@@ -64,6 +56,9 @@ const verifiedYachtData: VerifiedYachtInput[] = [
   { id: "yacht-25", slug: "يخت-اوميغا-100-قدم-للايجار", name: "يخت اوميغا 100 قدم للايجار", lengthFt: 100, guestCapacity: 50, yearBuilt: 2013, pricePerHour: 2500, minimumDuration: 4, numberOfBedrooms: 3, availability: "available", featured: false, priority: 6 },
 ];
 
-export const yachts: YachtRecord[] = verifiedYachtData.map((yacht) => ({ ...yacht, media: fallbackMedia(yacht.name) }));
+export const yachts: YachtRecord[] = verifiedYachtData.map((yacht) => ({
+  ...yacht,
+  media: mediaForYacht(yacht.id, yacht.name),
+}));
 
 if (yachts.length !== 24) throw new Error(`Expected 24 verified yacht records, received ${yachts.length}`);
