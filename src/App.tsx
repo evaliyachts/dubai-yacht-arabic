@@ -10,7 +10,6 @@ import Yachts from "./pages/Yachts";
 import YachtDetails from "./pages/YachtDetails";
 import Offers from "./pages/Offers";
 import Services from "./pages/Services";
-import ServiceDetails from "./pages/ServiceDetails";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
@@ -21,7 +20,8 @@ import LandingPage from "./pages/LandingPage";
 import ScrollToTop from "./components/shared/ScrollToTop";
 import { allLandingPages } from "./data/landingPages";
 import { ROUTES } from "./lib/constants";
-import { LEGACY_SERVICE_INDEX_PATH_AR, SERVICE_INDEX_PATH_AR } from "./data/services-ar";
+import { SERVICE_INDEX_PATH_AR } from "./data/services-ar";
+import { CLIENT_REDIRECTS } from "./seo/route-manifest";
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -56,21 +56,17 @@ export const AppRoutes = ({ enableClientEffects = true }: AppRoutesProps) => (
       <Route path="/yachts" element={<Yachts />} />
       <Route path="/yachts/:slug" element={<YachtDetails />} />
       <Route path={ROUTES.offers} element={<Offers />} />
-      <Route path="/offers" element={<Navigate to={ROUTES.offers} replace />} />
       <Route path={SERVICE_INDEX_PATH_AR} element={<Services />} />
-      <Route path={`${SERVICE_INDEX_PATH_AR}/:slug`} element={<ServiceDetails />} />
-      <Route path={LEGACY_SERVICE_INDEX_PATH_AR} element={<Navigate to={SERVICE_INDEX_PATH_AR} replace />} />
-      <Route path={`${LEGACY_SERVICE_INDEX_PATH_AR}/:slug`} element={<ServiceDetails />} />
-      <Route path="/services" element={<Navigate to={SERVICE_INDEX_PATH_AR} replace />} />
-      <Route path="/services/:slug" element={<ServiceDetails />} />
       <Route path="/about" element={<About />} />
       <Route path={ROUTES.faq} element={<FAQ />} />
-      <Route path="/faq" element={<Navigate to={ROUTES.faq} replace />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
       {allLandingPages.map((page) => (
         <Route key={page.slug} path={page.slug} element={<LandingPage />} />
+      ))}
+      {CLIENT_REDIRECTS.map((redirect) => (
+        <Route key={redirect.from} path={redirect.from} element={<Navigate to={redirect.to} replace />} />
       ))}
       <Route path="*" element={<NotFound />} />
     </Routes>

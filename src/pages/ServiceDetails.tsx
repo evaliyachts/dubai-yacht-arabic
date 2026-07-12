@@ -16,6 +16,7 @@ import {
 import { PLACEHOLDER_IMAGE, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
 import { ArrowLeft, MessageCircle, Phone, ChevronLeft } from "lucide-react";
 import NotFound from "./NotFound";
+import { requireRouteRecord } from "@/seo/route-manifest";
 
 const ServiceDetails = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -44,15 +45,11 @@ const ServiceDetails = () => {
   const titleAr = getServiceTitleAr(service.slug, service.title);
   const descriptionAr = getServiceDescriptionAr(service.slug, service.description);
   const categoryAr = getServiceCategoryLabelAr(service.category);
+  const route = requireRouteRecord(canonicalPath);
 
   return (
     <Layout>
-      <SEOHead
-        title={`${titleAr} | خدمات تأجير اليخوت في دبي`}
-        description={descriptionAr.slice(0, 155)}
-        path={canonicalPath}
-        keywords={`${titleAr} دبي، خدمات يخوت دبي، تأجير يخت في دبي، ${categoryAr}`}
-      />
+      <SEOHead route={route} />
 
       <div className="pt-28 pb-20" dir="rtl">
         <div className="container mx-auto px-4">

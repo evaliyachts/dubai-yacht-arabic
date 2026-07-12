@@ -6,26 +6,28 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Check, MessageCircle, Phone, Clock, Map, Tag } from "lucide-react";
 import { BRAND_NAME, DOMAIN, getPhoneLink, getWhatsAppLink, ROUTES } from "@/lib/constants";
 import type { LandingPage } from "@/data/landingPages";
+import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
 
 interface LandingPageTemplateProps {
   page: LandingPage;
 }
 
 const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
+  const route = requireRouteRecord(page.slug);
   const jsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: page.h1,
+      name: route.h1,
       provider: {
-        "@type": "LocalBusiness",
+        "@type": "Organization",
         name: BRAND_NAME,
-        url: DOMAIN,
+        url: `${DOMAIN}/`,
         telephone: "+971504641020",
       },
       areaServed: { "@type": "City", name: "Dubai" },
       serviceType: page.serviceType,
-      description: page.metaDescription,
+      description: route.description,
     },
     {
       "@context": "https://schema.org",
@@ -41,20 +43,14 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "الرئيسية", item: DOMAIN + "/" },
-        { "@type": "ListItem", position: 2, name: page.h1, item: DOMAIN + encodeURI(page.slug) },
+        { "@type": "ListItem", position: 2, name: route.h1, item: canonicalUrlForPath(route.path) },
       ],
     },
   ];
 
   return (
     <Layout>
-      <SEOHead
-        title={page.title}
-        description={page.metaDescription}
-        path={page.slug}
-        jsonLd={jsonLd}
-        image={page.image}
-      />
+      <SEOHead route={route} jsonLd={jsonLd} image={page.image} />
 
       <article className="pt-28 pb-20">
         <div className="container mx-auto px-4 max-w-5xl">
@@ -62,14 +58,14 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
           <AnimatedSection className="text-center mb-12">
             <span className="liquid-pill inline-block mb-4">{page.pill}</span>
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-5 leading-tight">
-              {page.h1}
+              {route.h1}
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed text-lg">
               {page.intro}
             </p>
             <div className="flex flex-wrap gap-3 justify-center mt-7">
               <a
-                href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن: ${page.h1}`)}
+                href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن: ${route.h1}`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-7 py-3 liquid-btn-primary text-base"
@@ -97,7 +93,7 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
               <div className="rounded-3xl overflow-hidden liquid-glass">
                 <img
                   src={page.image}
-                  alt={page.h1}
+                  alt={route.h1}
                   className="w-full h-[40vh] md:h-[55vh] object-cover"
                   referrerPolicy="no-referrer"
                   loading="eager"
@@ -214,7 +210,7 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
-                  href={getWhatsAppLink(`مرحباً، أرغب في حجز: ${page.h1}`)}
+                  href={getWhatsAppLink(`مرحباً، أرغب في حجز: ${route.h1}`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-7 py-3 liquid-btn-primary"

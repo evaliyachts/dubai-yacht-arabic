@@ -1,8 +1,10 @@
 import { LEGACY_REDIRECTS, PRERENDER_ROUTES } from "@/lib/static-routes";
+import { STATIC_ROUTE_RECORDS } from "@/seo/route-manifest";
 
 describe("static route inventory", () => {
   it("contains unique trailing-slash canonical paths", () => {
     expect(new Set(PRERENDER_ROUTES).size).toBe(PRERENDER_ROUTES.length);
+    expect(PRERENDER_ROUTES).toEqual(STATIC_ROUTE_RECORDS.map((record) => record.path));
     expect(PRERENDER_ROUTES).not.toContain("/404.html");
 
     for (const route of PRERENDER_ROUTES) {

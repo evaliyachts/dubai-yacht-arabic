@@ -63,15 +63,3 @@ export const getWhatsAppLink = (message?: string) => {
 };
 
 export const getPhoneLink = () => `tel:${PHONE_NUMBER.replace(/\s/g, "")}`;
-
-// Primary navigation (Arabic).
-export const NAV_LINKS = [
-  { label: "الرئيسية", path: ROUTES.home },
-  { label: "اليخوت", path: ROUTES.yachts },
-  { label: "العروض", path: ROUTES.offers },
-  { label: "الخدمات", path: ROUTES.services },
-  { label: "المناسبات", path: ROUTES.events },
-  { label: "من نحن", path: ROUTES.about },
-  { label: "الأسئلة الشائعة", path: ROUTES.faq },
-  { label: "اتصل بنا", path: ROUTES.contact },
-];

@@ -5,6 +5,9 @@ import YachtCard from "@/components/shared/YachtCard";
 import { AnimatedSection, StaggerContainer } from "@/components/shared/AnimatedSection";
 import { yachts } from "@/data/yachts";
 import { SlidersHorizontal } from "lucide-react";
+import { requireRouteRecord } from "@/seo/route-manifest";
+
+const route = requireRouteRecord("/yachts/");
 
 const TYPES = [
   { key: "All", label: "الكل" },
@@ -29,18 +32,13 @@ const Yachts = () => {
 
   return (
     <Layout>
-      <SEOHead
-        title="أسطول اليخوت للإيجار في دبي | يخوت دبي"
-        description="استعرض أسطول اليخوت للإيجار في دبي — قياسية، فاخرة، وسوبر يخوت. قارن الأسعار والمواصفات واحجز يختك بسهولة."
-        path="/yachts"
-        keywords="يخوت للإيجار في دبي، تأجير يخت في دبي، يخت دبي مارينا، أسطول يخوت دبي"
-      />
+      <SEOHead route={route} />
 
       <div className="pt-28 pb-10" dir="rtl">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-10">
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-              يخوت للإيجار في دبي
+              {route.h1}
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               تصفّح أسطولاً واسعاً من اليخوت للإيجار في دبي. قارن الأنواع، رتّب حسب السعر،

@@ -1,18 +1,15 @@
 import { Link } from "react-router-dom";
-import { yachts } from "@/data/yachts";
-import { YACHT_AR } from "@/data/yachts-ar";
-import { keywordPages, eventPages } from "@/data/landingPages";
-import { ROUTES } from "@/lib/constants";
+import { SITEMAP_SECTION_TARGETS } from "@/seo/route-manifest";
 
-const mainPages = [
-  { path: ROUTES.home, label: "الرئيسية" },
-  { path: ROUTES.yachts, label: "اليخوت" },
-  { path: ROUTES.about, label: "من نحن" },
-  { path: ROUTES.faq, label: "الأسئلة الشائعة" },
-  { path: ROUTES.contact, label: "تواصل معنا" },
-  { path: ROUTES.terms, label: "الشروط" },
-  { path: ROUTES.privacy, label: "الخصوصية" },
-];
+const mainLabels: Record<string, string> = {
+  home: "الرئيسية",
+  "yacht-index": "اليخوت",
+  about: "من نحن",
+  faq: "الأسئلة الشائعة",
+  contact: "تواصل معنا",
+  terms: "الشروط",
+  privacy: "الخصوصية",
+};
 
 const SitemapSection = () => (
   <section
@@ -33,9 +30,9 @@ const SitemapSection = () => (
         <div>
           <h3 className="font-display font-semibold text-foreground mb-3">الصفحات الرئيسية</h3>
           <ul className="space-y-2">
-            {mainPages.map((p) => (
-              <li key={p.path}>
-                <Link to={p.path} className="text-muted-foreground hover:text-primary transition-colors">{p.label}</Link>
+            {SITEMAP_SECTION_TARGETS.main.map((route) => (
+              <li key={route.path}>
+                <Link to={route.path} className="text-muted-foreground hover:text-primary transition-colors">{mainLabels[route.id]}</Link>
               </li>
             ))}
           </ul>
@@ -44,9 +41,9 @@ const SitemapSection = () => (
         <div>
           <h3 className="font-display font-semibold text-foreground mb-3">صفحات الخدمات</h3>
           <ul className="space-y-2">
-            {keywordPages.map((p) => (
-              <li key={p.slug}>
-                <Link to={p.slug} className="text-muted-foreground hover:text-primary transition-colors">{p.h1}</Link>
+            {SITEMAP_SECTION_TARGETS.keywords.map((route) => (
+              <li key={route.path}>
+                <Link to={route.path} className="text-muted-foreground hover:text-primary transition-colors">{route.h1}</Link>
               </li>
             ))}
           </ul>
@@ -55,21 +52,21 @@ const SitemapSection = () => (
         <div className="md:col-span-1">
           <h3 className="font-display font-semibold text-foreground mb-3">المناسبات</h3>
           <ul className="space-y-2">
-            {eventPages.map((p) => (
-              <li key={p.slug}>
-                <Link to={p.slug} className="text-muted-foreground hover:text-primary transition-colors">{p.h1}</Link>
+            {SITEMAP_SECTION_TARGETS.events.map((route) => (
+              <li key={route.path}>
+                <Link to={route.path} className="text-muted-foreground hover:text-primary transition-colors">{route.h1}</Link>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="md:col-span-2">
-          <h3 className="font-display font-semibold text-foreground mb-3">أسطول اليخوت ({yachts.length})</h3>
+          <h3 className="font-display font-semibold text-foreground mb-3">أسطول اليخوت ({SITEMAP_SECTION_TARGETS.yachts.length})</h3>
           <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-2">
-            {yachts.map((y) => (
-              <li key={y.slug}>
-                <Link to={`/yachts/${y.slug}`} className="text-muted-foreground hover:text-primary transition-colors">
-                  {YACHT_AR[y.slug]?.name ?? y.name}
+            {SITEMAP_SECTION_TARGETS.yachts.map((route) => (
+              <li key={route.path}>
+                <Link to={route.path} className="text-muted-foreground hover:text-primary transition-colors">
+                  {route.h1}
                 </Link>
               </li>
             ))}

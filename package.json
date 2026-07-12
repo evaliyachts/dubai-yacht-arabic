@@ -15,7 +15,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "seo:check": "node scripts/seo-check.mjs",
+    "seo:check": "tsx scripts/seo-check.ts",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
-import { NAV_LINKS, BRAND_NAME, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
+import { BRAND_NAME, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
+import { NAVIGATION_TARGETS } from "@/seo/route-manifest";
 
 const normalizePath = (path: string) => {
   try {
@@ -54,12 +55,12 @@ const Header = () => {
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
-          {NAV_LINKS.map((link) => (
+          {NAVIGATION_TARGETS.map((link) => (
             <Link
-              key={link.path}
-              to={link.path}
+              key={link.route.path}
+              to={link.route.path}
               className={`px-3 py-2 text-sm font-medium rounded-xl transition-all duration-300 ${
-                isActive(link.path)
+                isActive(link.route.path)
                   ? "text-primary liquid-btn-gold"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary/30"
               }`}
@@ -106,17 +107,17 @@ const Header = () => {
             dir="rtl"
           >
             <nav className="flex flex-col gap-2">
-              {NAV_LINKS.map((link, i) => (
+              {NAVIGATION_TARGETS.map((link, i) => (
                 <motion.div
-                  key={link.path}
+                  key={link.route.path}
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 + 0.1 }}
                 >
                   <Link
-                    to={link.path}
+                    to={link.route.path}
                     className={`block px-4 py-3 text-lg font-display rounded-2xl transition-all ${
-                      isActive(link.path) ? "text-primary liquid-glass-gold" : "text-foreground hover:bg-secondary/30"
+                      isActive(link.route.path) ? "text-primary liquid-glass-gold" : "text-foreground hover:bg-secondary/30"
                     }`}
                   >
                     {link.label}

@@ -17,22 +17,20 @@ import {
 } from "@/data/services-ar";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { ArrowLeft } from "lucide-react";
+import { getRouteRedirectTarget, requireRouteRecord } from "@/seo/route-manifest";
+
+const route = requireRouteRecord(SERVICE_INDEX_PATH_AR);
 
 const Services = () => (
   <Layout>
-    <SEOHead
-      title="خدمات تأجير اليخوت في دبي | باقات ومناسبات وأنشطة بحرية"
-      description="اكتشف خدمات تأجير اليخوت في دبي: مناسبات خاصة، رحلات صيد، سباحة، شواء، جت سكي، وفعاليات على متن يخت خاص."
-      path={SERVICE_INDEX_PATH_AR}
-      keywords="خدمات تأجير اليخوت في دبي، باقات يخوت دبي، حفلات على يخت في دبي، جت سكي دبي، شواء على يخت دبي، رحلة صيد يخت دبي"
-    />
+    <SEOHead route={route} />
 
     <div className="pt-28 pb-20" dir="rtl">
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-14">
           <span className="liquid-pill inline-block">الخدمات</span>
           <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mt-4 mb-4">
-            خدمات وباقات تأجير اليخوت في دبي
+            {route.h1}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             تجارب مخصصة ومناسبات وأنشطة مائية وخدمات ضيافة تجعل رحلتك على اليخت
@@ -59,7 +57,7 @@ const Services = () => (
                     whileHover={{ y: -6, transition: { duration: 0.3 } }}
                     className="liquid-glass overflow-hidden group"
                   >
-                    <Link to={getServicePathAr(s.slug)} className="block">
+                    <Link to={getRouteRedirectTarget(getServicePathAr(s.slug)) ?? route.path} className="block">
                       <div className="relative h-56 overflow-hidden">
                         <img
                           src={s.cover_image}

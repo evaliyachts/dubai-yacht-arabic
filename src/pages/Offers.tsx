@@ -6,6 +6,9 @@ import { offers } from "@/data/offers";
 import { Check } from "lucide-react";
 import { getWhatsAppLink, ROUTES } from "@/lib/constants";
 import { Link } from "react-router-dom";
+import { requireRouteRecord } from "@/seo/route-manifest";
+
+const route = requireRouteRecord(ROUTES.offers);
 
 const offerAr: Record<string, {
   name: string;
@@ -47,18 +50,13 @@ const offerAr: Record<string, {
 
 const Offers = () => (
   <Layout>
-    <SEOHead
-      title="عروض وباقات تأجير اليخوت في دبي | يخوت دبي"
-      description="اكتشف عروض وباقات تأجير اليخوت في دبي للغروب والحفلات والمناسبات الفاخرة، مع إمكانية تخصيص الباقة حسب مناسبتك."
-      path={ROUTES.offers}
-      keywords="عروض يخوت دبي، باقات تأجير يخت دبي، عروض تأجير اليخوت في دبي، حفلات يخت دبي"
-    />
+    <SEOHead route={route} />
 
     <div className="pt-28 pb-20" dir="rtl">
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-14">
           <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-            العروض والباقات
+            {route.h1}
           </h1>
           <p className="text-muted-foreground max-w-xl mx-auto">
             باقات يخت مختارة بعناية للرحلات الخاصة والحفلات والمناسبات، مع إمكانية
