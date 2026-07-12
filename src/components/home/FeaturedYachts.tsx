@@ -46,8 +46,10 @@ const FeaturedYachts = () => {
                     alt={yacht.media[0].altAr}
                     width={yacht.media[0].width}
                     height={yacht.media[0].height}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 </div>
@@ -64,7 +66,7 @@ const FeaturedYachts = () => {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Link to={route.path} className="liquid-pill hover:scale-105 transition-transform">بيانات اليخت</Link>
-                    <a href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن ${yacht.name}.`)} target="_blank" rel="noopener noreferrer" className="liquid-pill hover:scale-105 transition-transform inline-flex items-center gap-2">
+                    <a href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن ${yacht.name}.`)} target="_blank" rel="noopener noreferrer" data-analytics-placement="homepage_featured_yacht" className="liquid-pill hover:scale-105 transition-transform inline-flex items-center gap-2">
                       <MessageCircle className="w-4 h-4" /> استفسار
                     </a>
                   </div>

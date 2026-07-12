@@ -3,11 +3,6 @@ import { resolve } from "node:path";
 import { yachts } from "../src/data/yachts";
 import { isNeutralYachtMedia } from "../src/data/yacht-media";
 
-const expectedUnavailableSources = new Set([
-  "https://yacht.fra1.cdn.digitaloceanspaces.com/yachts/50_feet_royal_majesty/50_feet_royal_majesty7.webp",
-  "https://yacht.fra1.cdn.digitaloceanspaces.com/yachts/50_feet_royal_majesty/50_feet_royal_majesty9.webp",
-]);
-
 const webpDimensions = (buffer: Buffer): [number, number] => {
   const chunk = buffer.subarray(12, 16).toString();
   if (chunk === "VP8X") return [1 + buffer.readUIntLE(24, 3), 1 + buffer.readUIntLE(27, 3)];
@@ -29,7 +24,6 @@ const remoteMedia = yachts.flatMap((yacht) =>
   yacht.media.filter((media) => !isNeutralYachtMedia(media)).map((media) => ({ yacht, media })),
 );
 const failures: string[] = [];
-const unavailable: string[] = [];
 let cursor = 0;
 
 const fetchWithRetry = async (url: string) => {
@@ -66,10 +60,6 @@ async function verifyWorker() {
     try {
       const response = await fetchWithRetry(media.path);
       if (!response.ok) {
-        if (expectedUnavailableSources.has(media.path)) {
-          unavailable.push(media.path);
-          continue;
-        }
         failures.push(`${yacht.id}: ${response.status} for ${media.path}`);
         continue;
       }
@@ -107,5 +97,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `Media verification passed (${remoteMedia.length - unavailable.length} reachable remote images, ${unavailable.length} source URLs handled as unavailable, 1 local fallback)`,
+  `Media verification passed (${remoteMedia.length} reachable production images, 1 local fallback)`,
 );

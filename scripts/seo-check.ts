@@ -162,6 +162,7 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   const ogImage = extract(html, /<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i);
   const twitterImage = extract(html, /<meta[^>]*name=["']twitter:image["'][^>]*content=["']([^"']+)["']/i);
   const h1Matches = [...html.matchAll(/<h1(?:\s[^>]*)?>([\s\S]*?)<\/h1>/gi)].map((match) => textContent(match[1]));
+  const mainTags = [...html.matchAll(/<main\b([^>]*)>/gi)].map((match) => match[1]);
 
   if (title !== expectation.title) fail(expectation.path, `title mismatch (${title ?? "missing"})`);
   if (description !== expectation.description) fail(expectation.path, `description mismatch (${description ?? "missing"})`);
@@ -173,6 +174,9 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   else if (h1Matches[0] !== expectation.h1) fail(expectation.path, `H1 mismatch (${h1Matches[0]})`);
   if (!/\blang=["']ar-AE["']/i.test(htmlTag)) fail(expectation.path, 'missing html lang="ar-AE"');
   if (!/\bdir=["']rtl["']/i.test(htmlTag)) fail(expectation.path, 'missing html dir="rtl"');
+  if (mainTags.length !== 1) fail(expectation.path, `expected one main landmark, found ${mainTags.length}`);
+  if (!mainTags[0]?.includes('id="main-content"')) fail(expectation.path, "main landmark is missing the skip-link target");
+  if (/opacity\s*:\s*0(?:[;\s]|$)/i.test(mainTags[0] ?? "")) fail(expectation.path, "main content is hidden before hydration");
   if (!/<main(?:\s[^>]*)?>[\s\S]*?[^\s<][\s\S]*?<\/main>/i.test(html)) fail(expectation.path, "missing initial main content");
   if (html.includes("<!--app-html-->") || html.includes("<!--app-head-->")) fail(expectation.path, "unreplaced template marker");
   if (html.includes("yacht-dxb.netlify.app")) fail(expectation.path, "preview hostname in output");
@@ -288,7 +292,11 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   }
 
   for (const match of html.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)) {
+    const imageTag = match[0];
     const source = decodeHtml(match[1]).split(/[?#]/, 1)[0];
+    if (!/\bwidth=["']\d+["']/i.test(imageTag) || !/\bheight=["']\d+["']/i.test(imageTag)) {
+      fail(expectation.path, `image is missing explicit dimensions: ${source}`);
+    }
     if (source.startsWith("/") && !source.startsWith("//")) {
       const localPath = resolve(distDir, decodeURI(source).replace(/^\/+/, ""));
       if (!existsSync(localPath)) fail(expectation.path, `broken local image: ${source}`);

@@ -33,7 +33,7 @@ const About = () => (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           <AnimatedSection direction="right">
             <div className="rounded-2xl overflow-hidden h-80">
-              <img src={yachts[0].media[0].path} alt={yachts[0].media[0].altAr} width={yachts[0].media[0].width} height={yachts[0].media[0].height} className="w-full h-full object-cover" />
+              <img src={yachts[0].media[0].path} alt={yachts[0].media[0].altAr} width={yachts[0].media[0].width} height={yachts[0].media[0].height} sizes="(min-width: 1024px) 50vw, 100vw" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </div>
           </AnimatedSection>
           <AnimatedSection direction="left" className="flex flex-col justify-center">

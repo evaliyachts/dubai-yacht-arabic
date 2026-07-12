@@ -27,7 +27,7 @@ const Yachts = () => {
   return (
     <Layout>
       <SEOHead route={route} jsonLd={breadcrumbEntity(route)} />
-      <main className="pt-28 pb-16" dir="rtl">
+      <div className="pt-28 pb-16" dir="rtl">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-10">
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">{route.h1}</h1>
@@ -55,7 +55,7 @@ const Yachts = () => {
             {sorted.map((yacht, index) => <YachtCard key={yacht.id} yacht={yacht} index={index} />)}
           </StaggerContainer>
         </div>
-      </main>
+      </div>
     </Layout>
   );
 };

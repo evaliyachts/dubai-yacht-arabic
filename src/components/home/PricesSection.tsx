@@ -50,6 +50,7 @@ const PricesSection = () => (
             href={getWhatsAppLink("مرحباً، أرغب في الحصول على عرض سعر لتأجير يخت في دبي.")}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-placement="homepage_prices"
             className="inline-flex items-center gap-2 px-6 py-3 liquid-btn-primary"
           >
             <MessageCircle className="w-5 h-5" /> اسأل عن سعر اليخت

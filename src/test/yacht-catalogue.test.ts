@@ -98,7 +98,7 @@ describe("PR 5 verified yacht catalogue", () => {
     expect(ATTACHED_GALLERY_YACHT_IDS).toHaveLength(23);
     expect(yachts.filter((yacht) => !isNeutralYachtMedia(yacht.media[0]))).toHaveLength(23);
     expect(galleryCountForYacht("yacht-02")).toBe(10);
-    expect(galleryCountForYacht("yacht-03")).toBe(9);
+    expect(galleryCountForYacht("yacht-03")).toBe(7);
     expect(galleryCountForYacht("yacht-06")).toBe(7);
     expect(galleryCountForYacht("yacht-07")).toBe(6);
     expect(galleryCountForYacht("yacht-08")).toBe(7);
@@ -113,6 +113,23 @@ describe("PR 5 verified yacht catalogue", () => {
     expect(JSON.stringify(yachts.map(({ name, slug, media }) => ({ name, slug, alt: media.map((item) => item.altAr) })))).not.toMatch(
       /evali|evaliyacht|إڤالي|إيفالي|ايفالي/i,
     );
+  });
+
+  it("keeps rejected Royal Majesty sources in provenance only and verifies production galleries strictly", () => {
+    const rejected = [
+      "https://yacht.fra1.cdn.digitaloceanspaces.com/yachts/50_feet_royal_majesty/50_feet_royal_majesty7.webp",
+      "https://yacht.fra1.cdn.digitaloceanspaces.com/yachts/50_feet_royal_majesty/50_feet_royal_majesty9.webp",
+    ];
+    const rightsReport = readFileSync(resolve("docs/MEDIA_RIGHTS.md"), "utf8");
+    const verifier = readFileSync(resolve("scripts/media-verify.ts"), "utf8");
+    const productionMedia = yachts.flatMap((yacht) => yacht.media.map((media) => media.path));
+
+    for (const url of rejected) {
+      expect(productionMedia).not.toContain(url);
+      expect(rightsReport).toContain(url);
+    }
+    expect(verifier).not.toContain("expectedUnavailableSources");
+    expect(verifier).toContain("failures.push(`${yacht.id}: ${response.status} for ${media.path}`)");
   });
 
   it("renames the former 55-foot record and owns one direct permanent redirect", () => {

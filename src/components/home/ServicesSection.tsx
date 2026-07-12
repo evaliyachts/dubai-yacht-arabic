@@ -10,6 +10,8 @@ interface ServiceCard {
   title: string;
   subtitle: string;
   image: string;
+  imageWidth: number;
+  imageHeight: number;
   path: string;
 }
 
@@ -35,6 +37,8 @@ const buildCards = (): ServiceCard[] => {
       title: item.title,
       subtitle: item.subtitle,
       image: yacht?.media[0].path ?? "/placeholder.svg",
+      imageWidth: yacht?.media[0].width ?? 1200,
+      imageHeight: yacht?.media[0].height ?? 1200,
       path: requireRouteRecord(item.path).path,
     };
   });
@@ -131,7 +135,7 @@ const ServicesSection = () => {
               <div
                 key={card.path}
                 className={cn(
-                  "absolute inset-0 rounded-3xl overflow-hidden transition-all duration-500 ease-out will-change-transform",
+                  "absolute inset-0 rounded-3xl overflow-hidden transition-all duration-500 ease-out will-change-transform motion-reduce:transition-none",
                   "border border-border/40 shadow-[0_20px_60px_-20px_hsl(var(--background)/0.8)]"
                 )}
                 style={{
@@ -153,8 +157,12 @@ const ServicesSection = () => {
                   <img
                     src={card.image}
                     alt={card.title}
+                    width={card.imageWidth}
+                    height={card.imageHeight}
+                    sizes="(min-width: 768px) 448px, 88vw"
                     className="w-full h-full object-cover"
                     loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = "/media/yacht-placeholder.svg";

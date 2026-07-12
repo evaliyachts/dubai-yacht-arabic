@@ -36,8 +36,10 @@ const VerifiedYachtSelection = ({ slugs }: VerifiedYachtSelectionProps) => {
                 alt={image.altAr}
                 width={image.width}
                 height={image.height}
+                sizes="(min-width: 768px) 50vw, 100vw"
                 className="h-52 w-full object-cover"
                 loading="lazy"
+                decoding="async"
               />
               <div className="p-5">
                 <h3 className="text-xl font-display font-semibold text-foreground mb-4">{yacht.name}</h3>

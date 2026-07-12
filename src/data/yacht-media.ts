@@ -25,9 +25,7 @@ const SOURCE_GALLERIES: Record<string, SourceMediaRecord[]> = {
     { path: "https://yacht.fra1.cdn.digitaloceanspaces.com/50_feet_royal_majesty/50_feet_royal_majesty4.webp", width: 2496, height: 1664 },
     { path: "https://yacht.fra1.cdn.digitaloceanspaces.com/50_feet_royal_majesty/50_feet_royal_majesty5.webp", width: 2496, height: 1664 },
     { path: "https://yacht.fra1.cdn.digitaloceanspaces.com/50_feet_royal_majesty/50_feet_royal_majesty6.webp", width: 2496, height: 1498 },
-    { path: "https://yacht.fra1.cdn.digitaloceanspaces.com/yachts/50_feet_royal_majesty/50_feet_royal_majesty7.webp", width: 2496, height: 1664 },
     { path: "https://yacht.fra1.cdn.digitaloceanspaces.com/50_feet_royal_majesty/50_feet_royal_majesty8.webp", width: 2496, height: 1664 },
-    { path: "https://yacht.fra1.cdn.digitaloceanspaces.com/yachts/50_feet_royal_majesty/50_feet_royal_majesty9.webp", width: 2496, height: 1664 },
   ],
   "yacht-04": [
     { path: "https://yacht.fra1.cdn.digitaloceanspaces.com/azimut_42_feet_yacht_rental_dubai/azimut_42_feet_yacht_rental_dubai1.webp", width: 360, height: 270 },

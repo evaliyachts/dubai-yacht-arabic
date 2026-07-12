@@ -58,7 +58,7 @@ const Services = () => (
                     <motion.article key={page.slug} variants={staggerItemVariants} whileHover={{ y: -6, transition: { duration: 0.3 } }} className="liquid-glass overflow-hidden group">
                       <Link to={pageRoute.path} className="block h-full">
                         <div className="relative h-48 overflow-hidden">
-                          <img src={PLACEHOLDER_IMAGE} alt="صورة محايدة مؤقتة بانتظار اعتماد وسائط الخدمة" className="w-full h-full object-cover opacity-60" loading="lazy" />
+                          <img src={PLACEHOLDER_IMAGE} alt="صورة محايدة مؤقتة بانتظار اعتماد وسائط الخدمة" width={1200} height={1200} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="w-full h-full object-cover opacity-60" loading="lazy" decoding="async" />
                           <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
                           <span className="absolute top-4 right-4 liquid-pill">{EVENT_CATEGORY_LABELS[category]}</span>
                         </div>
