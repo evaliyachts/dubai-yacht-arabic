@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MessageCircle, Phone, MapPin, Clock, Globe } from "lucide-react";
-import { BRAND_NAME, NAV_LINKS, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY } from "@/lib/constants";
+import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY } from "@/lib/constants";
+import { NAVIGATION_TARGETS } from "@/seo/route-manifest";
 
 const Footer = () => (
   <footer className="liquid-divider pt-16 pb-8 border-t border-border/30" dir="rtl">
@@ -33,8 +34,8 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold text-foreground mb-4">روابط سريعة</h4>
           <nav className="flex flex-col gap-2">
-            {NAV_LINKS.map((link) => (
-              <Link key={link.path} to={link.path} className="text-sm text-muted-foreground hover:text-primary transition-colors">{link.label}</Link>
+            {NAVIGATION_TARGETS.map((link) => (
+              <Link key={link.route.path} to={link.route.path} className="text-sm text-muted-foreground hover:text-primary transition-colors">{link.label}</Link>
             ))}
           </nav>
         </div>

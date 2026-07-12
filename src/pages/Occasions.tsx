@@ -3,8 +3,11 @@ import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection, StaggerContainer, staggerItemVariants } from "@/components/shared/AnimatedSection";
 import { occasions } from "@/data/occasions";
-import { getWhatsAppLink } from "@/lib/constants";
+import { getWhatsAppLink, ROUTES } from "@/lib/constants";
 import { Cake, Heart, Briefcase, Fish, Sunset, PartyPopper, Camera } from "lucide-react";
+import { requireRouteRecord } from "@/seo/route-manifest";
+
+const route = requireRouteRecord(ROUTES.events);
 
 const iconMap: Record<string, React.ElementType> = {
   birthday: Cake, proposal: Heart, corporate: Briefcase, fishing: Fish,
@@ -13,12 +16,7 @@ const iconMap: Record<string, React.ElementType> = {
 
 const Occasions = () => (
   <Layout>
-    <SEOHead
-      title="Yacht Experiences for Every Occasion in Dubai | Dubai Yatch"
-      description="Birthday parties, proposals, corporate events, fishing trips, sunset cruises — discover the perfect yacht experience in Dubai."
-      path="/occasions"
-      keywords="birthday yacht party dubai, proposal yacht dubai, corporate yacht event dubai, fishing yacht dubai, sunset cruise dubai"
-    />
+    <SEOHead route={route} />
 
     <div className="pt-28 pb-20">
       <div className="container mx-auto px-4">

@@ -1,14 +1,17 @@
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { requireRouteRecord } from "@/seo/route-manifest";
+
+const route = requireRouteRecord("/terms/");
 
 const Terms = () => (
   <Layout>
-    <SEOHead title="Terms & Conditions | Dubai Yatch" description="Terms and conditions for yacht rental services provided by Dubai Yatch." path="/terms" />
+    <SEOHead route={route} />
     <div className="pt-28 pb-20">
       <div className="container mx-auto px-4 max-w-3xl">
         <AnimatedSection>
-          <h1 className="text-4xl font-display font-bold text-foreground mb-8">Terms & Conditions</h1>
+          <h1 className="text-4xl font-display font-bold text-foreground mb-8">{route.h1}</h1>
           <div className="prose prose-invert max-w-none text-muted-foreground space-y-6 text-sm leading-relaxed">
             <h2 className="text-xl font-display font-semibold text-foreground">1. Booking & Payment</h2>
             <p>A 50% deposit is required to confirm all bookings. The remaining balance is due on the day of charter. Accepted payment methods include bank transfer, credit card, and cash.</p>

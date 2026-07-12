@@ -3,6 +3,9 @@ import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ROUTES } from "@/lib/constants";
+import { requireRouteRecord } from "@/seo/route-manifest";
+
+const route = requireRouteRecord(ROUTES.faq);
 
 const faqGroups = [
   {
@@ -52,19 +55,13 @@ const FAQ = () => {
 
   return (
     <Layout>
-      <SEOHead
-        title="الأسئلة الشائعة | تأجير يخت في دبي — يخوت دبي"
-        description="الأسئلة الشائعة حول تأجير اليخوت في دبي — الأسعار، الحجز، الإلغاء، الإضافات، وكل ما تريد معرفته."
-        path={ROUTES.faq}
-        keywords="أسئلة تأجير يخت دبي، حجز يخت دبي، أسعار يخت دبي"
-        jsonLd={jsonLd}
-      />
+      <SEOHead route={route} jsonLd={jsonLd} />
 
       <div className="pt-28 pb-20" dir="rtl">
         <div className="container mx-auto px-4 max-w-3xl">
           <AnimatedSection className="text-center mb-14">
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-              الأسئلة الشائعة
+              {route.h1}
             </h1>
             <p className="text-muted-foreground">كل ما تريد معرفته عن تأجير اليخوت في دبي.</p>
           </AnimatedSection>

@@ -1,30 +1,19 @@
 // Runs before Vite development and static production builds.
-import { writeFileSync } from "fs";
-import { resolve } from "path";
-import { LEGACY_REDIRECTS, PRERENDER_ROUTES } from "../src/lib/static-routes";
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { generateRedirects, generateRobotsTxt, generateSitemap } from "../src/seo/output-generators";
+import {
+  assertValidRouteManifest,
+  INDEXABLE_ROUTE_RECORDS,
+  LEGACY_REDIRECTS,
+  STATIC_ROUTE_RECORDS,
+} from "../src/seo/route-manifest";
 
-const BASE_URL = "https://yacht-dxb.com";
+assertValidRouteManifest();
 
-function generateSitemap(routes: string[]) {
-  const urls = routes.map((route) =>
-    [`  <url>`, `    <loc>${BASE_URL}${encodeURI(route)}</loc>`, `  </url>`].join("\n"),
-  );
-
-  return [
-    `<?xml version="1.0" encoding="UTF-8"?>`,
-    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
-    ...urls,
-    `</urlset>`,
-    ``,
-  ].join("\n");
-}
-
-const redirects = [
-  "# Generated from src/lib/static-routes.ts. Specific legacy rules only; no SPA wildcard.",
-  ...LEGACY_REDIRECTS.map(({ from, to, status }) => `${from} ${to} ${status}`),
-  "",
-].join("\n");
-
-writeFileSync(resolve("public/sitemap.xml"), generateSitemap(PRERENDER_ROUTES));
-writeFileSync(resolve("public/_redirects"), redirects);
-console.log(`Static inputs written (${PRERENDER_ROUTES.length} routes, ${LEGACY_REDIRECTS.length} redirects)`);
+writeFileSync(resolve("public/sitemap.xml"), generateSitemap(INDEXABLE_ROUTE_RECORDS));
+writeFileSync(resolve("public/robots.txt"), generateRobotsTxt());
+writeFileSync(resolve("public/_redirects"), generateRedirects(LEGACY_REDIRECTS));
+console.log(
+  `Manifest outputs written (${INDEXABLE_ROUTE_RECORDS.length} indexable, ${STATIC_ROUTE_RECORDS.length} static, ${LEGACY_REDIRECTS.length} redirects)`,
+);

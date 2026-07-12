@@ -7,6 +7,9 @@ import { MessageCircle, Phone, MapPin, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { yachts } from "@/data/yachts";
 import { YACHT_AR } from "@/data/yachts-ar";
+import { requireRouteRecord } from "@/seo/route-manifest";
+
+const route = requireRouteRecord("/contact/");
 
 const OCCASIONS = [
   "عيد ميلاد", "خطوبة", "طلب زواج", "زفاف", "ذكرى زواج",
@@ -42,19 +45,14 @@ const Contact = () => {
 
   return (
     <Layout>
-      <SEOHead
-        title="احجز يختك في دبي | تواصل عبر واتساب — يخوت دبي"
-        description="احجز يختك في دبي بسرعة عبر واتساب أو الاتصال المباشر. نموذج استفسار مع تفاصيل المناسبة، اليخت، التاريخ، وعدد الضيوف."
-        path="/contact"
-        keywords="حجز يخت في دبي، تواصل يخوت دبي، نموذج حجز يخت"
-      />
+      <SEOHead route={route} />
 
       <div className="pt-28 pb-20" dir="rtl">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-14">
             <span className="liquid-pill inline-block mb-4">تواصل معنا</span>
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-              احجز يختك في دبي
+              {route.h1}
             </h1>
             <p className="text-muted-foreground max-w-xl mx-auto">
               املأ النموذج التالي وسنتواصل معك خلال دقائق عبر واتساب، أو تواصل معنا مباشرة.

@@ -8,6 +8,7 @@ import { YACHT_AR, translateInclusion, translateAddon } from "@/data/yachts-ar";
 import { PLACEHOLDER_IMAGE, getWhatsAppLink, getPhoneLink, ROUTES, BRAND_NAME, DOMAIN } from "@/lib/constants";
 import { Users, BedDouble, Bath, Ruler, UserCheck, Check, MessageCircle, Phone, ArrowRight } from "lucide-react";
 import { StaggerImageCarousel } from "@/components/ui/stagger-image-carousel";
+import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
 
 const TYPE_AR: Record<string, string> = { Standard: "قياسي", Luxury: "فاخر", Superyacht: "سوبر يخت" };
 
@@ -40,6 +41,7 @@ const YachtDetails = () => {
   const ar = YACHT_AR[yacht.slug];
   const nameAr = ar?.name ?? yacht.name;
   const descAr = ar?.description ?? yacht.description;
+  const route = requireRouteRecord(`/yachts/${yacht.slug}`);
 
   const images = yacht.images?.length ? yacht.images : [PLACEHOLDER_IMAGE];
 
@@ -56,7 +58,7 @@ const YachtDetails = () => {
       "@context": "https://schema.org",
       "@type": "Service",
       name: `${nameAr} - تأجير يخت في دبي`,
-      provider: { "@type": "LocalBusiness", name: BRAND_NAME, url: DOMAIN, telephone: "+971504641020" },
+      provider: { "@type": "Organization", name: BRAND_NAME, url: `${DOMAIN}/`, telephone: "+971504641020" },
       areaServed: { "@type": "City", name: "Dubai" },
       description: descAr,
       offers: { "@type": "Offer", price: yacht.price_per_hour_from_aed, priceCurrency: "AED" },
@@ -66,22 +68,15 @@ const YachtDetails = () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "الرئيسية", item: DOMAIN + "/" },
-        { "@type": "ListItem", position: 2, name: "اليخوت", item: DOMAIN + "/yachts" },
-        { "@type": "ListItem", position: 3, name: nameAr, item: `${DOMAIN}/yachts/${yacht.slug}` },
+        { "@type": "ListItem", position: 2, name: "اليخوت", item: DOMAIN + "/yachts/" },
+        { "@type": "ListItem", position: 3, name: nameAr, item: canonicalUrlForPath(route.path) },
       ],
     },
   ];
 
   return (
     <Layout>
-      <SEOHead
-        title={`${nameAr} | يخت للإيجار في دبي — يخوت دبي`}
-        description={descAr.slice(0, 155)}
-        path={`/yachts/${yacht.slug}`}
-        keywords={`${nameAr}، تأجير يخت ${yacht.length_ft} قدم، يخت دبي مارينا، حجز يخت في دبي`}
-        jsonLd={jsonLd}
-        image={images[0]}
-      />
+      <SEOHead route={route} jsonLd={jsonLd} image={images[0]} />
 
       <div className="relative pt-28 pb-10 overflow-hidden" dir="rtl">
         <div className="container mx-auto px-4">
@@ -93,7 +88,7 @@ const YachtDetails = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl md:text-5xl font-display font-bold text-foreground mb-2"
           >
-            {nameAr}
+            {route.h1}
           </motion.h1>
           <p className="text-primary font-display text-xl mb-8">
             من {yacht.price_per_hour_from_aed.toLocaleString()} د.إ / ساعة

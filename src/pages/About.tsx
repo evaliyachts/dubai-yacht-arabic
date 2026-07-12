@@ -3,6 +3,9 @@ import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Anchor, Heart, Shield, Users } from "lucide-react";
 import { yachts } from "@/data/yachts";
+import { requireRouteRecord } from "@/seo/route-manifest";
+
+const route = requireRouteRecord("/about/");
 
 const values = [
   { icon: Anchor, title: "أسطول فاخر", desc: "كل يخت في أسطولنا يخضع لأعلى معايير الفخامة والسلامة." },
@@ -13,17 +16,13 @@ const values = [
 
 const About = () => (
   <Layout>
-    <SEOHead
-      title="من نحن | يخوت دبي — شركة تأجير يخوت في دبي"
-      description="تعرّف على يخوت دبي — شركتك الموثوقة لتأجير اليخوت في دبي. قصتنا، قيمنا، والتزامنا بتقديم تجربة بحرية فاخرة."
-      path="/about"
-    />
+    <SEOHead route={route} />
 
     <div className="pt-28 pb-20" dir="rtl">
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-14">
           <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-4">
-            من نحن
+            {route.h1}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             يخوت دبي — شركة رائدة في تأجير اليخوت الفاخرة في دبي، نقدّم تجارب بحرية لا تُنسى.
