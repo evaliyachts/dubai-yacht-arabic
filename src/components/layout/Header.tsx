@@ -33,6 +33,16 @@ const Header = () => {
 
   useEffect(() => setIsOpen(false), [location]);
 
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeAtDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setIsOpen(false);
+    };
+    desktop.addEventListener("change", closeAtDesktop);
+    if (desktop.matches) setIsOpen(false);
+    return () => desktop.removeEventListener("change", closeAtDesktop);
+  }, []);
+
   return (
     <motion.header
       initial={false}

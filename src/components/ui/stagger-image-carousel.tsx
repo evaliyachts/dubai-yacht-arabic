@@ -112,6 +112,7 @@ export const StaggerImageCarousel = ({
     availableImages.length > 0 ? availableImages : [fallbackMedia],
   );
   const [fullscreenMedia, setFullscreenMedia] = useState<YachtMediaRecord | null>(null);
+  const fullscreenTrigger = useRef<HTMLElement | null>(null);
   const initialPrimaryPath = images[0]?.path ?? fallbackSrc;
   const orderedUsableImages = images.filter((media) => !failedSources.current.has(media.path));
   const currentPosition = Math.max(
@@ -147,6 +148,11 @@ export const StaggerImageCarousel = ({
       const remaining = current.filter((media) => media.path !== path);
       return remaining.length > 0 ? remaining : [fallbackMedia];
     });
+  };
+
+  const openFullscreen = (media: YachtMediaRecord) => {
+    fullscreenTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setFullscreenMedia(media);
   };
 
   useEffect(() => {
@@ -186,7 +192,7 @@ export const StaggerImageCarousel = ({
               media={media}
               isInitialPrimary={media.path === initialPrimaryPath}
               handleMove={handleMove}
-              handleOpen={() => setFullscreenMedia(media)}
+              handleOpen={() => openFullscreen(media)}
               handleFailure={handleFailure}
               cardSize={cardSize}
             />
@@ -224,7 +230,13 @@ export const StaggerImageCarousel = ({
       </div>
 
       <Dialog open={Boolean(fullscreenMedia)} onOpenChange={(open) => !open && setFullscreenMedia(null)}>
-        <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 border-0 bg-black/95 flex items-center justify-center">
+        <DialogContent
+          className="max-w-[95vw] max-h-[95vh] p-0 border-0 bg-black/95 flex items-center justify-center"
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            fullscreenTrigger.current?.focus();
+          }}
+        >
           <DialogTitle className="sr-only">عرض صورة {altPrefix} بالحجم الكامل</DialogTitle>
           <DialogDescription className="sr-only">معاينة الصورة المحددة دون تغيير ترتيب معرض اليخت.</DialogDescription>
           {fullscreenMedia && (
