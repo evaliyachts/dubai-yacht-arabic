@@ -1,73 +1,45 @@
-# Welcome to your Lovable project
+# Yacht-DXB Arabic
 
-## Project info
+Arabic RTL website for `https://yacht-dxb.com/`.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Runtime
 
-## How can I edit this code?
+- Node.js `24.18.0`
+- npm `11.16.0`
 
-There are several ways of editing your application.
+Use the pinned runtime before installing dependencies:
 
-**Use Lovable**
+```bash
+nvm install
+nvm use
+npm ci
+```
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Node 22 is not a normal development or deployment target. It may be used only as a documented temporary fallback after a reproducible Node 24 dependency incompatibility is confirmed.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Development
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Quality gate
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm ci
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm run seo:check
+```
 
-**Use GitHub Codespaces**
+The repository retains its Bun lockfiles until npm installation, clean `npm ci`, the production build, and a Netlify production-context build have all passed with `package-lock.json`.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Deployment scope
 
-## What technologies are used for this project?
+- Production origin: `https://yacht-dxb.com/`
+- Netlify preview origin: `https://yacht-dxb.netlify.app/`
+- English equivalent site: `https://yachtrentaldxb.com/`
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The Netlify hostname is a deployment preview and must not be used for production canonical URLs, Open Graph URLs, schema URLs, sitemap entries, or hreflang. See `AGENTS.md` for the complete content, data, SEO, and release rules.

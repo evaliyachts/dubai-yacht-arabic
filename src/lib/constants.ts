@@ -2,7 +2,7 @@
 // Keep BRAND_NAME and DOMAIN editable in one place so they can be renamed easily.
 
 export const BRAND_NAME = "يخوت دبي";
-export const BRAND_NAME_EN = "Yacht Rental DXB";
+export const BRAND_NAME_EN = "Yacht DXB";
 export const DOMAIN = "https://yacht-dxb.com";
 export const ENGLISH_SITE_URL = "https://yachtrentaldxb.com";
 
