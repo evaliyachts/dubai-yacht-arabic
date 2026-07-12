@@ -8,7 +8,6 @@ import { useState, type ReactNode } from "react";
 import Index from "./pages/Index";
 import Yachts from "./pages/Yachts";
 import YachtDetails from "./pages/YachtDetails";
-import Offers from "./pages/Offers";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
@@ -55,7 +54,6 @@ export const AppRoutes = ({ enableClientEffects = true }: AppRoutesProps) => (
       <Route path="/" element={<Index />} />
       <Route path="/yachts" element={<Yachts />} />
       <Route path="/yachts/:slug" element={<YachtDetails />} />
-      <Route path={ROUTES.offers} element={<Offers />} />
       <Route path={SERVICE_INDEX_PATH_AR} element={<Services />} />
       <Route path="/about" element={<About />} />
       <Route path={ROUTES.faq} element={<FAQ />} />

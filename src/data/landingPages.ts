@@ -1,8 +1,11 @@
 // Data-driven Arabic landing pages.
-// All keyword pages + event/service pages live here so a single
-// LandingPageTemplate can render them with unique content + SEO.
+// Keyword pages live here; typed event/service records are imported from
+// eventPages.ts so the shared LandingPageTemplate can render both groups.
 
 import { ROUTES } from "@/lib/constants";
+import { eventPages } from "@/data/eventPages";
+
+export type EventServiceCategory = "celebration" | "private experience" | "hospitality" | "water activity";
 
 export interface LandingFAQ {
   q: string;
@@ -24,10 +27,15 @@ export interface LandingPage {
   pill: string; // small label above the H1
   intro: string; // 1–2 short paragraphs
   directAnswer?: string;
+  category?: EventServiceCategory;
   highlights: string[]; // bullet list — what is included / why
   highlightsTitle?: string;
   contentSections?: LandingContentSection[];
   featuredYachtSlugs?: string[];
+  bookingSteps?: string[];
+  priceFactors?: string[];
+  optionalAddOns?: string[];
+  mediaPlaceholder?: boolean;
   lastSignificantUpdate?: `${number}-${number}-${number}`;
   decoration?: string[]; // optional add-ons / decoration
   duration?: string; // suggested duration
@@ -39,7 +47,18 @@ export interface LandingPage {
   image?: string; // optional hero image URL
 }
 
-const CDN = "https://evali.fra1.cdn.digitaloceanspaces.com/";
+export interface EventLandingPage extends LandingPage {
+  category: EventServiceCategory;
+  directAnswer: string;
+  contentSections: LandingContentSection[];
+  featuredYachtSlugs: [string, string, string];
+  bookingSteps: [string, string, string];
+  priceFactors: [string, string, string, string];
+  optionalAddOns: string[];
+  mediaPlaceholder: true;
+  lastSignificantUpdate: `${number}-${number}-${number}`;
+}
+
 const YACHT_CDN = "https://yacht.fra1.cdn.digitaloceanspaces.com/";
 
 const COMMON_INTERNAL = [
@@ -414,378 +433,7 @@ export const keywordPages: LandingPage[] = [
 // Event landing pages
 // -----------------------------------------------------------------------------
 
-const STANDARD_INCLUDED = [
-  "كابتن وطاقم محترف",
-  "وقود ومعدات سلامة",
-  "نظام صوتي عالي الجودة",
-  "مشروبات غازية وماء",
-  "منصة للسباحة",
-];
-
-const STANDARD_DECOR = [
-  "بالونات بألوان متنوعة",
-  "خلفية تصوير مخصصة",
-  "ديكور طاولة وكراسي",
-  "إضاءة مميزة",
-];
-
-export const eventPages: LandingPage[] = [
-  {
-    slug: ROUTES.birthday,
-    title: "عيد ميلاد على يخت في دبي | حفلة عيد ميلاد فاخرة — يخوت دبي",
-    metaDescription:
-      "احتفل بعيد ميلادك على يخت خاص في دبي مع ديكور وكيك وموسيقى. باقات مخصصة لكل الأعمار، انطلاق من دبي مارينا.",
-    h1: "عيد ميلاد على يخت في دبي",
-    pill: "عيد ميلاد",
-    intro:
-      "اجعل عيد ميلادك تجربة لا تُنسى مع حفلة خاصة على يخت في دبي. نوفر ديكور مخصص بألوانك المفضلة، كيك، موسيقى، وإطلالات مذهلة على دبي مارينا ونخلة جميرا.",
-    highlights: STANDARD_INCLUDED,
-    decoration: ["بالونات بألوان مخصصة", "كيك عيد ميلاد", "خلفية صور Happy Birthday", "ديكور طاولة", "شموع و سبارك"],
-    duration: "3 ساعات (الأنسب للحفلات)",
-    route: "دبي مارينا → عين دبي → نخلة جميرا",
-    faqs: [
-      { q: "هل يمكن تجهيز اليخت لعيد ميلاد؟", a: "نعم، نوفر ديكور كامل وكيك وموسيقى حسب الذوق." },
-      { q: "ما عدد الضيوف المناسب لحفلة عيد ميلاد؟", a: "نوفر يخوتاً تتسع من 10 إلى 130 ضيف حسب حجم الحفلة." },
-      { q: "كم سعر حفلة عيد ميلاد على يخت؟", a: "تبدأ الأسعار من 500 درهم/ساعة بالإضافة إلى تكلفة الديكور والكيك." },
-    ],
-    serviceType: "حفلة عيد ميلاد على يخت",
-    related: eventRelated(
-      { label: "حفلة خاصة على يخت", path: ROUTES.privateParty },
-      { label: "حفلة تخرج على يخت", path: ROUTES.graduation },
-    ),
-    image: `${CDN}birthday-party/IMG-20250404-WA0001-1.webp`,
-  },
-  {
-    slug: ROUTES.privateParty,
-    title: "حفلة خاصة على يخت في دبي | تأجير يخت لحفلات خاصة",
-    metaDescription:
-      "حفلة خاصة على يخت في دبي مع طاقم محترف، ديكور حسب الطلب، DJ ومشروبات. الخصوصية والفخامة في رحلة لا تُنسى.",
-    h1: "حفلة خاصة على يخت في دبي",
-    pill: "حفلة خاصة",
-    intro:
-      "نظّم حفلتك الخاصة على يخت فاخر في دبي مع كامل الخصوصية لك ولضيوفك. اختر اليخت، الديكور، الطعام، والموسيقى بحسب رؤيتك.",
-    highlights: STANDARD_INCLUDED,
-    decoration: STANDARD_DECOR,
-    duration: "3–4 ساعات",
-    faqs: [
-      { q: "هل اليخت خاص بالكامل؟", a: "نعم، اليخت لك ولضيوفك فقط طوال مدة الحجز." },
-      { q: "هل يمكن إضافة DJ؟", a: "نعم، نوفر DJ احترافي بسعر إضافي." },
-    ],
-    serviceType: "حفلة خاصة على يخت",
-    related: eventRelated({ label: "حفلة شواء على يخت", path: ROUTES.bbq }),
-  },
-  {
-    slug: ROUTES.engagement,
-    title: "يخت لحفلة خطوبة في دبي | تجهيز كامل للخطوبة على البحر",
-    metaDescription:
-      "حفلة خطوبة على يخت فاخر في دبي مع ديكور رومانسي وورد وكيك. تجربة لا تُنسى تجمع الفخامة والخصوصية.",
-    h1: "يخت لحفلة خطوبة في دبي",
-    pill: "خطوبة",
-    intro:
-      "احتفل بخطوبتك على يخت فاخر في دبي مع تجهيزات رومانسية كاملة: ديكور بالورد، كيك خطوبة، إضاءة دافئة، ومنظر بحري ساحر.",
-    highlights: STANDARD_INCLUDED,
-    decoration: ["ديكور ورد طبيعي", "إضاءة شموع", "كيك خطوبة مخصص", "خلفية تصوير راقية", "موسيقى رومانسية"],
-    duration: "3 ساعات",
-    route: "دبي مارينا → برج العرب → نخلة جميرا (وقت الغروب)",
-    faqs: [
-      { q: "هل يمكن تجهيز ديكور رومانسي؟", a: "نعم، نوفر ديكور كامل بالورد والشموع وخلفيات تصوير." },
-      { q: "هل تتوفر خدمة تصوير؟", a: "نعم، نوفر مصور احترافي بناءً على الطلب." },
-    ],
-    serviceType: "حفلة خطوبة على يخت",
-    related: eventRelated(
-      { label: "طلب زواج على يخت", path: ROUTES.proposal },
-      { label: "حفلة زفاف على يخت", path: ROUTES.wedding },
-    ),
-    image: `${CDN}engagement-party/IMG-20250405-WA0033.webp`,
-  },
-  {
-    slug: ROUTES.proposal,
-    title: "طلب زواج على يخت في دبي | لحظة لا تُنسى على البحر",
-    metaDescription:
-      "اطلب يدها على يخت فاخر في دبي مع ديكور Marry Me، ورد، شموع وموسيقى. لحظة رومانسية مثالية على غروب الشمس.",
-    h1: "طلب زواج على يخت في دبي",
-    pill: "طلب زواج",
-    intro:
-      "اجعل لحظة طلب الزواج مميزة على يخت خاص في دبي. نوفر تجهيزات Marry Me كاملة مع ورد وشموع وموسيقى ومصور احترافي لتوثيق اللحظة.",
-    highlights: STANDARD_INCLUDED,
-    decoration: ["لوحة Marry Me", "ورد طبيعي", "شموع رومانسية", "موسيقى هادئة", "كيك ومشروبات", "مصور احترافي"],
-    duration: "2–3 ساعات (مثالي وقت الغروب)",
-    route: "دبي مارينا → برج العرب وقت الغروب",
-    faqs: [
-      { q: "ما الوقت الأنسب لطلب الزواج؟", a: "نوصي بوقت غروب الشمس للحصول على إطار مثالي لطلب الزواج." },
-      { q: "هل يمكن مفاجأتها؟", a: "نعم، نتعاون معك سراً لتجهيز كل التفاصيل قبل وصولها." },
-    ],
-    serviceType: "طلب زواج على يخت",
-    related: eventRelated(
-      { label: "حفلة خطوبة على يخت", path: ROUTES.engagement },
-      { label: "ذكرى زواج على يخت", path: ROUTES.anniversary },
-    ),
-    image: `${CDN}marriage-proposal-part/IMG-20250405-WA0004-1.webp`,
-  },
-  {
-    slug: ROUTES.wedding,
-    title: "حفلة زفاف على يخت في دبي | زفاف فاخر على البحر",
-    metaDescription:
-      "حفلة زفاف على يخت فاخر في دبي مع تجهيزات كاملة: ديكور، طعام، كيك زفاف، DJ، وتصوير. أسطول يخوت كبير يستوعب جميع الضيوف.",
-    h1: "حفلة زفاف على يخت في دبي",
-    pill: "زفاف",
-    intro:
-      "احتفل بزفافك على يخت فاخر في دبي مع تجربة فريدة تجمع الفخامة والخصوصية. نوفر يخوت تستوعب حتى 130 ضيف مع تجهيزات زفاف كاملة.",
-    highlights: STANDARD_INCLUDED,
-    decoration: ["ديكور زفاف فاخر", "كيك زفاف", "بوفيه طعام", "DJ احترافي", "إضاءة وزينة", "مصور وفيديو"],
-    duration: "5–8 ساعات",
-    faqs: [
-      { q: "كم عدد الضيوف الأقصى؟", a: "تتسع يخوتنا الكبرى لما يصل إلى 130 ضيف." },
-      { q: "هل تتوفر خدمة catering كاملة؟", a: "نعم، نوفر بوفيه كامل وخدمة ضيافة احترافية." },
-    ],
-    serviceType: "حفلة زفاف على يخت",
-    related: eventRelated(
-      { label: "حفلة خطوبة", path: ROUTES.engagement },
-      { label: "ذكرى زواج", path: ROUTES.anniversary },
-    ),
-    image: `${CDN}wedding-celebration-on%20yacht-in-dubai/IMG-20250405-WA0036.webp`,
-  },
-  {
-    slug: ROUTES.anniversary,
-    title: "ذكرى زواج على يخت في دبي | احتفال رومانسي خاص",
-    metaDescription:
-      "احتفل بذكرى زواجك على يخت فاخر في دبي مع عشاء رومانسي، ورد، شموع وإطلالات ساحرة. تجربة خاصة تستحقها.",
-    h1: "ذكرى زواج على يخت في دبي",
-    pill: "ذكرى زواج",
-    intro:
-      "احتفل بذكرى زواجك بطريقة لا تُنسى مع رحلة يخت خاصة في دبي. عشاء رومانسي، ديكور بالورد، وموسيقى هادئة على غروب الشمس.",
-    highlights: STANDARD_INCLUDED,
-    decoration: ["عشاء رومانسي", "ورد وشموع", "كيك ذكرى زواج", "موسيقى هادئة"],
-    duration: "2–3 ساعات",
-    faqs: [
-      { q: "هل يمكن تجهيز عشاء رومانسي؟", a: "نعم، نوفر عشاء كامل مع شيف خاص بناءً على الطلب." },
-    ],
-    serviceType: "ذكرى زواج على يخت",
-    related: eventRelated({ label: "عشاء على يخت", path: ROUTES.dinner }),
-  },
-  {
-    slug: ROUTES.graduation,
-    title: "حفلة تخرج على يخت في دبي | احتفال تخرج مميز",
-    metaDescription:
-      "احتفل بتخرجك على يخت فاخر في دبي مع أصدقائك وعائلتك. ديكور تخرج، كيك، موسيقى وإطلالات رائعة.",
-    h1: "حفلة تخرج على يخت في دبي",
-    pill: "تخرج",
-    intro:
-      "احتفل بنجاحك مع حفلة تخرج مميزة على يخت في دبي. اجمع عائلتك وأصدقاءك لتجربة لا تُنسى مع ديكور تخرج مخصص وموسيقى.",
-    highlights: STANDARD_INCLUDED,
-    decoration: ["ديكور تخرج (قبعة، شهادة)", "كيك تخرج", "بالونات بألوان مخصصة", "خلفية تصوير"],
-    duration: "3 ساعات",
-    faqs: [
-      { q: "هل تتوفر باقة تخرج كاملة؟", a: "نعم، نوفر باقة كاملة تشمل الديكور والكيك والموسيقى." },
-    ],
-    serviceType: "حفلة تخرج على يخت",
-    related: eventRelated({ label: "عيد ميلاد على يخت", path: ROUTES.birthday }),
-    image: `${CDN}graduation-party/IMG-20250405-WA0020-1-1.webp`,
-  },
-  {
-    slug: ROUTES.genderReveal,
-    title: "تحديد جنس المولود على يخت في دبي | حفلة Gender Reveal",
-    metaDescription:
-      "حفلة تحديد جنس المولود على يخت في دبي — ديكور وردي/أزرق، كيك مفاجأة، وبالونات. تجربة عائلية لا تُنسى.",
-    h1: "تحديد جنس المولود على يخت في دبي",
-    pill: "Gender Reveal",
-    intro:
-      "احتفل بانتظار مولودك مع حفلة Gender Reveal على يخت فاخر في دبي. ديكور بالألوان الوردية والزرقاء، كيك مفاجأة، وموسيقى عائلية.",
-    highlights: STANDARD_INCLUDED,
-    decoration: ["ديكور وردي وأزرق", "كيك مفاجأة (Gender Reveal Cake)", "بالونات", "خلفية تصوير", "شموع مفاجأة"],
-    duration: "2–3 ساعات",
-    faqs: [
-      { q: "هل يمكن تجهيز كيك المفاجأة؟", a: "نعم، نوفر كيك Gender Reveal مفاجأة مع التنسيق المسبق." },
-    ],
-    serviceType: "حفلة تحديد جنس المولود",
-    related: eventRelated({ label: "يخت للمناسبات العائلية", path: ROUTES.family }),
-    image: `${CDN}gender-reveal-party/IMG-20250405-WA0009-1.webp`,
-  },
-  {
-    slug: ROUTES.bachelor,
-    title: "حفلة وداع عزوبية على يخت في دبي | حفلة قبل الزفاف",
-    metaDescription:
-      "حفلة وداع عزوبية على يخت في دبي مع أصدقائك. خصوصية تامة، موسيقى، طعام، ووقت لا يُنسى قبل الزفاف.",
-    h1: "حفلة وداع عزوبية على يخت في دبي",
-    pill: "وداع عزوبية",
-    intro:
-      "احتفل بآخر أيام العزوبية مع حفلة خاصة على يخت في دبي. خصوصية كاملة، موسيقى، طعام، وأجواء مرحة مع الأصدقاء.",
-    highlights: STANDARD_INCLUDED,
-    decoration: STANDARD_DECOR,
-    duration: "3–4 ساعات",
-    faqs: [
-      { q: "هل اليخت يضمن الخصوصية؟", a: "نعم، اليخت خاص بالكامل لك وأصدقائك." },
-    ],
-    serviceType: "حفلة وداع عزوبية",
-    related: eventRelated({ label: "حفلة خاصة على يخت", path: ROUTES.privateParty }),
-    image: `${CDN}bachelor-party-on-yacht/IMG-20250405-WA0001.webp`,
-  },
-  {
-    slug: ROUTES.family,
-    title: "يخت للمناسبات العائلية في دبي | رحلة عائلية خاصة",
-    metaDescription:
-      "تأجير يخت للمناسبات العائلية في دبي مع تجهيزات مناسبة للأطفال. رحلة آمنة وممتعة بإطلالات على دبي مارينا.",
-    h1: "يخت للمناسبات العائلية في دبي",
-    pill: "عائلية",
-    intro:
-      "اجتماعات عائلية على يخت خاص في دبي مع تجهيزات تناسب الأطفال والكبار. وقفات سباحة آمنة، طعام عائلي، وذكريات تدوم.",
-    highlights: ["سترات نجاة لجميع الأعمار", "وقفات سباحة آمنة", "طعام عائلي", "نظام صوتي للأطفال", "كابتن متعاون مع العائلات"],
-    duration: "3 ساعات",
-    faqs: [
-      { q: "هل اليخت آمن للأطفال؟", a: "نعم، نوفر سترات نجاة لجميع الأعمار وطاقم مدرب للتعامل مع العائلات." },
-    ],
-    serviceType: "يخت للعائلات",
-    related: eventRelated({ label: "سباحة على يخت", path: ROUTES.swimming }),
-  },
-  {
-    slug: ROUTES.bbq,
-    title: "حفلة شواء على يخت في دبي | BBQ على البحر",
-    metaDescription:
-      "حفلة شواء على يخت في دبي مع شواء طازج، مشروبات، وإطلالات مذهلة. تجربة فريدة تجمع الطعام والمتعة.",
-    h1: "حفلة شواء على يخت في دبي",
-    pill: "BBQ",
-    intro:
-      "استمتع بشواء طازج على متن يخت خاص في دبي. لحوم، دجاج، مأكولات بحرية مشوية مع منظر دبي مارينا.",
-    highlights: ["شواء طازج على متن اليخت", "تشكيلة لحوم ودجاج ومأكولات بحرية", "سلطات ومقبلات", "مشروبات غازية وعصائر"],
-    duration: "3–4 ساعات",
-    faqs: [
-      { q: "هل الطعام يُطهى على اليخت؟", a: "نعم، نوفر شواء طازج على متن اليخت من قبل طاقم متخصص." },
-    ],
-    serviceType: "حفلة شواء على يخت",
-    related: eventRelated({ label: "عشاء على يخت", path: ROUTES.dinner }),
-    image: `${CDN}bbq-experience/IMG_8252-1.webp`,
-  },
-  {
-    slug: ROUTES.dinner,
-    title: "عشاء على يخت في دبي | عشاء رومانسي على البحر",
-    metaDescription:
-      "عشاء على يخت في دبي مع قائمة طعام مخصصة، شيف خاص، وإطلالات على برج العرب. تجربة فاخرة لا تُنسى.",
-    h1: "عشاء على يخت في دبي",
-    pill: "عشاء",
-    intro:
-      "تجربة عشاء فاخرة على يخت خاص في دبي مع قائمة طعام راقية وشيف خاص. مثالي للأزواج والمناسبات الرومانسية.",
-    highlights: ["قائمة طعام مخصصة", "شيف خاص", "خدمة ضيافة راقية", "إضاءة رومانسية", "وقت غروب الشمس"],
-    duration: "2–3 ساعات",
-    route: "دبي مارينا → برج العرب وقت الغروب",
-    faqs: [
-      { q: "هل يمكن تخصيص قائمة العشاء؟", a: "نعم، نوفر قائمة طعام بحسب تفضيلاتك." },
-    ],
-    serviceType: "عشاء على يخت",
-    related: eventRelated({ label: "ذكرى زواج على يخت", path: ROUTES.anniversary }),
-  },
-  {
-    slug: ROUTES.morning,
-    title: "رحلة يخت صباحية في دبي | صباح هادئ على البحر",
-    metaDescription:
-      "رحلة يخت صباحية خاصة في دبي للسباحة والاستجمام. أجواء هادئة بعيداً عن زحام النهار وإطلالات صباحية ساحرة.",
-    h1: "رحلة يخت صباحية في دبي",
-    pill: "رحلة صباحية",
-    intro:
-      "ابدأ يومك برحلة يخت صباحية خاصة في دبي. مياه هادئة، نسيم منعش، وفرصة مثالية للسباحة والاستجمام بعيداً عن زحام النهار.",
-    highlights: ["مياه هادئة في الصباح", "وقفات سباحة", "إفطار خفيف اختياري", "مثالي للعائلات"],
-    duration: "2–4 ساعات",
-    faqs: [
-      { q: "ما أفضل وقت للانطلاق؟", a: "نوصي بالانطلاق بين 8 و10 صباحاً للحصول على أفضل تجربة." },
-    ],
-    serviceType: "رحلة يخت صباحية",
-    related: eventRelated({ label: "سباحة على يخت", path: ROUTES.swimming }),
-  },
-  {
-    slug: ROUTES.afternoonTea,
-    title: "افترنون تي على يخت في دبي | شاي ما بعد الظهر الفاخر",
-    metaDescription:
-      "تجربة افترنون تي على يخت فاخر في دبي مع شاي وحلويات فاخرة وإطلالات على دبي مارينا. تجربة بريطانية أصيلة على البحر.",
-    h1: "افترنون تي على يخت في دبي",
-    pill: "Afternoon Tea",
-    intro:
-      "تجربة افترنون تي راقية على يخت خاص في دبي. شاي بريطاني فاخر، ساندويتشات، حلويات، وكعك سكونز مع إطلالات بحرية.",
-    highlights: ["تشكيلة شاي بريطاني فاخر", "ساندويتشات وحلويات", "كعك سكونز وكريما", "إطلالات على دبي مارينا"],
-    duration: "2 ساعات",
-    faqs: [
-      { q: "ما الذي تتضمنه قائمة الـ Afternoon Tea؟", a: "تتضمن شاي فاخر، ساندويتشات، حلويات، وكعك سكونز مع كريما." },
-    ],
-    serviceType: "افترنون تي على يخت",
-    related: eventRelated({ label: "عشاء على يخت", path: ROUTES.dinner }),
-  },
-  {
-    slug: ROUTES.jetSki,
-    title: "يخت مع جت سكي في دبي | رحلة يخت ومتعة الجت سكي",
-    metaDescription:
-      "تأجير يخت مع جت سكي في دبي — تجربة تجمع بين الفخامة والإثارة. جلسات جت سكي بمعدات حديثة بإشراف الطاقم.",
-    h1: "يخت مع جت سكي في دبي",
-    pill: "جت سكي",
-    intro:
-      "اجمع بين فخامة اليخت ومتعة الجت سكي في دبي. تأجير الجت سكي كإضافة لرحلتك مع معدات حديثة وإشراف الطاقم.",
-    highlights: ["جت سكي حديث وآمن", "إشراف الطاقم", "سترات نجاة", "إمكانية تجربة لجميع المستويات"],
-    duration: "ساعة جت سكي + رحلة اليخت",
-    pricesNote: "جت سكي بسعر إضافي 600 درهم/ساعة.",
-    faqs: [
-      { q: "هل أحتاج رخصة قيادة الجت سكي؟", a: "لا، نوفر تدريب أولي بإشراف الطاقم لأي شخص جديد." },
-    ],
-    serviceType: "يخت مع جت سكي",
-    related: eventRelated({ label: "يخت مع ألعاب مائية", path: ROUTES.waterSports }),
-    image: `${CDN}jet-ski-rental/IMG_7681-1.jpg`,
-  },
-  {
-    slug: ROUTES.waterSports,
-    title: "يخت مع ألعاب مائية في دبي | ركوب الموز ودونات وجت سكي",
-    metaDescription:
-      "تأجير يخت مع ألعاب مائية في دبي — ركوب الموز، دونات، جت سكي. متعة لا تنتهي على البحر مع طاقم محترف.",
-    h1: "يخت مع ألعاب مائية في دبي",
-    pill: "ألعاب مائية",
-    intro:
-      "أضف الإثارة لرحلتك مع ألعاب مائية متنوعة: ركوب الموز، دونات، جت سكي وأكثر. مثالي للمجموعات والعائلات الباحثة عن المرح.",
-    highlights: ["ركوب الموز", "ركوب الدونات", "جت سكي", "إشراف الطاقم", "سترات نجاة لجميع الأعمار"],
-    duration: "3 ساعات",
-    faqs: [
-      { q: "هل الألعاب آمنة للأطفال؟", a: "نعم، نوفر سترات نجاة لجميع الأعمار وإشراف كامل من الطاقم." },
-    ],
-    serviceType: "يخت مع ألعاب مائية",
-    related: eventRelated({ label: "يخت مع جت سكي", path: ROUTES.jetSki }),
-    image: `${CDN}banana-boat-ride/photo_2025-04-05_12-29-24-1.webp`,
-  },
-  {
-    slug: ROUTES.fishing,
-    title: "رحلة صيد على يخت في دبي | صيد سمك في الخليج العربي",
-    metaDescription:
-      "رحلة صيد على يخت خاص في دبي مع معدات الصيد والطعم. تجربة هادئة وممتعة للمبتدئين والمحترفين على حد سواء.",
-    h1: "رحلة صيد على يخت في دبي",
-    pill: "صيد",
-    intro:
-      "استمتع برحلة صيد على يخت خاص في دبي مع كل المعدات. مناسبة للمبتدئين والمحترفين، مع كابتن خبير يعرف أفضل مواقع الصيد.",
-    highlights: ["معدات صيد كاملة", "طعم وعدّة جاهزة", "كابتن يعرف أفضل المواقع", "وقفة للسباحة بين الصيد"],
-    duration: "4–6 ساعات",
-    faqs: [
-      { q: "هل المعدات متوفرة؟", a: "نعم، نوفر كل معدات الصيد والطعم." },
-      { q: "ما الأنواع الممكن صيدها؟", a: "كنعد، باراكودا، هامور، وأسماك أخرى من الخليج العربي." },
-    ],
-    serviceType: "رحلة صيد على يخت",
-    related: eventRelated({ label: "رحلة يخت صباحية", path: ROUTES.morning }),
-    image: `${CDN}fishing-trips/IMG_8255-1.webp`,
-  },
-  {
-    slug: ROUTES.swimming,
-    title: "سباحة على يخت في دبي | وقفة سباحة خاصة في الخليج",
-    metaDescription:
-      "سباحة على يخت خاص في دبي مع وقفات في مياه نقية بعيداً عن زحام الشواطئ. منصة سباحة وسترات نجاة متوفرة.",
-    h1: "سباحة على يخت في دبي",
-    pill: "سباحة",
-    intro:
-      "استمتع بالسباحة في مياه نقية بعيداً عن زحام الشواطئ. كل يخوتنا تحوي منصة سباحة آمنة وسترات نجاة لكل الأعمار.",
-    highlights: ["منصة سباحة آمنة", "سترات نجاة لجميع الأعمار", "وقفات في مناطق هادئة", "مناشف ودوش بمياه عذبة"],
-    duration: "2–3 ساعات",
-    faqs: [
-      { q: "هل المياه آمنة للسباحة؟", a: "نعم، نختار مناطق سباحة آمنة بعيداً عن الزحام وحركة السفن." },
-    ],
-    serviceType: "سباحة على يخت",
-    related: eventRelated(
-      { label: "رحلة يخت صباحية", path: ROUTES.morning },
-      { label: "يخت للمناسبات العائلية", path: ROUTES.family },
-    ),
-    image: `${YACHT_CDN}sunseeker_82ft/sunseeker_82ft1.webp`,
-  },
-];
-
+export { eventPages };
 export const allLandingPages: LandingPage[] = [...keywordPages, ...eventPages];
 
 export const getLandingBySlug = (slug: string): LandingPage | undefined =>

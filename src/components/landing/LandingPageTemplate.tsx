@@ -3,8 +3,8 @@ import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Check, MessageCircle, Phone, Clock, Map, Tag } from "lucide-react";
-import { BRAND_NAME, DOMAIN, getPhoneLink, getWhatsAppLink, ROUTES } from "@/lib/constants";
+import { Check, MessageCircle, Phone, Clock, Map, Tag, ListChecks, CircleDollarSign } from "lucide-react";
+import { BRAND_NAME, DOMAIN, getPhoneLink, getWhatsAppLink, PLACEHOLDER_IMAGE, ROUTES } from "@/lib/constants";
 import type { LandingPage } from "@/data/landingPages";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
 import VerifiedYachtSelection from "@/components/landing/VerifiedYachtSelection";
@@ -15,6 +15,13 @@ interface LandingPageTemplateProps {
 
 const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
   const route = requireRouteRecord(page.slug);
+  const heroImage = page.image ?? (page.mediaPlaceholder ? PLACEHOLDER_IMAGE : undefined);
+  const categoryLabels = {
+    celebration: "احتفال",
+    "private experience": "تجربة خاصة",
+    hospitality: "ضيافة",
+    "water activity": "نشاط مائي",
+  } as const;
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -29,15 +36,6 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
       areaServed: { "@type": "City", name: "Dubai" },
       serviceType: page.serviceType,
       description: route.description,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: page.faqs.map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
     },
     {
       "@context": "https://schema.org",
@@ -57,7 +55,10 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
         <div className="container mx-auto px-4 max-w-5xl">
           {/* Hero */}
           <AnimatedSection className="text-center mb-12">
-            <span className="liquid-pill inline-block mb-4">{page.pill}</span>
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
+              <span className="liquid-pill inline-block">{page.pill}</span>
+              {page.category && <span className="liquid-pill inline-block">{categoryLabels[page.category]}</span>}
+            </div>
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-5 leading-tight">
               {route.h1}
             </h1>
@@ -89,11 +90,11 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
           </AnimatedSection>
 
           {/* Hero image */}
-          {page.image && (
+          {heroImage && (
             <AnimatedSection className="mb-12">
               <div className="rounded-3xl overflow-hidden liquid-glass">
                 <img
-                  src={page.image}
+                  src={heroImage}
                   alt={route.h1}
                   className="w-full h-[40vh] md:h-[55vh] object-cover"
                   referrerPolicy="no-referrer"
@@ -110,6 +111,62 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
                   الجواب المباشر
                 </h2>
                 <p className="text-foreground/90 leading-8 text-lg">{page.directAnswer}</p>
+              </section>
+            </AnimatedSection>
+          )}
+
+          {page.bookingSteps && (
+            <AnimatedSection className="mb-10">
+              <section className="liquid-glass p-6 md:p-8" aria-labelledby="booking-steps-heading">
+                <div className="flex items-center gap-3 mb-5">
+                  <ListChecks className="w-6 h-6 text-primary" aria-hidden="true" />
+                  <h2 id="booking-steps-heading" className="text-2xl md:text-3xl font-display font-bold text-foreground">خطوات الطلب</h2>
+                </div>
+                <ol className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {page.bookingSteps.map((step, index) => (
+                    <li key={step} className="liquid-glass-gold p-5">
+                      <span className="w-9 h-9 liquid-icon mb-3 font-display font-bold text-primary">{index + 1}</span>
+                      <p className="text-muted-foreground leading-7">{step}</p>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            </AnimatedSection>
+          )}
+
+          {page.priceFactors && (
+            <AnimatedSection className="mb-10">
+              <section className="liquid-glass p-6 md:p-8" aria-labelledby="price-factors-heading">
+                <div className="flex items-center gap-3 mb-5">
+                  <CircleDollarSign className="w-6 h-6 text-primary" aria-hidden="true" />
+                  <h2 id="price-factors-heading" className="text-2xl md:text-3xl font-display font-bold text-foreground">عوامل السعر</h2>
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {page.priceFactors.map((factor) => (
+                    <li key={factor} className="flex items-start gap-3 text-muted-foreground">
+                      <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" aria-hidden="true" />
+                      <span>{factor}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </AnimatedSection>
+          )}
+
+          {page.optionalAddOns && page.optionalAddOns.length > 0 && (
+            <AnimatedSection className="mb-10">
+              <section className="liquid-glass-gold p-6 md:p-8" aria-labelledby="optional-addons-heading">
+                <h2 id="optional-addons-heading" className="text-2xl md:text-3xl font-display font-bold text-foreground mb-3">طلبات اختيارية</h2>
+                <p className="text-muted-foreground leading-7 mb-5">
+                  هذه الطلبات ليست مشمولة تلقائياً. يخضع كل طلب للتوفر والتأكيد والتسعير المنفصل قبل الحجز.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {page.optionalAddOns.map((addOn) => (
+                    <span key={addOn} className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-secondary/40 text-sm text-foreground border border-border/40">
+                      <Tag className="w-3.5 h-3.5 text-primary" aria-hidden="true" /> {addOn}
+                    </span>
+                  ))}
+                </div>
               </section>
             </AnimatedSection>
           )}

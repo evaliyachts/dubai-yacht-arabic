@@ -1,4 +1,5 @@
 import { allLandingPages, eventPages, keywordPages } from "@/data/landingPages";
+import { offers } from "@/data/offers";
 import { services } from "@/data/services";
 import {
   getServiceDescriptionAr,
@@ -108,25 +109,27 @@ const coreRecords: RouteManifestRecord[] = [
   {
     id: "offers",
     path: toCanonicalPath(ROUTES.offers),
-    indexable: true,
+    indexable: false,
     pageType: "service",
-    title: "عروض وباقات تأجير اليخوت في دبي | يخوت دبي",
+    title: "صفحة عروض قديمة | الانتقال إلى أسعار تأجير اليخوت",
     description:
-      "اكتشف عروض وباقات تأجير اليخوت في دبي للغروب والحفلات والمناسبات الفاخرة، مع إمكانية تخصيص الباقة حسب مناسبتك.",
-    h1: "العروض والباقات",
-    primaryIntent: "عروض وباقات تأجير اليخوت في دبي",
-    schema: ["Service", "BreadcrumbList"],
+      "انتقلت معلومات التكلفة إلى صفحة أسعار تأجير اليخوت في دبي، وهي المالك القانوني لمقارنة السعر والمدة.",
+    h1: "الانتقال إلى أسعار تأجير اليخوت",
+    primaryIntent: "إعادة توجيه صفحة العروض القديمة إلى الأسعار",
+    schema: [],
+    redirectTo: toCanonicalPath(ROUTES.prices),
   },
   {
     id: "service-index",
     path: toCanonicalPath(SERVICE_INDEX_PATH_AR),
     indexable: true,
     pageType: "service",
-    title: "خدمات تأجير اليخوت في دبي | باقات ومناسبات وأنشطة بحرية",
+    title: "دليل خدمات اليخوت الخاصة في دبي | يخوت دبي",
     description:
-      "اكتشف خدمات تأجير اليخوت في دبي: مناسبات خاصة، رحلات صيد، سباحة، شواء، جت سكي، وفعاليات على متن يخت خاص.",
-    h1: "خدمات وباقات تأجير اليخوت في دبي",
-    primaryIntent: "دليل خدمات وباقات وأنشطة اليخوت في دبي",
+      "استعرض 18 خدمة لليخوت الخاصة في دبي ضمن الاحتفالات والتجارب الخاصة والضيافة والأنشطة المائية، مع متطلبات واضحة لكل طلب.",
+    h1: "دليل خدمات اليخوت الخاصة في دبي",
+    primaryIntent: "استعراض خدمات اليخوت الخاصة حسب الفئة",
+    lastSignificantUpdate: "2026-07-12",
     schema: ["Service", "BreadcrumbList"],
   },
   {
@@ -262,7 +265,13 @@ const redirectVariants = (from: string, to: CanonicalPath): LegacyRedirect[] => 
 };
 
 export const LEGACY_REDIRECTS: LegacyRedirect[] = [
-  ...redirectVariants("/offers", toCanonicalPath(ROUTES.offers)),
+  ...redirectVariants("/offers", toCanonicalPath(ROUTES.prices)),
+  ...redirectVariants(ROUTES.offers, toCanonicalPath(ROUTES.prices)),
+  ...offers.flatMap((offer) => [
+    ...redirectVariants(`/offers/${offer.slug}`, toCanonicalPath(ROUTES.prices)),
+    ...redirectVariants(`${ROUTES.offers}/${offer.slug}`, toCanonicalPath(ROUTES.prices)),
+    ...redirectVariants(`/offer/${offer.slug}`, toCanonicalPath(ROUTES.prices)),
+  ]),
   ...redirectVariants("/faq", toCanonicalPath(ROUTES.faq)),
   ...redirectVariants("/services", toCanonicalPath(SERVICE_INDEX_PATH_AR)),
   ...redirectVariants(LEGACY_SERVICE_INDEX_PATH_AR, toCanonicalPath(SERVICE_INDEX_PATH_AR)),
@@ -288,14 +297,14 @@ export const CLIENT_REDIRECTS = [
 const navigationPaths = [
   ROUTES.home,
   ROUTES.yachts,
-  ROUTES.offers,
+  ROUTES.prices,
   ROUTES.services,
   ROUTES.events,
   ROUTES.about,
   ROUTES.faq,
   ROUTES.contact,
 ];
-const navigationLabels = ["الرئيسية", "اليخوت", "العروض", "الخدمات", "المناسبات", "من نحن", "الأسئلة الشائعة", "اتصل بنا"];
+const navigationLabels = ["الرئيسية", "اليخوت", "الأسعار", "الخدمات", "المناسبات", "من نحن", "الأسئلة الشائعة", "اتصل بنا"];
 
 export const NAVIGATION_TARGETS = navigationPaths.map((path, index) => ({
   label: navigationLabels[index],
