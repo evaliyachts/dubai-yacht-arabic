@@ -11,7 +11,7 @@
     "predev": "tsx scripts/generate-sitemap.ts",
     "dev": "vite",
     "prebuild": "tsx scripts/generate-sitemap.ts",
-    "build": "vite build",
+    "build": "tsx scripts/build-static.ts",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",

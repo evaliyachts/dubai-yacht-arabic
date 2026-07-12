@@ -14,7 +14,8 @@ const SEOHead = ({ title, description, path, keywords, jsonLd, image }: SEOHeadP
   // React Router's path is already decoded; encode it once for canonical URLs
   // so that Arabic slugs survive as %-encoded characters in links shared
   // with crawlers and social platforms.
-  const url = `${DOMAIN}${encodeURI(path)}`;
+  const canonicalPath = path === "/" ? "/" : `${path.replace(/\/+$/, "")}/`;
+  const url = `${DOMAIN}${encodeURI(canonicalPath)}`;
   const schemas = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 
   return (

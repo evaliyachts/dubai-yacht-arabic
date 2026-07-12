@@ -33,6 +33,7 @@ const ServiceDetails = () => {
   } catch {
     currentPath = location.pathname;
   }
+  if (currentPath !== "/") currentPath = currentPath.replace(/\/+$/, "");
 
   if (currentPath !== canonicalPath) {
     return <Navigate to={canonicalPath} replace />;
