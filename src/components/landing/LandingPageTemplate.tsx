@@ -9,6 +9,7 @@ import type { LandingPage } from "@/data/landingPages";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
 import VerifiedYachtSelection from "@/components/landing/VerifiedYachtSelection";
 import { organizationReference } from "@/seo/entities";
+import { responsiveImageSrcSet } from "@/lib/responsive-image";
 
 interface LandingPageTemplateProps {
   page: LandingPage;
@@ -93,6 +94,7 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
               <div className="rounded-3xl overflow-hidden liquid-glass">
                 <img
                   src={heroImage}
+                  srcSet={responsiveImageSrcSet(heroImage, page.imageWidth ?? 1200)}
                   alt={route.h1}
                   width={page.imageWidth ?? 1200}
                   height={page.imageHeight ?? 1200}

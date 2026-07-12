@@ -12,6 +12,9 @@
 [build.processing.html]
   pretty_urls = true
 
+[images]
+  remote_images = ["https://yacht\\.fra1\\.cdn\\.digitaloceanspaces\\.com/.*"]
+
 [[headers]]
   for = "/*"
   [headers.values]

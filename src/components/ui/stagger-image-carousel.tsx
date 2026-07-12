@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import type { YachtMediaRecord } from "@/data/yachts";
+import { responsiveYachtMediaSrcSet } from "@/lib/responsive-image";
 
 interface StaggerImageCarouselProps {
   images: YachtMediaRecord[];
@@ -68,6 +69,7 @@ const ImageCard = ({
     >
       <img
         src={media.path}
+        srcSet={responsiveYachtMediaSrcSet(media)}
         alt={media.altAr}
         width={media.width}
         height={media.height}
@@ -228,12 +230,14 @@ export const StaggerImageCarousel = ({
           {fullscreenMedia && (
             <img
               src={fullscreenMedia.path}
+              srcSet={responsiveYachtMediaSrcSet(fullscreenMedia)}
               alt={fullscreenMedia.altAr}
               width={fullscreenMedia.width}
               height={fullscreenMedia.height}
               className="max-w-full max-h-[90vh] object-contain"
               referrerPolicy="no-referrer"
               decoding="async"
+              sizes="95vw"
               onError={() => handleFailure(fullscreenMedia.path)}
             />
           )}

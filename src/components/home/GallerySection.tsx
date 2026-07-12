@@ -1,6 +1,7 @@
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { yachts } from "@/data/yachts";
 import { motion } from "framer-motion";
+import { responsiveYachtMediaSrcSet } from "@/lib/responsive-image";
 
 const GallerySection = () => {
   const heights = ["h-48", "h-64", "h-56", "h-72", "h-52", "h-60", "h-44", "h-68"];
@@ -46,6 +47,7 @@ const GallerySection = () => {
             >
               <img
                 src={img.path}
+                srcSet={responsiveYachtMediaSrcSet(img)}
                 alt={img.altAr}
                 width={img.width}
                 height={img.height}

@@ -308,6 +308,9 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
     if (!/\bwidth=["']\d+["']/i.test(imageTag) || !/\bheight=["']\d+["']/i.test(imageTag)) {
       fail(expectation.path, `image is missing explicit dimensions: ${source}`);
     }
+    if (source.startsWith("https://yacht.fra1.cdn.digitaloceanspaces.com/") && !/\bsrcset=["'][^"']*\/\.netlify\/images\?url=/i.test(imageTag)) {
+      fail(expectation.path, `authorized remote yacht image is missing an allowlisted responsive srcset: ${source}`);
+    }
     if (source.startsWith("/") && !source.startsWith("//")) {
       const localPath = resolve(distDir, decodeURI(source).replace(/^\/+/, ""));
       if (!existsSync(localPath)) fail(expectation.path, `broken local image: ${source}`);

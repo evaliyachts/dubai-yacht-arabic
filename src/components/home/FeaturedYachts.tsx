@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, CalendarDays, Clock3, MessageCircle, Ruler, Users } from "lucide-react";
 import { requireRouteRecord } from "@/seo/route-manifest";
 import { getWhatsAppLink } from "@/lib/constants";
+import { responsiveYachtMediaSrcSet } from "@/lib/responsive-image";
 
 const featuredSlugs = [
   "يخت-42-قدم-ازيموت-للايجار",
@@ -43,10 +44,11 @@ const FeaturedYachts = () => {
                 <div className="relative h-56 overflow-hidden">
                   <img
                     src={yacht.media[0].path}
+                    srcSet={responsiveYachtMediaSrcSet(yacht.media[0])}
                     alt={yacht.media[0].altAr}
                     width={yacht.media[0].width}
                     height={yacht.media[0].height}
-                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, calc(100vw - 2rem)"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
