@@ -1,184 +1,117 @@
-import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { Link, useParams } from "react-router-dom";
+import { ArrowRight, BedDouble, CalendarDays, Clock3, MessageCircle, Phone, Ruler, Users } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import YachtCard from "@/components/shared/YachtCard";
 import { yachts } from "@/data/yachts";
-import { YACHT_AR, translateInclusion, translateAddon } from "@/data/yachts-ar";
-import { PLACEHOLDER_IMAGE, getWhatsAppLink, getPhoneLink, ROUTES, BRAND_NAME, DOMAIN } from "@/lib/constants";
-import { Users, BedDouble, Bath, Ruler, UserCheck, Check, MessageCircle, Phone, ArrowRight } from "lucide-react";
-import { StaggerImageCarousel } from "@/components/ui/stagger-image-carousel";
+import { capacityGuidance, relatedYachts, yachtFaqs, yachtOverview } from "@/data/fleet";
+import { buildYachtJsonLd } from "@/data/yacht-page";
+import { ROUTES, getPhoneLink, getWhatsAppLink } from "@/lib/constants";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
+import { socialImageForYachtMedia } from "@/seo/social-image";
 
-const TYPE_AR: Record<string, string> = { Standard: "قياسي", Luxury: "فاخر", Superyacht: "سوبر يخت" };
-
-const normalizeSlug = (slug?: string) => {
+const normalizeYachtSlug = (slug?: string) => {
   if (!slug) return "";
-
-  try {
-    return decodeURIComponent(slug);
-  } catch {
-    return slug;
-  }
+  try { return decodeURIComponent(slug); } catch { return slug; }
 };
 
 const YachtDetails = () => {
-  const { slug } = useParams();
-  const normalizedSlug = normalizeSlug(slug);
-  const yacht = yachts.find((y) => y.slug === normalizedSlug);
+  const normalizedSlug = normalizeYachtSlug(useParams().slug);
+  const yacht = yachts.find((candidate) => candidate.slug === normalizedSlug);
 
   if (!yacht) {
-    return (
-      <Layout>
-        <div className="pt-28 pb-20 text-center" dir="rtl">
-          <h1 className="text-3xl font-display font-bold text-foreground mb-4">اليخت غير موجود</h1>
-          <Link to="/yachts" className="text-primary hover:underline">العودة إلى الأسطول</Link>
-        </div>
-      </Layout>
-    );
+    return <Layout><main className="pt-28 pb-20 text-center" dir="rtl"><h1 className="text-3xl font-display font-bold mb-4">اليخت غير موجود</h1><Link to={ROUTES.yachts} className="text-primary hover:underline">العودة إلى الأسطول</Link></main></Layout>;
   }
 
-  const ar = YACHT_AR[yacht.slug];
-  const nameAr = ar?.name ?? yacht.name;
-  const descAr = ar?.description ?? yacht.description;
   const route = requireRouteRecord(`/yachts/${yacht.slug}`);
-
-  const images = yacht.images?.length ? yacht.images : [PLACEHOLDER_IMAGE];
-
-  const stats = [
-    { icon: Ruler, label: "الطول", value: `${yacht.length_ft} قدم` },
-    { icon: Users, label: "الضيوف", value: `حتى ${yacht.max_guests}` },
-    { icon: BedDouble, label: "غرف النوم", value: yacht.bedrooms.toString() },
-    { icon: Bath, label: "الحمامات", value: yacht.bathrooms.toString() },
-    { icon: UserCheck, label: "الطاقم", value: yacht.crew.toString() },
+  const canonical = canonicalUrlForPath(route.path);
+  const image = yacht.media[0];
+  const related = relatedYachts(yacht);
+  const faqs = yachtFaqs(yacht);
+  const facts = [
+    { icon: Ruler, label: "الطول", value: `${yacht.lengthFt} قدم` },
+    { icon: Users, label: "السعة المسجلة", value: `${yacht.guestCapacity} ضيفاً` },
+    { icon: CalendarDays, label: "سنة البناء", value: yacht.yearBuilt.toString() },
+    { icon: Clock3, label: "الحد الأدنى", value: `${yacht.minimumDuration} ساعات` },
+    ...(yacht.numberOfBedrooms ? [{ icon: BedDouble, label: "غرف النوم المسجلة", value: yacht.numberOfBedrooms.toString() }] : []),
   ];
-
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: `${nameAr} - تأجير يخت في دبي`,
-      provider: { "@type": "Organization", name: BRAND_NAME, url: `${DOMAIN}/`, telephone: "+971504641020" },
-      areaServed: { "@type": "City", name: "Dubai" },
-      description: descAr,
-      offers: { "@type": "Offer", price: yacht.price_per_hour_from_aed, priceCurrency: "AED" },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: DOMAIN + "/" },
-        { "@type": "ListItem", position: 2, name: "اليخوت", item: DOMAIN + "/yachts/" },
-        { "@type": "ListItem", position: 3, name: nameAr, item: canonicalUrlForPath(route.path) },
-      ],
-    },
-  ];
+  const jsonLd = buildYachtJsonLd(yacht, canonical);
 
   return (
     <Layout>
-      <SEOHead route={route} jsonLd={jsonLd} image={images[0]} />
-
-      <div className="relative pt-28 pb-10 overflow-hidden" dir="rtl">
+      <SEOHead route={route} jsonLd={jsonLd} image={socialImageForYachtMedia(image)} />
+      <main className="pt-28 pb-16" dir="rtl">
         <div className="container mx-auto px-4">
-          <Link to="/yachts" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowRight className="w-4 h-4 rotate-180" /> العودة إلى الأسطول
-          </Link>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-5xl font-display font-bold text-foreground mb-2"
-          >
-            {route.h1}
-          </motion.h1>
-          <p className="text-primary font-display text-xl mb-8">
-            من {yacht.price_per_hour_from_aed.toLocaleString()} د.إ / ساعة
-            <span className="text-sm text-muted-foreground mr-2">({TYPE_AR[yacht.type]})</span>
-          </p>
+          <Link to={requireRouteRecord(ROUTES.yachts).path} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-5"><ArrowRight className="w-4 h-4" /> العودة إلى الأسطول</Link>
+          <h1 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-3">{route.h1}</h1>
+          <p className="text-xl font-display text-primary mb-8">{yacht.pricePerHour.toLocaleString("ar-AE")} د.إ / ساعة — حد أدنى {yacht.minimumDuration} ساعات</p>
 
-          <StaggerImageCarousel images={images} altPrefix={nameAr} fallbackSrc={PLACEHOLDER_IMAGE} />
-        </div>
-      </div>
+          <figure className="liquid-glass overflow-hidden bg-muted mb-12">
+            <img src={image.path} alt={image.altAr} width={image.width} height={image.height} className="w-full max-h-[560px] object-cover" />
+            <figcaption className="px-4 py-3 text-sm text-muted-foreground">صورة بديلة محايدة؛ لا تُستخدم صور خارجية دون توثيق حقوق الاستخدام.</figcaption>
+          </figure>
 
-      <div className="container mx-auto px-4 py-12" dir="rtl">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2 space-y-10">
-            <AnimatedSection>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">
-                {stats.map((s) => (
-                  <div key={s.label} className="glass-card p-4 text-center">
-                    <s.icon className="w-5 h-5 text-primary mx-auto mb-1" />
-                    <p className="text-xs text-muted-foreground">{s.label}</p>
-                    <p className="text-sm font-semibold text-foreground">{s.value}</p>
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div className="lg:col-span-2 space-y-12">
+              <AnimatedSection>
+                <h2 className="text-2xl font-display font-bold mb-4">نظرة موثقة على اليخت</h2>
+                <p className="text-muted-foreground leading-relaxed">{yachtOverview(yacht)}</p>
+                <dl className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-7">
+                  {facts.map(({ icon: Icon, label, value }) => <div key={label} className="liquid-glass p-4"><Icon className="w-5 h-5 text-primary mb-2" /><dt className="text-xs text-muted-foreground">{label}</dt><dd className="font-semibold mt-1">{value}</dd></div>)}
+                </dl>
+              </AnimatedSection>
 
-            <AnimatedSection delay={0.1}>
-              <h2 className="text-2xl font-display font-bold text-foreground mb-3">نظرة عامة</h2>
-              <p className="text-muted-foreground leading-relaxed">{descAr}</p>
-            </AnimatedSection>
+              <AnimatedSection>
+                <h2 className="text-2xl font-display font-bold mb-3">الملاءمة حسب عدد الضيوف</h2>
+                <p className="text-muted-foreground leading-relaxed">{capacityGuidance(yacht)}</p>
+                {yacht.availability && <p className="mt-3 text-sm text-muted-foreground">حالة التوفر المسجلة: {yacht.availability === "available" ? "متاح عند آخر تحقق" : yacht.availability === "unavailable" ? "غير متاح" : "حسب الطلب"}. يجب إعادة تأكيد الموعد.</p>}
+              </AnimatedSection>
 
-            <AnimatedSection delay={0.2}>
-              <h2 className="text-2xl font-display font-bold text-foreground mb-3">ما يشمله الحجز</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {yacht.inclusions.map((inc) => (
-                  <div key={inc} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Check className="w-4 h-4 text-primary shrink-0" /> {translateInclusion(inc)}
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.3}>
-              <h2 className="text-2xl font-display font-bold text-foreground mb-3">إضافات اختيارية</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {yacht.add_ons.map((ao) => (
-                  <div key={ao} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" /> {translateAddon(ao)}
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.4}>
-              <div className="liquid-glass-gold p-6">
-                <h3 className="text-lg font-display font-bold text-foreground mb-3">روابط ذات صلة</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Link to={ROUTES.bookYacht} className="liquid-pill">حجز يخت في دبي</Link>
-                  <Link to={ROUTES.prices} className="liquid-pill">أسعار اليخوت</Link>
-                  <Link to={ROUTES.marina} className="liquid-pill">يخت دبي مارينا</Link>
-                  <Link to={ROUTES.events} className="liquid-pill">تأجير يخت للمناسبات</Link>
-                  <Link to={ROUTES.birthday} className="liquid-pill">عيد ميلاد على يخت</Link>
+              <AnimatedSection>
+                <h2 className="text-2xl font-display font-bold mb-4">السعر وطريقة الحساب</h2>
+                <div className="liquid-glass-gold p-6 space-y-2 text-muted-foreground">
+                  <p>سعر الساعة المسجل: <strong className="text-foreground">{yacht.pricePerHour.toLocaleString("ar-AE")} درهم</strong>.</p>
+                  <p>الحد الأدنى المسجل: <strong className="text-foreground">{yacht.minimumDuration} ساعات</strong>.</p>
+                  <p>قيمة وقت اليخت للحد الأدنى: <strong className="text-foreground">{(yacht.pricePerHour * yacht.minimumDuration).toLocaleString("ar-AE")} درهم</strong> قبل أي طلبات اختيارية مؤكدة ومنفصلة السعر.</p>
                 </div>
+              </AnimatedSection>
+
+              <AnimatedSection>
+                <h2 className="text-2xl font-display font-bold mb-4">خطوات طلب الحجز</h2>
+                <ol className="grid md:grid-cols-3 gap-4">
+                  <li className="liquid-glass p-5"><strong>1. أرسل التفاصيل</strong><p className="text-sm text-muted-foreground mt-2">التاريخ والوقت وعدد الضيوف.</p></li>
+                  <li className="liquid-glass p-5"><strong>2. اطلب التأكيد</strong><p className="text-sm text-muted-foreground mt-2">تأكيد التوفر والسعر النهائي وأي طلب اختياري.</p></li>
+                  <li className="liquid-glass p-5"><strong>3. أكمل الحجز</strong><p className="text-sm text-muted-foreground mt-2">اتبع تعليمات الحجز بعد استلام التفاصيل المؤكدة.</p></li>
+                </ol>
+              </AnimatedSection>
+
+              <AnimatedSection>
+                <h2 className="text-2xl font-display font-bold mb-4">أسئلة عن {yacht.name}</h2>
+                <div className="space-y-3">{faqs.map((faq) => <details key={faq.question} className="liquid-glass p-5"><summary className="font-semibold cursor-pointer">{faq.question}</summary><p className="text-muted-foreground leading-relaxed mt-3">{faq.answer}</p></details>)}</div>
+              </AnimatedSection>
+
+              <AnimatedSection>
+                <h2 className="text-2xl font-display font-bold mb-4">روابط أساسية</h2>
+                <nav className="flex flex-wrap gap-3" aria-label="روابط أساسية لصفحة اليخت">
+                  {[ROUTES.yachts, ROUTES.bookYacht, ROUTES.prices, ROUTES.events].map((path) => { const target = requireRouteRecord(path); return <Link key={target.path} to={target.path} className="liquid-pill">{target.h1}</Link>; })}
+                </nav>
+              </AnimatedSection>
+            </div>
+
+            <aside className="lg:col-span-1">
+              <div className="sticky top-24 glass-card p-6 space-y-4">
+                <h2 className="text-xl font-display font-bold">استفسر عن {yacht.name}</h2>
+                <p className="text-sm text-muted-foreground">أرسل التاريخ والوقت وعدد الضيوف لتأكيد التوفر والسعر النهائي.</p>
+                <a href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن ${yacht.name} لعدد ${yacht.guestCapacity} ضيفاً أو أقل.`)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold"><MessageCircle className="w-5 h-5" /> واتساب</a>
+                <a href={getPhoneLink()} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl glass-button"><Phone className="w-5 h-5" /> اتصال</a>
               </div>
-            </AnimatedSection>
+            </aside>
           </div>
 
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 glass-card p-6 space-y-4">
-              <h3 className="text-xl font-display font-bold text-foreground">احجز {nameAr}</h3>
-              <p className="text-2xl font-display font-bold text-primary">
-                {yacht.price_per_hour_from_aed.toLocaleString()} د.إ<span className="text-sm text-muted-foreground font-body"> / ساعة</span>
-              </p>
-              <a
-                href={getWhatsAppLink(`مرحباً، أرغب في حجز ${nameAr} (${yacht.length_ft} قدم، يتسع ${yacht.max_guests} ضيف).`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:scale-105 transition-transform gold-glow"
-              >
-                <MessageCircle className="w-5 h-5" /> احجز عبر واتساب
-              </a>
-              <a
-                href={getPhoneLink()}
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl glass-button text-foreground font-medium hover:scale-105 transition-transform"
-              >
-                <Phone className="w-5 h-5" /> اتصل الآن
-              </a>
-            </div>
-          </div>
+          <section className="mt-16" aria-labelledby="related-yachts"><h2 id="related-yachts" className="text-2xl md:text-3xl font-display font-bold mb-6">ثلاثة يخوت قريبة للمقارنة</h2><div className="grid md:grid-cols-3 gap-6">{related.map((candidate) => <YachtCard key={candidate.id} yacht={candidate} />)}</div></section>
         </div>
-      </div>
+      </main>
     </Layout>
   );
 };

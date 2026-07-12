@@ -1,15 +1,17 @@
 import { Helmet } from "react-helmet-async";
 import { BRAND_NAME } from "@/lib/constants";
 import { canonicalUrlForPath, type RouteManifestRecord, type SchemaOwner } from "@/seo/route-manifest";
+import { normalizeSocialImage, type SocialImageMetadata } from "@/seo/social-image";
 
 interface SEOHeadProps {
   route: RouteManifestRecord;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
-  image?: string;
+  image?: string | SocialImageMetadata;
 }
 
 const SEOHead = ({ route, jsonLd, image }: SEOHeadProps) => {
   const url = canonicalUrlForPath(route.path);
+  const socialImage = normalizeSocialImage(image);
   const schemaInputs = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   const schemas = schemaInputs.filter((schema) => {
     const type = schema["@type"];
@@ -29,11 +31,15 @@ const SEOHead = ({ route, jsonLd, image }: SEOHeadProps) => {
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content={BRAND_NAME} />
       <meta property="og:type" content="website" />
-      {image && <meta property="og:image" content={image} />}
-      <meta name="twitter:card" content={image ? "summary_large_image" : "summary"} />
+      {socialImage && <meta property="og:image" content={socialImage.url} />}
+      {socialImage?.alt && <meta property="og:image:alt" content={socialImage.alt} />}
+      {socialImage?.width && <meta property="og:image:width" content={socialImage.width.toString()} />}
+      {socialImage?.height && <meta property="og:image:height" content={socialImage.height.toString()} />}
+      <meta name="twitter:card" content={socialImage ? "summary_large_image" : "summary"} />
       <meta name="twitter:title" content={route.title} />
       <meta name="twitter:description" content={route.description} />
-      {image && <meta name="twitter:image" content={image} />}
+      {socialImage && <meta name="twitter:image" content={socialImage.url} />}
+      {socialImage?.alt && <meta name="twitter:image:alt" content={socialImage.alt} />}
       {schemas.map((schema, i) => (
         <script key={i} type="application/ld+json">
           {JSON.stringify(schema)}

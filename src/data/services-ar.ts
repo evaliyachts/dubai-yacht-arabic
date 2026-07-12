@@ -51,6 +51,8 @@ export const SERVICE_SLUG_AR: Record<string, string> = {
   "wedding-parties": "حفلات-زفاف-على-يخت-في-دبي",
 };
 
+export const LEGACY_SERVICE_SLUGS = Object.keys(SERVICE_SLUG_AR);
+
 export const SERVICE_DESCRIPTION_AR: Record<string, string> = {
   "banana-boat-ride":
     "أضف المزيد من الحماس إلى رحلتك البحرية في دبي مع تجربة بنانا بوت ممتعة وآمنة. النشاط مناسب للعائلات والأصدقاء والمجموعات، مع سترات نجاة وإرشاد من الطاقم وسرعة قابلة للتعديل حسب راحتك.",

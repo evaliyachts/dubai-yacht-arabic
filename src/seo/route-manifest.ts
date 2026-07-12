@@ -1,15 +1,15 @@
 import { allLandingPages, eventPages, keywordPages } from "@/data/landingPages";
 import { offers } from "@/data/offers";
-import { services } from "@/data/services";
 import {
   getServiceDescriptionAr,
   getServicePathAr,
   getServiceTitleAr,
   LEGACY_SERVICE_INDEX_PATH_AR,
+  LEGACY_SERVICE_SLUGS,
   SERVICE_INDEX_PATH_AR,
 } from "@/data/services-ar";
-import { YACHT_AR } from "@/data/yachts-ar";
 import { yachts } from "@/data/yachts";
+import { yachtSeoTitle } from "@/data/yacht-page";
 import { DOMAIN, ROUTES } from "@/lib/constants";
 
 export type CanonicalPath = "/" | `/${string}/`;
@@ -62,23 +62,18 @@ const landingRecords: RouteManifestRecord[] = allLandingPages.map((page) => ({
   schema: ["Service", "BreadcrumbList"],
 }));
 
-const yachtRecords: RouteManifestRecord[] = yachts.map((yacht) => {
-  const localized = YACHT_AR[yacht.slug];
-  const name = localized?.name ?? yacht.name;
-  const description = localized?.description ?? yacht.description;
-
-  return {
+export const YACHT_ROUTE_RECORDS: RouteManifestRecord[] = yachts.map((yacht) => ({
     id: `yacht:${yacht.slug}`,
     path: toCanonicalPath(`/yachts/${yacht.slug}`),
     indexable: true,
     pageType: "yacht",
-    title: `${name} | يخت للإيجار في دبي — يخوت دبي`,
-    description: description.slice(0, 155).trim(),
-    h1: name,
-    primaryIntent: `تأجير ${name} في دبي`,
+    title: yachtSeoTitle(yacht),
+    description: `${yacht.name}: ${yacht.lengthFt} قدم، حتى ${yacht.guestCapacity} ضيفاً، بناء ${yacht.yearBuilt}، من ${yacht.pricePerHour.toLocaleString("ar-AE")} درهم/ساعة، والحد الأدنى ${yacht.minimumDuration} ساعات.`,
+    h1: yacht.name,
+    primaryIntent: `بيانات وحجز ${yacht.name} في دبي`,
+    lastSignificantUpdate: "2026-07-13",
     schema: ["Service", "BreadcrumbList"],
-  };
-});
+  }));
 
 const coreRecords: RouteManifestRecord[] = [
   {
@@ -213,18 +208,18 @@ const serviceRedirectTargets: Record<string, CanonicalPath> = {
   "wedding-parties": toCanonicalPath(ROUTES.wedding),
 };
 
-const nonIndexableServiceRecords: RouteManifestRecord[] = services.map((service) => {
-  const title = getServiceTitleAr(service.slug, service.title);
-  const redirectTo = serviceRedirectTargets[service.slug];
-  if (!redirectTo) throw new Error(`Missing canonical destination for service route: ${service.slug}`);
+const nonIndexableServiceRecords: RouteManifestRecord[] = LEGACY_SERVICE_SLUGS.map((slug) => {
+  const title = getServiceTitleAr(slug, slug);
+  const redirectTo = serviceRedirectTargets[slug];
+  if (!redirectTo) throw new Error(`Missing canonical destination for service route: ${slug}`);
 
   return {
-    id: `legacy-service:${service.slug}`,
-    path: toCanonicalPath(getServicePathAr(service.slug)),
+    id: `legacy-service:${slug}`,
+    path: toCanonicalPath(getServicePathAr(slug)),
     indexable: false,
     pageType: "service",
     title: `${title} | خدمات تأجير اليخوت في دبي`,
-    description: getServiceDescriptionAr(service.slug, service.description).slice(0, 155).trim(),
+    description: getServiceDescriptionAr(slug, `مسار خدمة قديم لـ ${title}`).slice(0, 155).trim(),
     h1: title,
     primaryIntent: `مسار خدمة قديم: ${title}`,
     schema: [],
@@ -232,11 +227,64 @@ const nonIndexableServiceRecords: RouteManifestRecord[] = services.map((service)
   };
 });
 
+const FORMER_YACHT_PATH = decodeURI(
+  "/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%A5%DA%A4%D8%A7%D9%84%D9%8A-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D8%AF%D8%A8%D9%8A",
+);
+const RENAMED_YACHT_PATH = toCanonicalPath("/yachts/عوامة-خاصة-55-قدم-للإيجار-في-دبي");
+const formerYachtRecord: RouteManifestRecord = {
+  id: "legacy-yacht:55-foot-private-float",
+  path: toCanonicalPath(FORMER_YACHT_PATH),
+  indexable: false,
+  pageType: "yacht",
+  title: "المسار السابق للعوامة الخاصة 55 قدم",
+  description: "انتقلت بيانات العوامة الخاصة 55 قدم إلى مسارها المحايد المعتمد.",
+  h1: "المسار السابق للعوامة الخاصة 55 قدم",
+  primaryIntent: "إعادة توجيه المسار السابق للعوامة الخاصة 55 قدم",
+  schema: [],
+  redirectTo: RENAMED_YACHT_PATH,
+};
+
+const correctedYachtRedirects = [
+  {
+    id: "legacy-yacht:azimut-50-spelling",
+    from: decodeURI("/yachts/%D8%A7%D8%B3%D8%AA%D8%A3%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA"),
+    to: toCanonicalPath("/yachts/يخت-أزيموت-50-قدم-للإيجار"),
+    name: "يخت أزيموت 50 قدم",
+  },
+  {
+    id: "legacy-yacht:oryx-50-spelling",
+    from: decodeURI("/yachts/%D8%A3%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%A7%D9%88%D8%B1%D9%83%D8%B3"),
+    to: toCanonicalPath("/yachts/يخت-أوريكس-50-قدم-للإيجار"),
+    name: "يخت أوريكس 50 قدم",
+  },
+  {
+    id: "legacy-yacht:ferretti-50-spelling",
+    from: decodeURI("/yachts/%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A"),
+    to: toCanonicalPath("/yachts/يخت-فيريتي-50-قدم-للإيجار"),
+    name: "يخت فيريتي 50 قدم",
+  },
+] as const;
+
+const correctedYachtRecords: RouteManifestRecord[] = correctedYachtRedirects.map((redirect) => ({
+  id: redirect.id,
+  path: toCanonicalPath(redirect.from),
+  indexable: false,
+  pageType: "yacht",
+  title: `المسار السابق لـ ${redirect.name}`,
+  description: `انتقلت بيانات ${redirect.name} إلى المسار العربي المصحح.`,
+  h1: `المسار السابق لـ ${redirect.name}`,
+  primaryIntent: `إعادة توجيه المسار السابق لـ ${redirect.name}`,
+  schema: [],
+  redirectTo: redirect.to,
+}));
+
 export const ROUTE_MANIFEST: RouteManifestRecord[] = [
   ...coreRecords,
   ...landingRecords,
-  ...yachtRecords,
+  ...YACHT_ROUTE_RECORDS,
   ...nonIndexableServiceRecords,
+  formerYachtRecord,
+  ...correctedYachtRecords,
 ];
 
 export const INDEXABLE_ROUTE_RECORDS = ROUTE_MANIFEST.filter((record) => record.indexable);
@@ -275,14 +323,16 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   ...redirectVariants("/faq", toCanonicalPath(ROUTES.faq)),
   ...redirectVariants("/services", toCanonicalPath(SERVICE_INDEX_PATH_AR)),
   ...redirectVariants(LEGACY_SERVICE_INDEX_PATH_AR, toCanonicalPath(SERVICE_INDEX_PATH_AR)),
-  ...services.flatMap((service) => {
-    const target = serviceRedirectTargets[service.slug];
+  ...LEGACY_SERVICE_SLUGS.flatMap((slug) => {
+    const target = serviceRedirectTargets[slug];
     return [
-      ...redirectVariants(`/services/${service.slug}`, target),
-      ...redirectVariants(`${LEGACY_SERVICE_INDEX_PATH_AR}/${service.slug}`, target),
-      ...redirectVariants(getServicePathAr(service.slug), target),
+      ...redirectVariants(`/services/${slug}`, target),
+      ...redirectVariants(`${LEGACY_SERVICE_INDEX_PATH_AR}/${slug}`, target),
+      ...redirectVariants(getServicePathAr(slug), target),
     ];
   }),
+  ...redirectVariants(FORMER_YACHT_PATH, RENAMED_YACHT_PATH),
+  ...correctedYachtRedirects.flatMap((redirect) => redirectVariants(redirect.from, redirect.to)),
 ];
 
 export const CLIENT_REDIRECTS = [
@@ -317,7 +367,7 @@ export const SITEMAP_SECTION_TARGETS = {
   ),
   keywords: keywordPages.map((page) => requireRouteRecord(page.slug)),
   events: eventPages.map((page) => requireRouteRecord(page.slug)),
-  yachts: yachtRecords,
+  yachts: YACHT_ROUTE_RECORDS,
 };
 
 export interface RouteQaExpectation {

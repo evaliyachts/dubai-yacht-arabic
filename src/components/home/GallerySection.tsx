@@ -1,6 +1,5 @@
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { yachts } from "@/data/yachts";
-import { YACHT_AR } from "@/data/yachts-ar";
 import { motion } from "framer-motion";
 
 const GallerySection = () => {
@@ -18,8 +17,8 @@ const GallerySection = () => {
 
   const galleryImages = gallerySlugs.map((slug) => {
     const yacht = yachts.find((candidate) => candidate.slug === slug);
-    if (!yacht?.images[0]) throw new Error(`Missing homepage gallery yacht: ${slug}`);
-    return { src: yacht.images[0], name: YACHT_AR[yacht.slug]?.name ?? yacht.name };
+    if (!yacht?.media[0]) throw new Error(`Missing homepage gallery yacht: ${slug}`);
+    return { ...yacht.media[0], name: yacht.name };
   });
 
   return (
@@ -46,11 +45,12 @@ const GallerySection = () => {
               className={`${heights[i]} rounded-3xl overflow-hidden break-inside-avoid group cursor-pointer liquid-glass p-0`}
             >
               <img
-                src={img.src}
-                alt={`${img.name} - تأجير يخت في دبي`}
+                src={img.path}
+                alt={img.altAr}
+                width={img.width}
+                height={img.height}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
-                referrerPolicy="no-referrer"
               />
             </motion.div>
           ))}

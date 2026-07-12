@@ -34,24 +34,24 @@ const VerifiedYachtSelection = ({ slugs }: VerifiedYachtSelectionProps) => {
               <dl className="grid grid-cols-2 gap-3 text-sm">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Ruler className="w-4 h-4 text-primary" aria-hidden="true" />
-                  <div><dt className="sr-only">الطول</dt><dd>{yacht.length_ft} قدم</dd></div>
+                  <div><dt className="sr-only">الطول</dt><dd>{yacht.lengthFt} قدم</dd></div>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Users className="w-4 h-4 text-primary" aria-hidden="true" />
-                  <div><dt className="sr-only">سعة الضيوف</dt><dd>{yacht.guest_capacity} ضيفاً</dd></div>
+                  <div><dt className="sr-only">سعة الضيوف</dt><dd>{yacht.guestCapacity} ضيفاً</dd></div>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <CalendarDays className="w-4 h-4 text-primary" aria-hidden="true" />
-                  <div><dt className="sr-only">سنة البناء</dt><dd>بناء {yacht.year_built}</dd></div>
+                  <div><dt className="sr-only">سنة البناء</dt><dd>بناء {yacht.yearBuilt}</dd></div>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Clock3 className="w-4 h-4 text-primary" aria-hidden="true" />
-                  <div><dt className="sr-only">الحد الأدنى</dt><dd>حد أدنى {yacht.minimum_duration} س</dd></div>
+                  <div><dt className="sr-only">الحد الأدنى</dt><dd>حد أدنى {yacht.minimumDuration} س</dd></div>
                 </div>
               </dl>
               <div className="mt-5 flex items-center justify-between gap-4">
                 <p className="font-display font-semibold text-primary">
-                  {yacht.price_per_hour.toLocaleString("ar-AE")} د.إ/ساعة
+                  {yacht.pricePerHour.toLocaleString("ar-AE")} د.إ/ساعة
                 </p>
                 <Link to={route.path} className="liquid-pill hover:scale-105 transition-transform">
                   بيانات اليخت

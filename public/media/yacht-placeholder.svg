@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">صورة بديلة محايدة لليخت</title>
+  <desc id="desc">رسم محايد ليخت فوق البحر لا يمثل مواصفات يخت بعينه</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07182e"/>
+      <stop offset="0.62" stop-color="#174b70"/>
+      <stop offset="1" stop-color="#4c9cba"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d5274"/>
+      <stop offset="1" stop-color="#041829"/>
+    </linearGradient>
+    <linearGradient id="hull" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9e8ee"/>
+      <stop offset="0.65" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#a8c6d2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#sky)"/>
+  <rect y="720" width="1200" height="480" fill="url(#sea)"/>
+  <circle cx="920" cy="230" r="92" fill="#f1c76b" opacity=".9"/>
+  <g fill="none" stroke="#8cc7d9" stroke-width="12" opacity=".45">
+    <path d="M0 820c120-42 240-42 360 0s240 42 360 0 240-42 480 0"/>
+    <path d="M0 920c160-46 320-46 480 0s320 46 720-4"/>
+    <path d="M0 1040c130-35 260-35 390 0s260 35 390 0 260-35 420 4"/>
+  </g>
+  <g transform="translate(190 420)">
+    <path d="M90 350h770l-86 116c-30 40-78 64-128 64H250c-59 0-113-32-142-83L50 350h40Z" fill="url(#hull)"/>
+    <path d="M270 350V224h340l122 126H270Z" fill="#eef6f8"/>
+    <path d="M350 224V132h190l70 92H350Z" fill="#dcecf1"/>
+    <path d="M430 132V70h104l36 62H430Z" fill="#f6fafb"/>
+    <path d="M385 164h72v38h-72zm94 0h72v38h-72zm-145 92h86v48h-86zm112 0h86v48h-86zm112 0h86v48h-86z" fill="#164767"/>
+    <path d="M860 350h-48l-122-126h48l122 126Z" fill="#ca9b43"/>
+    <path d="M124 401h688" stroke="#ca9b43" stroke-width="12"/>
+  </g>
+</svg>
