@@ -56,6 +56,7 @@ const landingRecords: RouteManifestRecord[] = allLandingPages.map((page) => ({
   title: page.title,
   description: page.metaDescription,
   h1: page.h1,
+  lastSignificantUpdate: page.lastSignificantUpdate,
   primaryIntent: page.h1,
   schema: ["Service", "BreadcrumbList"],
 }));
@@ -84,11 +85,12 @@ const coreRecords: RouteManifestRecord[] = [
     path: "/",
     indexable: true,
     pageType: "home",
-    title: "يخوت دبي | تأجير يخوت فاخرة في دبي للمناسبات",
+    title: "يخوت دبي | تأجير يخت خاص في دبي",
     description:
-      "يخوت دبي — تأجير يخت في دبي للمناسبات والرحلات البحرية الخاصة. أسطول فاخر، طاقم محترف، انطلاق من دبي مارينا، حجز عبر واتساب.",
-    h1: "تأجير يخوت فاخرة في دبي للمناسبات والرحلات الخاصة",
-    primaryIntent: "تأجير يخوت خاصة فاخرة للمناسبات في دبي",
+      "قارن يخوتاً خاصة في دبي حسب الطول والسعة والسعر والمدة. انطلاق الرحلات من دبي مارينا وطلب الحجز عبر واتساب أو الهاتف.",
+    h1: "تأجير يخت خاص في دبي مع يخوت دبي",
+    primaryIntent: "اختيار وحجز يخت خاص في دبي",
+    lastSignificantUpdate: "2026-07-12",
     schema: ["WebSite", "Organization", "ContactPoint"],
   },
   {

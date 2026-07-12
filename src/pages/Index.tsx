@@ -8,8 +8,9 @@ import GallerySection from "@/components/home/GallerySection";
 import RoutesSection from "@/components/home/RoutesSection";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import CTAStrip from "@/components/home/CTAStrip";
+import HomeOverviewSection from "@/components/home/HomeOverviewSection";
 import SEOHead from "@/components/shared/SEOHead";
-import { BRAND_NAME } from "@/lib/constants";
+import { BRAND_NAME, BRAND_NAME_EN } from "@/lib/constants";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
 
 const route = requireRouteRecord("/");
@@ -20,8 +21,8 @@ const Index = () => {
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: BRAND_NAME,
+      alternateName: [BRAND_NAME_EN],
       url: canonicalUrlForPath(route.path),
-      inLanguage: "ar-AE",
     },
   ];
 
@@ -29,6 +30,7 @@ const Index = () => {
     <Layout>
       <SEOHead route={route} jsonLd={jsonLd} />
       <HeroSection />
+      <HomeOverviewSection />
       <FeaturedYachts />
       <ServicesSection />
       <WhyChooseUs />

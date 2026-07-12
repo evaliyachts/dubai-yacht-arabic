@@ -14,5 +14,20 @@ describe("manifest-owned metadata output", () => {
     expect(document.head.querySelector('meta[name="keywords"]')).toBeNull();
     expect(document.head.querySelector("[hreflang]")).toBeNull();
     expect(document.head.textContent).not.toContain("LocalBusiness");
+    expect(document.head.querySelector('meta[property="og:site_name"]')).toHaveAttribute("content", "يخوت دبي");
+
+    const websiteNodes = [...document.head.querySelectorAll('script[type="application/ld+json"]')]
+      .map((script) => JSON.parse(script.textContent ?? "null"))
+      .filter((node) => node?.["@type"] === "WebSite");
+
+    expect(websiteNodes).toEqual([
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "يخوت دبي",
+        alternateName: ["Yacht DXB"],
+        url: "https://yacht-dxb.com/",
+      },
+    ]);
   });
 });
