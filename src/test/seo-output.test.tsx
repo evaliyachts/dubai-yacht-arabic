@@ -5,6 +5,11 @@ import SEOHead from "@/components/shared/SEOHead";
 import { yachts, type YachtMediaRecord } from "@/data/yachts";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
 import { normalizeSocialImage, socialImageForYachtMedia } from "@/seo/social-image";
+import {
+  CONTACT_POINT_ID,
+  ORGANIZATION_ID,
+  WEBSITE_ID,
+} from "@/seo/entities";
 
 describe("manifest-owned metadata output", () => {
   it("renders homepage metadata from the manifest without keywords or hreflang", async () => {
@@ -28,10 +33,31 @@ describe("manifest-owned metadata output", () => {
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": WEBSITE_ID,
         name: "يخوت دبي",
         alternateName: ["Yacht DXB"],
         url: "https://yacht-dxb.com/",
+        publisher: { "@id": ORGANIZATION_ID },
       },
+    ]);
+
+    const nodes = [...document.head.querySelectorAll('script[type="application/ld+json"]')]
+      .map((script) => JSON.parse(script.textContent ?? "null"));
+    expect(nodes.filter((node) => node?.["@type"] === "Organization")).toEqual([
+      expect.objectContaining({
+        "@id": ORGANIZATION_ID,
+        name: "يخوت دبي",
+        alternateName: "Yacht DXB",
+        telephone: "+971504641020",
+        contactPoint: { "@id": CONTACT_POINT_ID },
+      }),
+    ]);
+    expect(nodes.filter((node) => node?.["@type"] === "ContactPoint")).toEqual([
+      expect.objectContaining({
+        "@id": CONTACT_POINT_ID,
+        telephone: "+971504641020",
+        contactType: "reservations",
+      }),
     ]);
   });
 

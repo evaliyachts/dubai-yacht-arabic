@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MessageCircle, Phone, MapPin, Clock, Globe } from "lucide-react";
+import { MessageCircle, Phone, Check, Clock, Globe } from "lucide-react";
 import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY, ROUTES } from "@/lib/constants";
 import { NAVIGATION_TARGETS, requireRouteRecord } from "@/seo/route-manifest";
 
@@ -18,8 +18,8 @@ const Footer = () => (
             <span className="font-display font-bold text-lg text-foreground">{BRAND_NAME}</span>
           </Link>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            تأجير يخت في دبي للمناسبات والرحلات البحرية الخاصة. أسطول فاخر، طاقم محترف،
-            انطلاق من دبي مارينا.
+            قارن بيانات اليخوت الخاصة في دبي حسب السعة والسعر والمدة، ثم اطلب تأكيد
+            الموعد والتفاصيل قبل الحجز.
           </p>
           <div className="flex gap-3">
             <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="p-2 liquid-btn rounded-xl text-green-400">
@@ -41,10 +41,10 @@ const Footer = () => (
         </div>
 
         <div>
-          <h4 className="font-display font-semibold text-foreground mb-4">مناطق الخدمة</h4>
+          <h4 className="font-display font-semibold text-foreground mb-4">قبل طلب الحجز</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            {["دبي مارينا", "JBR وبلوواترز", "نخلة جميرا", "أتلانتس وبرج العرب", "ميناء دبي", "جزر العالم"].map(a => (
-              <li key={a} className="flex items-center gap-2"><MapPin className="w-3 h-3 text-primary" />{a}</li>
+            {["حدّد عدد الضيوف", "راجع سعر الساعة", "تحقق من الحد الأدنى للمدة", "اطلب تأكيد الإضافات اختيارياً"].map(a => (
+              <li key={a} className="flex items-center gap-2"><Check className="w-3 h-3 text-primary" />{a}</li>
             ))}
           </ul>
         </div>

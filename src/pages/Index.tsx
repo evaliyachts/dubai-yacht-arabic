@@ -10,21 +10,13 @@ import HomeFAQ from "@/components/home/HomeFAQ";
 import CTAStrip from "@/components/home/CTAStrip";
 import HomeOverviewSection from "@/components/home/HomeOverviewSection";
 import SEOHead from "@/components/shared/SEOHead";
-import { BRAND_NAME, BRAND_NAME_EN } from "@/lib/constants";
-import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
+import { requireRouteRecord } from "@/seo/route-manifest";
+import { contactPointEntity, organizationEntity, websiteEntity } from "@/seo/entities";
 
 const route = requireRouteRecord("/");
 
 const Index = () => {
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: BRAND_NAME,
-      alternateName: [BRAND_NAME_EN],
-      url: canonicalUrlForPath(route.path),
-    },
-  ];
+  const jsonLd = [websiteEntity(), organizationEntity(), contactPointEntity()];
 
   return (
     <Layout>

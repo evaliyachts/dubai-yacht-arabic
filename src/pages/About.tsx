@@ -4,19 +4,20 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Anchor, Heart, Shield, Users } from "lucide-react";
 import { yachts } from "@/data/yachts";
 import { requireRouteRecord } from "@/seo/route-manifest";
+import { breadcrumbEntity, organizationEntity } from "@/seo/entities";
 
 const route = requireRouteRecord("/about/");
 
 const values = [
-  { icon: Anchor, title: "أسطول فاخر", desc: "كل يخت في أسطولنا يخضع لأعلى معايير الفخامة والسلامة." },
-  { icon: Heart, title: "خدمة الضيف أولاً", desc: "نسعى دائماً لتجاوز توقعاتك في كل رحلة." },
-  { icon: Shield, title: "مرخّص ومؤمَّن", desc: "ترخيص بحري كامل وتأمين شامل لكل رحلة." },
-  { icon: Users, title: "طاقم محترف", desc: "كباتن وطاقم ضيافة بخبرة سنوات." },
+  { icon: Anchor, title: "بيانات مسجلة", desc: "يعرض الكتالوج الطول والسعة وسنة البناء والسعر والمدة الدنيا لكل يخت." },
+  { icon: Heart, title: "اختيار حسب المجموعة", desc: "تبدأ المقارنة من عدد الضيوف والتاريخ والمدة المطلوبة." },
+  { icon: Shield, title: "تأكيد قبل الحجز", desc: "يحتاج الموعد والسعر النهائي وأي طلب اختياري إلى تأكيد مباشر." },
+  { icon: Users, title: "تواصل مباشر", desc: "يمكن إرسال تفاصيل الرحلة عبر واتساب أو التواصل بالهاتف." },
 ];
 
 const About = () => (
   <Layout>
-    <SEOHead route={route} />
+    <SEOHead route={route} jsonLd={[organizationEntity(), breadcrumbEntity(route)]} />
 
     <div className="pt-28 pb-20" dir="rtl">
       <div className="container mx-auto px-4">
@@ -25,7 +26,7 @@ const About = () => (
             {route.h1}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            يخوت دبي — شركة رائدة في تأجير اليخوت الفاخرة في دبي، نقدّم تجارب بحرية لا تُنسى.
+            يخوت دبي موقع عربي لمقارنة بيانات اليخوت الخاصة وطلب الحجز في دبي.
           </p>
         </AnimatedSection>
 
@@ -38,12 +39,12 @@ const About = () => (
           <AnimatedSection direction="left" className="flex flex-col justify-center">
             <h2 className="text-3xl font-display font-bold text-foreground mb-4">قصتنا</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              بدأنا برحلة بسيطة: تقديم تجربة بحرية فاخرة لا تُنسى للعائلات والمجموعات في دبي.
-              اليوم، أصبحنا من أكثر الشركات الموثوقة في تأجير اليخوت في دبي مارينا.
+              يجمع الموقع خيارات اليخوت في كتالوج واحد يوضح البيانات المسجلة لكل خيار،
+              حتى تبدأ المقارنة من السعة والسعر والحد الأدنى للمدة.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              من رحلات غروب الشمس الرومانسية إلى الحفلات الكبيرة، نضمن لك تجربة سلسة وراقية
-              في كل مرة. ننطلق من دبي مارينا ونخدم ضيوفاً من جميع أنحاء العالم.
+              أرسل التاريخ والوقت وعدد الضيوف، ثم اطلب تأكيد اليخت والسعر النهائي وموقع
+              الالتقاء في دبي مارينا قبل ترتيب الرحلة.
             </p>
           </AnimatedSection>
         </div>

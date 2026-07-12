@@ -9,13 +9,25 @@ import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { ArrowLeft } from "lucide-react";
 import { requireRouteRecord } from "@/seo/route-manifest";
 import { SERVICE_INDEX_PATH_AR } from "@/data/services-ar";
+import { breadcrumbEntity, organizationReference } from "@/seo/entities";
 
 const route = requireRouteRecord(SERVICE_INDEX_PATH_AR);
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: route.h1,
+    serviceType: "دليل خدمات اليخوت الخاصة في دبي",
+    description: route.description,
+    provider: organizationReference(),
+  },
+  breadcrumbEntity(route),
+];
 const categoryOrder: EventServiceCategory[] = ["celebration", "private experience", "hospitality", "water activity"];
 
 const Services = () => (
   <Layout>
-    <SEOHead route={route} />
+    <SEOHead route={route} jsonLd={jsonLd} />
 
     <div className="pt-28 pb-20" dir="rtl">
       <div className="container mx-auto px-4">
