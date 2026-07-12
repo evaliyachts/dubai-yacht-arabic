@@ -66,12 +66,14 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
                 href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن: ${route.h1}`)}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-analytics-placement="landing_hero"
                 className="inline-flex items-center gap-2 px-7 py-3 liquid-btn-primary text-base"
               >
                 <MessageCircle className="w-5 h-5" /> احجز عبر واتساب
               </a>
               <a
                 href={getPhoneLink()}
+                data-analytics-placement="landing_hero"
                 className="inline-flex items-center gap-2 px-7 py-3 liquid-btn-gold text-primary"
               >
                 <Phone className="w-5 h-5" /> اتصل الآن
@@ -92,9 +94,14 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
                 <img
                   src={heroImage}
                   alt={route.h1}
+                  width={page.imageWidth ?? 1200}
+                  height={page.imageHeight ?? 1200}
+                  sizes="(min-width: 1024px) 1024px, 100vw"
                   className="w-full h-[40vh] md:h-[55vh] object-cover"
                   referrerPolicy="no-referrer"
                   loading="eager"
+                  decoding="async"
+                  {...{ fetchpriority: "high" }}
                 />
               </div>
             </AnimatedSection>
@@ -313,12 +320,14 @@ const LandingPageTemplate = ({ page }: LandingPageTemplateProps) => {
                   href={getWhatsAppLink(`مرحباً، أرغب في حجز: ${route.h1}`)}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics-placement="landing_footer"
                   className="inline-flex items-center justify-center gap-2 px-7 py-3 liquid-btn-primary"
                 >
                   <MessageCircle className="w-5 h-5" /> احجز عبر واتساب
                 </a>
                 <a
                   href={getPhoneLink()}
+                  data-analytics-placement="landing_footer"
                   className="inline-flex items-center justify-center gap-2 px-7 py-3 liquid-btn-gold text-primary"
                 >
                   <Phone className="w-5 h-5" /> اتصل الآن

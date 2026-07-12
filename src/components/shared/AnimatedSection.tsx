@@ -31,11 +31,6 @@ interface AnimatedSectionProps {
 }
 
 export const AnimatedSection = ({ children, className = "", delay = 0, direction = "up" }: AnimatedSectionProps) => {
-  const initial: Record<string, number> = { opacity: 0 };
-  if (direction === "up") initial.y = 40;
-  if (direction === "left") initial.x = -40;
-  if (direction === "right") initial.x = 40;
-
   const animate: Record<string, number> = { opacity: 1 };
   if (direction === "up") animate.y = 0;
   if (direction === "left") animate.x = 0;
@@ -43,7 +38,7 @@ export const AnimatedSection = ({ children, className = "", delay = 0, direction
 
   return (
     <motion.div
-      initial={initial}
+      initial={false}
       whileInView={animate}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
@@ -63,7 +58,7 @@ interface StaggerContainerProps {
 export const StaggerContainer = ({ children, className = "", staggerDelay = 0.1 }: StaggerContainerProps) => {
   return (
     <motion.div
-      initial="hidden"
+      initial={false}
       whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
       variants={{

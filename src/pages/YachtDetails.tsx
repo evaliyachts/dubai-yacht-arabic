@@ -22,7 +22,7 @@ const YachtDetails = () => {
   const yacht = yachts.find((candidate) => candidate.slug === normalizedSlug);
 
   if (!yacht) {
-    return <Layout><main className="pt-28 pb-20 text-center" dir="rtl"><h1 className="text-3xl font-display font-bold mb-4">اليخت غير موجود</h1><Link to={ROUTES.yachts} className="text-primary hover:underline">العودة إلى الأسطول</Link></main></Layout>;
+    return <Layout><div className="pt-28 pb-20 text-center" dir="rtl"><h1 className="text-3xl font-display font-bold mb-4">اليخت غير موجود</h1><Link to={ROUTES.yachts} className="text-primary hover:underline">العودة إلى الأسطول</Link></div></Layout>;
   }
 
   const route = requireRouteRecord(`/yachts/${yacht.slug}`);
@@ -42,7 +42,7 @@ const YachtDetails = () => {
   return (
     <Layout>
       <SEOHead route={route} jsonLd={jsonLd} image={socialImageForYachtMedia(image)} />
-      <main className="pt-28 pb-16" dir="rtl">
+      <div className="pt-28 pb-16" dir="rtl">
         <div className="container mx-auto px-4">
           <Link to={requireRouteRecord(ROUTES.yachts).path} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-5"><ArrowRight className="w-4 h-4" /> العودة إلى الأسطول</Link>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-3">{route.h1}</h1>
@@ -62,7 +62,7 @@ const YachtDetails = () => {
                 <h2 className="text-2xl font-display font-bold mb-4">نظرة موثقة على اليخت</h2>
                 <p className="text-muted-foreground leading-relaxed">{yachtOverview(yacht)}</p>
                 <dl className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-7">
-                  {facts.map(({ icon: Icon, label, value }) => <div key={label} className="liquid-glass p-4"><Icon className="w-5 h-5 text-primary mb-2" /><dt className="text-xs text-muted-foreground">{label}</dt><dd className="font-semibold mt-1">{value}</dd></div>)}
+                  {facts.map(({ icon: Icon, label, value }) => <div key={label} className="liquid-glass p-4"><dt className="flex items-center gap-2 text-xs text-muted-foreground"><Icon className="w-5 h-5 text-primary" aria-hidden="true" />{label}</dt><dd className="font-semibold mt-1">{value}</dd></div>)}
                 </dl>
               </AnimatedSection>
 
@@ -107,15 +107,15 @@ const YachtDetails = () => {
               <div className="sticky top-24 glass-card p-6 space-y-4">
                 <h2 className="text-xl font-display font-bold">استفسر عن {yacht.name}</h2>
                 <p className="text-sm text-muted-foreground">أرسل التاريخ والوقت وعدد الضيوف لتأكيد التوفر والسعر النهائي.</p>
-                <a href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن ${yacht.name} لعدد ${yacht.guestCapacity} ضيفاً أو أقل.`)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold"><MessageCircle className="w-5 h-5" /> واتساب</a>
-                <a href={getPhoneLink()} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl glass-button"><Phone className="w-5 h-5" /> اتصال</a>
+                <a href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن ${yacht.name} لعدد ${yacht.guestCapacity} ضيفاً أو أقل.`)} target="_blank" rel="noopener noreferrer" data-analytics-placement="yacht_detail_sidebar" className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold"><MessageCircle className="w-5 h-5" /> واتساب</a>
+                <a href={getPhoneLink()} data-analytics-placement="yacht_detail_sidebar" className="flex items-center justify-center gap-2 w-full py-3 rounded-xl glass-button"><Phone className="w-5 h-5" /> اتصال</a>
               </div>
             </aside>
           </div>
 
           <section className="mt-16" aria-labelledby="related-yachts"><h2 id="related-yachts" className="text-2xl md:text-3xl font-display font-bold mb-6">ثلاثة يخوت قريبة للمقارنة</h2><div className="grid md:grid-cols-3 gap-6">{related.map((candidate) => <YachtCard key={candidate.id} yacht={candidate} />)}</div></section>
         </div>
-      </main>
+      </div>
     </Layout>
   );
 };

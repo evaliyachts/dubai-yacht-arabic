@@ -17,6 +17,9 @@ import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
 import ScrollToTop from "./components/shared/ScrollToTop";
+import ConversionTracking from "./components/shared/ConversionTracking";
+import { isAnalyticsEnabled } from "./lib/analytics";
+import { MotionConfig } from "framer-motion";
 import { allLandingPages } from "./data/landingPages";
 import { ROUTES } from "./lib/constants";
 import { SERVICE_INDEX_PATH_AR } from "./data/services-ar";
@@ -34,9 +37,11 @@ export const AppProviders = ({ children, helmetContext }: AppProvidersProps) => 
     <QueryClientProvider client={queryClient}>
       <HelmetProvider context={helmetContext}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          {children}
+          <MotionConfig reducedMotion="user">
+            <Toaster />
+            <Sonner />
+            {children}
+          </MotionConfig>
         </TooltipProvider>
       </HelmetProvider>
     </QueryClientProvider>
@@ -50,6 +55,7 @@ interface AppRoutesProps {
 export const AppRoutes = ({ enableClientEffects = true }: AppRoutesProps) => (
   <>
     {enableClientEffects && <ScrollToTop />}
+    {enableClientEffects && isAnalyticsEnabled() && <ConversionTracking />}
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/yachts" element={<Yachts />} />

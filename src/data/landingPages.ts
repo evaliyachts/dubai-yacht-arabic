@@ -45,6 +45,8 @@ export interface LandingPage {
   serviceType: string; // for Service JSON-LD
   related: { label: string; path: string }[];
   image?: string; // optional hero image URL
+  imageWidth?: number;
+  imageHeight?: number;
 }
 
 export interface EventLandingPage extends LandingPage {
@@ -143,6 +145,8 @@ export const keywordPages: LandingPage[] = [
       { label: "تأجير يخوت فاخرة", path: ROUTES.luxuryYachts },
     ),
     image: `${YACHT_CDN}50_feet_royal_majesty/50_feet_royal_majesty1.webp`,
+    imageWidth: 1013,
+    imageHeight: 1024,
     lastSignificantUpdate: "2026-07-12",
   },
   {
@@ -270,6 +274,8 @@ export const keywordPages: LandingPage[] = [
       { label: "تأجير يخت للمناسبات", path: ROUTES.events },
     ),
     image: `${YACHT_CDN}88_feet_majesty_yacht_with_jacuzzi_charter/88_feet_majesty_yacht_with_jacuzzi_charter1.webp`,
+    imageWidth: 1536,
+    imageHeight: 1063,
     lastSignificantUpdate: "2026-07-12",
   },
   {
@@ -425,6 +431,8 @@ export const keywordPages: LandingPage[] = [
       ...COMMON_INTERNAL,
     ],
     image: `${YACHT_CDN}88_feet_majesty_yacht_with_jacuzzi_charter/88_feet_majesty_yacht_with_jacuzzi_charter1.webp`,
+    imageWidth: 1536,
+    imageHeight: 1063,
     lastSignificantUpdate: "2026-07-12",
   },
 ];

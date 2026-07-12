@@ -17,13 +17,13 @@ const NotFound = () => {
         <meta name="description" content="الصفحة المطلوبة غير موجودة. يمكنك العودة إلى الصفحة الرئيسية لموقع يخوت دبي." />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
-      <div className="text-center">
+      <main className="text-center">
         <h1 className="mb-4 text-4xl font-bold">404 — الصفحة غير موجودة</h1>
         <p className="mb-4 text-xl text-muted-foreground">تعذر العثور على الصفحة المطلوبة.</p>
         <a href="/" className="text-primary underline hover:text-primary/90">
           العودة إلى الرئيسية
         </a>
-      </div>
+      </main>
     </div>
   );
 };

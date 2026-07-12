@@ -35,15 +35,18 @@ describe("existing stagger image carousel", () => {
     expect(screen.getByAltText("اليخت التجريبي — صورة 1")).toHaveAttribute("fetchpriority", "high");
     expect(screen.getByAltText("اليخت التجريبي — صورة 2")).toHaveAttribute("loading", "lazy");
     expect(screen.getByRole("button", { name: /فتح اليخت التجريبي — صورة 1/ })).toHaveClass("motion-reduce:transition-none");
+    expect(screen.getByRole("status")).toHaveTextContent("الصورة 1 من 3");
   });
 
   it("moves with previous/next controls and brings a selected side image to the center", async () => {
     renderCarousel();
     fireEvent.click(screen.getByRole("button", { name: "الصورة التالية" }));
     await waitFor(() => expect(screen.getByRole("button", { name: /فتح اليخت التجريبي — صورة 2/ })).toHaveAttribute("aria-current", "true"));
+    expect(screen.getByRole("status")).toHaveTextContent("الصورة 2 من 3");
 
     fireEvent.click(screen.getByRole("button", { name: /اختيار اليخت التجريبي — صورة 3/ }));
     await waitFor(() => expect(screen.getByRole("button", { name: /فتح اليخت التجريبي — صورة 3/ })).toHaveAttribute("aria-current", "true"));
+    expect(screen.getByRole("status")).toHaveTextContent("الصورة 3 من 3");
 
     fireEvent.click(screen.getByRole("button", { name: "الصورة السابقة" }));
     await waitFor(() => expect(screen.getByRole("button", { name: /فتح اليخت التجريبي — صورة 2/ })).toHaveAttribute("aria-current", "true"));

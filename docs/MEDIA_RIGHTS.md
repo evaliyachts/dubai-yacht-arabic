@@ -33,6 +33,15 @@ Production yacht records may reference only media whose `rightsRecordId` exists 
 
 The approved attached media import is intentionally limited to the `image_url` and `gallery` arrays for numeric IDs 2–13 and 15–25. Exact duplicate URLs are removed without reordering; the known Ferretti `hhttps` typo is corrected. No descriptions, names, specifications, prices, schema or business data are imported. The remote images are not copied or rehosted.
 
+### Rejected source entries
+
+The following attached Royal Majesty entries returned HTTP 403 during the 2026-07-13 verification. They are retained here only as rejected provenance and are not present in any production gallery, card, social metadata or generated HTML:
+
+- `https://yacht.fra1.cdn.digitaloceanspaces.com/yachts/50_feet_royal_majesty/50_feet_royal_majesty7.webp`
+- `https://yacht.fra1.cdn.digitaloceanspaces.com/yachts/50_feet_royal_majesty/50_feet_royal_majesty9.webp`
+
+`npm run media:verify` has no production-gallery exception list: every retained remote URL must return a supported image successfully and match its recorded dimensions.
+
 Benetti ID 14 remains unresolved and continues to use only `media-neutral-placeholder-001`. Its source-feed images remain excluded.
 
 The attached file contains legacy names and other unapproved fields. Those values are not public media metadata and must never be restored. Public alt text is generated from the current Yacht DXB name.

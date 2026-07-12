@@ -38,7 +38,7 @@ const GallerySection = () => {
           {galleryImages.map((img, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={false}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
@@ -49,8 +49,10 @@ const GallerySection = () => {
                 alt={img.altAr}
                 width={img.width}
                 height={img.height}
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
+                decoding="async"
               />
             </motion.div>
           ))}

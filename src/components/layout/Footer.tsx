@@ -4,7 +4,7 @@ import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISP
 import { NAVIGATION_TARGETS, requireRouteRecord } from "@/seo/route-manifest";
 
 const Footer = () => (
-  <footer className="liquid-divider pt-16 pb-8 border-t border-border/30" dir="rtl">
+  <footer className="liquid-divider pt-16 pb-8 border-t border-border/30" dir="rtl" data-analytics-region="footer">
     <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
         <div>
@@ -12,6 +12,10 @@ const Footer = () => (
             <img
               src="/favicon.png"
               alt={BRAND_NAME}
+              width={181}
+              height={181}
+              loading="lazy"
+              decoding="async"
               className="h-9 w-9 rounded-md"
               onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
             />
@@ -22,10 +26,10 @@ const Footer = () => (
             الموعد والتفاصيل قبل الحجز.
           </p>
           <div className="flex gap-3">
-            <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="p-2 liquid-btn rounded-xl text-green-400">
+            <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" data-analytics-placement="footer" aria-label="واتساب" className="p-2 liquid-btn rounded-xl text-green-400">
               <MessageCircle className="w-4 h-4" />
             </a>
-            <a href={getPhoneLink()} className="p-2 liquid-btn-gold rounded-xl text-primary">
+            <a href={getPhoneLink()} data-analytics-placement="footer" aria-label="اتصل بنا" className="p-2 liquid-btn-gold rounded-xl text-primary">
               <Phone className="w-4 h-4" />
             </a>
           </div>

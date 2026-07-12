@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { MessageCircle, Compass, Phone } from "lucide-react";
 import { getWhatsAppLink, getPhoneLink, ROUTES } from "@/lib/constants";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { requireRouteRecord } from "@/seo/route-manifest";
 
 const HERO_DESKTOP = "https://dubai-yacht.fra1.cdn.digitaloceanspaces.com/dubai_yacht_luxury_dt.avif";
@@ -11,7 +10,6 @@ const HERO_MOBILE = "https://dubai-yacht.fra1.cdn.digitaloceanspaces.com/dubai_y
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const textY = useTransform(scrollYProgress, [0, 1], [0, 80]);
@@ -20,23 +18,31 @@ const HeroSection = () => {
   return (
     <section ref={ref} className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden" dir="rtl">
       <motion.div style={{ y: imgY }} className="absolute inset-0">
-        <img
-          src={isMobile ? HERO_MOBILE : HERO_DESKTOP}
-          alt="تأجير يخت فاخر في دبي مارينا للمناسبات والرحلات الخاصة"
-          className="w-full h-full object-cover scale-110"
-          loading="eager"
-        />
+        <picture className="block w-full h-full">
+          <source media="(max-width: 639px)" srcSet={HERO_MOBILE} />
+          <img
+            src={HERO_DESKTOP}
+            alt="تأجير يخت فاخر في دبي مارينا للمناسبات والرحلات الخاصة"
+            width={1920}
+            height={1080}
+            sizes="100vw"
+            className="w-full h-full object-cover scale-110"
+            loading="eager"
+            decoding="async"
+            {...{ fetchpriority: "high" }}
+          />
+        </picture>
       </motion.div>
 
       <div className="absolute inset-0 hero-gradient" />
 
       <motion.div style={{ y: textY, opacity }} className="relative z-10 text-center max-w-4xl mx-auto px-4 pb-24">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
+        <motion.div initial={false} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
           <span className="liquid-pill inline-block mb-4">تأجير يخوت خاصة في دبي</span>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 40 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-foreground mb-4 leading-tight"
@@ -46,7 +52,7 @@ const HeroSection = () => {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-base sm:text-lg md:text-xl leading-snug text-white/85 mb-7 font-light max-w-2xl mx-auto"
@@ -56,7 +62,7 @@ const HeroSection = () => {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
           className="flex flex-row gap-3 justify-center flex-wrap"
@@ -65,6 +71,7 @@ const HeroSection = () => {
             href={getWhatsAppLink()}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-placement="homepage_hero"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 liquid-btn-primary text-base hover:scale-105 transition-transform"
           >
             <MessageCircle className="w-5 h-5" /> أرسل تفاصيل الرحلة
@@ -79,6 +86,7 @@ const HeroSection = () => {
 
           <a
             href={getPhoneLink()}
+            data-analytics-placement="homepage_hero"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 liquid-btn-gold text-primary text-base hover:scale-105 transition-transform"
           >
             <Phone className="w-5 h-5" /> اتصل بنا

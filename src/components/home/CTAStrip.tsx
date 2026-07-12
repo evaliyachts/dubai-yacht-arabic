@@ -20,12 +20,14 @@ const CTAStrip = () => (
             href={getWhatsAppLink()}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-placement="homepage_cta"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn-primary text-base hover:scale-105 transition-transform"
           >
             <MessageCircle className="w-5 h-5" /> واتساب
           </a>
           <a
             href={getPhoneLink()}
+            data-analytics-placement="homepage_cta"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 liquid-btn text-foreground hover:scale-105 transition-transform"
           >
             <Phone className="w-5 h-5" /> اتصل الآن

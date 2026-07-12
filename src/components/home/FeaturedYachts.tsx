@@ -46,25 +46,27 @@ const FeaturedYachts = () => {
                     alt={yacht.media[0].altAr}
                     width={yacht.media[0].width}
                     height={yacht.media[0].height}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 </div>
                 <div className="p-5">
                   <h3 className="text-xl font-display font-semibold text-foreground mb-4">{yacht.name}</h3>
                   <dl className="grid grid-cols-2 gap-3 text-sm text-muted-foreground mb-5">
-                    <div className="flex items-center gap-2"><Ruler className="w-4 h-4 text-primary" /><dt className="sr-only">الطول</dt><dd>{yacht.lengthFt} قدم</dd></div>
-                    <div className="flex items-center gap-2"><Users className="w-4 h-4 text-primary" /><dt className="sr-only">السعة</dt><dd>{yacht.guestCapacity} ضيفاً</dd></div>
-                    <div className="flex items-center gap-2"><CalendarDays className="w-4 h-4 text-primary" /><dt className="sr-only">سنة البناء</dt><dd>بناء {yacht.yearBuilt}</dd></div>
-                    <div className="flex items-center gap-2"><Clock3 className="w-4 h-4 text-primary" /><dt className="sr-only">الحد الأدنى</dt><dd>{yacht.minimumDuration} س كحد أدنى</dd></div>
+                    <div><dt className="sr-only">الطول</dt><dd className="flex items-center gap-2"><Ruler className="w-4 h-4 text-primary" aria-hidden="true" />{yacht.lengthFt} قدم</dd></div>
+                    <div><dt className="sr-only">السعة</dt><dd className="flex items-center gap-2"><Users className="w-4 h-4 text-primary" aria-hidden="true" />{yacht.guestCapacity} ضيفاً</dd></div>
+                    <div><dt className="sr-only">سنة البناء</dt><dd className="flex items-center gap-2"><CalendarDays className="w-4 h-4 text-primary" aria-hidden="true" />بناء {yacht.yearBuilt}</dd></div>
+                    <div><dt className="sr-only">الحد الأدنى</dt><dd className="flex items-center gap-2"><Clock3 className="w-4 h-4 text-primary" aria-hidden="true" />{yacht.minimumDuration} س كحد أدنى</dd></div>
                   </dl>
                   <p className="text-primary font-display text-lg font-semibold mb-4">
                     {yacht.pricePerHour.toLocaleString("ar-AE")} <span className="text-xs text-muted-foreground font-body">د.إ/ساعة</span>
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Link to={route.path} className="liquid-pill hover:scale-105 transition-transform">بيانات اليخت</Link>
-                    <a href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن ${yacht.name}.`)} target="_blank" rel="noopener noreferrer" className="liquid-pill hover:scale-105 transition-transform inline-flex items-center gap-2">
+                    <a href={getWhatsAppLink(`مرحباً، أرغب في الاستفسار عن ${yacht.name}.`)} target="_blank" rel="noopener noreferrer" data-analytics-placement="homepage_featured_yacht" className="liquid-pill hover:scale-105 transition-transform inline-flex items-center gap-2">
                       <MessageCircle className="w-4 h-4" /> استفسار
                     </a>
                   </div>

@@ -74,6 +74,8 @@ const ImageCard = ({
         className="w-full h-full object-cover"
         referrerPolicy="no-referrer"
         loading={isInitialPrimary ? "eager" : "lazy"}
+        decoding="async"
+        sizes="(min-width: 640px) 420px, 300px"
         {...(isInitialPrimary ? { fetchpriority: "high" } : {})}
         onError={() => handleFailure(media.path)}
       />
@@ -109,6 +111,12 @@ export const StaggerImageCarousel = ({
   );
   const [fullscreenMedia, setFullscreenMedia] = useState<YachtMediaRecord | null>(null);
   const initialPrimaryPath = images[0]?.path ?? fallbackSrc;
+  const orderedUsableImages = images.filter((media) => !failedSources.current.has(media.path));
+  const currentPosition = Math.max(
+    1,
+    orderedUsableImages.findIndex((media) => media.path === imageList[0]?.path) + 1,
+  );
+  const positionTotal = orderedUsableImages.length || 1;
 
   useEffect(() => {
     const usable = images.filter((media) => !failedSources.current.has(media.path));
@@ -164,6 +172,9 @@ export const StaggerImageCarousel = ({
         onKeyDown={handleKeyDown}
         aria-label={`معرض صور ${altPrefix}`}
       >
+        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          الصورة {currentPosition} من {positionTotal}
+        </p>
         {imageList.map((media, index) => {
           const position = carouselPosition(index, imageList.length);
           return (
@@ -222,6 +233,7 @@ export const StaggerImageCarousel = ({
               height={fullscreenMedia.height}
               className="max-w-full max-h-[90vh] object-contain"
               referrerPolicy="no-referrer"
+              decoding="async"
               onError={() => handleFailure(fullscreenMedia.path)}
             />
           )}

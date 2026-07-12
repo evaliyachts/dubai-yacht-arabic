@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useEffect, useRef, useState, FormEvent } from "react";
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/shared/SEOHead";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { yachts } from "@/data/yachts";
 import { requireRouteRecord } from "@/seo/route-manifest";
 import { breadcrumbEntity, contactPointEntity, organizationEntity } from "@/seo/entities";
+import { trackConversionEvent } from "@/lib/analytics";
+import { openPreparedWhatsApp } from "@/lib/open-whatsapp";
 
 const route = requireRouteRecord("/contact/");
 
@@ -20,14 +22,27 @@ const OCCASIONS = [
 const Contact = () => {
   const { toast } = useToast();
   const [honeypot, setHoneypot] = useState("");
+  const [formStatus, setFormStatus] = useState("");
+  const [fallbackUrl, setFallbackUrl] = useState<string | null>(null);
+  const hasStarted = useRef(false);
+  const fallbackLink = useRef<HTMLAnchorElement>(null);
   const [form, setForm] = useState({
     name: "", phone: "", date: "", time: "", guests: "",
     occasion: "", yacht: "", notes: "",
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  useEffect(() => {
+    if (fallbackUrl) fallbackLink.current?.focus();
+  }, [fallbackUrl]);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (honeypot) return;
+    if (!e.currentTarget.checkValidity()) {
+      e.currentTarget.reportValidity();
+      return;
+    }
+    trackConversionEvent("booking_form_submit", { placement: "contact_form", formId: "booking_contact" });
     const msg = `استفسار جديد:
 الاسم: ${form.name}
 الهاتف: ${form.phone}
@@ -37,11 +52,32 @@ const Contact = () => {
 نوع المناسبة: ${form.occasion}
 اختيار اليخت: ${form.yacht}
 ملاحظات: ${form.notes}`;
-    window.open(getWhatsAppLink(msg), "_blank");
-    toast({ title: "تم فتح واتساب", description: "راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار." });
+    const preparedUrl = getWhatsAppLink(msg);
+    setFallbackUrl(null);
+
+    if (openPreparedWhatsApp(preparedUrl)) {
+      trackConversionEvent("whatsapp_click", { placement: "contact_form_submit", formId: "booking_contact" });
+      setFormStatus("تم فتح نافذة واتساب. راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار.");
+      toast({ title: "تم فتح نافذة واتساب", description: "راجع تفاصيل الرسالة ثم أرسلها لإكمال الاستفسار." });
+      return;
+    }
+
+    setFallbackUrl(preparedUrl);
+    setFormStatus("تعذر فتح واتساب تلقائياً. استخدم رابط واتساب أدناه لإكمال الاستفسار.");
+    toast({ title: "تعذر فتح واتساب تلقائياً", description: "استخدم رابط واتساب الظاهر لإكمال الاستفسار." });
   };
 
-  const inputClass = "w-full px-4 py-3 rounded-2xl bg-secondary/40 border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm backdrop-blur-sm text-right";
+  const handleFormStart = (target: EventTarget | null) => {
+    if (hasStarted.current || !(target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement)) return;
+    if (target.name === "website") return;
+    hasStarted.current = true;
+    trackConversionEvent("booking_form_start", { placement: "contact_form", formId: "booking_contact" });
+  };
+
+  const updateField = (field: keyof typeof form, value: string) => setForm((current) => ({ ...current, [field]: value }));
+
+  const inputClass = "w-full px-4 py-3 rounded-2xl bg-secondary/40 border border-border/50 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background text-sm backdrop-blur-sm text-right";
+  const labelClass = "mb-2 block text-sm font-medium text-foreground";
 
   return (
     <Layout>
@@ -62,41 +98,87 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-5xl mx-auto">
             <div className="lg:col-span-2">
               <AnimatedSection>
-                <form onSubmit={handleSubmit} className="liquid-glass-gold p-6 md:p-8 space-y-4">
-                  <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
+                <form
+                  id="booking-contact"
+                  onSubmit={handleSubmit}
+                  onChangeCapture={(event) => handleFormStart(event.target)}
+                  className="liquid-glass-gold p-6 md:p-8 space-y-4"
+                  aria-describedby="booking-form-guidance booking-form-status"
+                >
+                  <p id="booking-form-guidance" className="text-sm text-muted-foreground">
+                    الحقول المعلّمة بنجمة مطلوبة. إرسال النموذج يفتح رسالة واتساب لمراجعتها قبل الإرسال.
+                  </p>
+                  <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input required placeholder="الاسم *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
-                    <input required type="tel" placeholder="رقم الهاتف *" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={inputClass} />
+                    <div>
+                      <label htmlFor="booking-name" className={labelClass}>الاسم *</label>
+                      <input id="booking-name" name="name" required autoComplete="name" placeholder="اكتب الاسم" value={form.name} onChange={(e) => updateField("name", e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                      <label htmlFor="booking-phone" className={labelClass}>رقم الهاتف *</label>
+                      <input id="booking-phone" name="phone" required type="tel" autoComplete="tel" inputMode="tel" placeholder="مثال: +971 50 000 0000" value={form.phone} onChange={(e) => updateField("phone", e.target.value)} className={inputClass} />
+                    </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input type="date" placeholder="التاريخ" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
-                    <input type="time" placeholder="وقت الرحلة" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass} />
+                    <div>
+                      <label htmlFor="booking-date" className={labelClass}>تاريخ الرحلة المطلوب</label>
+                      <input id="booking-date" name="date" type="date" value={form.date} onChange={(e) => updateField("date", e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                      <label htmlFor="booking-time" className={labelClass}>وقت الرحلة المطلوب</label>
+                      <input id="booking-time" name="time" type="time" value={form.time} onChange={(e) => updateField("time", e.target.value)} className={inputClass} />
+                    </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input type="number" min="1" placeholder="عدد الضيوف" value={form.guests} onChange={(e) => setForm({ ...form, guests: e.target.value })} className={inputClass} />
-                    <select value={form.occasion} onChange={(e) => setForm({ ...form, occasion: e.target.value })} className={inputClass}>
-                      <option value="">نوع المناسبة</option>
-                      {OCCASIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+                    <div>
+                      <label htmlFor="booking-guests" className={labelClass}>عدد الضيوف</label>
+                      <input id="booking-guests" name="guests" type="number" inputMode="numeric" min="1" placeholder="أدخل العدد الإجمالي" value={form.guests} onChange={(e) => updateField("guests", e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                      <label htmlFor="booking-occasion" className={labelClass}>نوع المناسبة</label>
+                      <select id="booking-occasion" name="occasion" value={form.occasion} onChange={(e) => updateField("occasion", e.target.value)} className={inputClass}>
+                        <option value="">بدون مناسبة محددة</option>
+                        {OCCASIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="booking-yacht" className={labelClass}>اليخت المفضل</label>
+                    <select id="booking-yacht" name="yacht" value={form.yacht} onChange={(e) => updateField("yacht", e.target.value)} className={inputClass}>
+                      <option value="">لم أحدد يختاً بعد</option>
+                      {yachts.map((y) => (
+                        <option key={y.slug} value={y.name}>{y.name}</option>
+                      ))}
                     </select>
                   </div>
-                  <select value={form.yacht} onChange={(e) => setForm({ ...form, yacht: e.target.value })} className={inputClass}>
-                    <option value="">اختيار اليخت (اختياري)</option>
-                    {yachts.map((y) => (
-                      <option key={y.slug} value={y.name}>
-                        {y.name}
-                      </option>
-                    ))}
-                  </select>
-                  <textarea rows={4} placeholder="ملاحظات إضافية" value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className={inputClass} />
+                  <div>
+                    <label htmlFor="booking-notes" className={labelClass}>ملاحظات إضافية</label>
+                    <textarea id="booking-notes" name="notes" rows={4} placeholder="طلبات تحتاج إلى تأكيد أو معلومات أخرى" value={form.notes} onChange={(e) => updateField("notes", e.target.value)} className={inputClass} />
+                  </div>
                   <button type="submit" className="w-full flex items-center justify-center gap-2 py-3 liquid-btn-primary text-base">
                     <Send className="w-4 h-4" /> أرسل الاستفسار عبر واتساب
                   </button>
+                  <div id="booking-form-status" role="status" aria-live="polite" aria-atomic="true" className="min-h-6 text-sm text-muted-foreground">
+                    <p>{formStatus}</p>
+                    {fallbackUrl && (
+                      <a
+                        ref={fallbackLink}
+                        href={fallbackUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-analytics-placement="contact_form_fallback"
+                        className="mt-2 inline-flex rounded-lg font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      >
+                        افتح رسالة واتساب الجاهزة
+                      </a>
+                    )}
+                  </div>
                 </form>
               </AnimatedSection>
             </div>
 
             <AnimatedSection delay={0.2} className="space-y-4">
-              <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="liquid-glass p-5 flex items-center gap-4 hover:border-green-500/20 transition-colors block">
+              <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" data-analytics-placement="contact_sidebar" className="liquid-glass p-5 flex items-center gap-4 hover:border-green-500/20 transition-colors block">
                 <div className="w-10 h-10 liquid-btn rounded-xl flex items-center justify-center shrink-0 text-green-400">
                   <MessageCircle className="w-5 h-5" />
                 </div>
@@ -105,7 +187,7 @@ const Contact = () => {
                   <p className="text-xs text-muted-foreground">إرسال تفاصيل الاستفسار</p>
                 </div>
               </a>
-              <a href={getPhoneLink()} className="liquid-glass p-5 flex items-center gap-4 hover:border-primary/20 transition-colors block">
+              <a href={getPhoneLink()} data-analytics-placement="contact_sidebar" className="liquid-glass p-5 flex items-center gap-4 hover:border-primary/20 transition-colors block">
                 <div className="w-10 h-10 liquid-icon rounded-xl shrink-0">
                   <Phone className="w-5 h-5 text-primary" />
                 </div>

@@ -15,10 +15,14 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="min-h-screen flex flex-col" dir="rtl">
+      <a href="#main-content" className="skip-link">تخطي إلى المحتوى الرئيسي</a>
       <Header />
       <motion.main
+        id="main-content"
+        tabIndex={-1}
+        data-analytics-region="page_content"
         key={location.pathname}
-        initial={{ opacity: 0, y: 20 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="flex-1"
