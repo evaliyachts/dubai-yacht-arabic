@@ -30,6 +30,6 @@ export const generateRobotsTxt = () =>
 export const generateRedirects = (redirects: LegacyRedirect[]) =>
   [
     "# Generated from src/seo/route-manifest.ts. Specific legacy rules only; no SPA wildcard.",
-    ...redirects.map(({ from, to, status }) => `${from} ${to} ${status}`),
+    ...redirects.map(({ from, to, status }) => `${encodeURI(from)} ${encodeURI(to)} ${status}`),
     "",
   ].join("\n");

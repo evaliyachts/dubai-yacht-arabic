@@ -1,4 +1,4 @@
-import { generateSitemap } from "@/seo/output-generators";
+import { generateRedirects, generateSitemap } from "@/seo/output-generators";
 import {
   canonicalUrlForPath,
   INDEXABLE_ROUTE_RECORDS,
@@ -48,6 +48,13 @@ describe("SEO route manifest", () => {
 
     expect(withoutDate).not.toContain("<lastmod>");
     expect(withDate).toContain("<lastmod>2026-07-01</lastmod>");
+  });
+
+  it("URL-encodes Arabic Netlify redirect paths", () => {
+    const redirects = generateRedirects([{ from: "/الخدمات/سباحة/", to: "/سباحة/", status: 301 }]);
+
+    expect(redirects).toContain("/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9/");
+    expect(redirects).toContain("/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9/ 301");
   });
 
   it.each(["title", "description", "h1", "primaryIntent"] as const)("rejects duplicate %s values", (field) => {
