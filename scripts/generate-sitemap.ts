@@ -16,8 +16,6 @@ interface SitemapEntry {
   priority?: string;
 }
 
-const today = new Date().toISOString().split("T")[0];
-
 const staticEntries: SitemapEntry[] = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/yachts", changefreq: "weekly", priority: "0.9" },
@@ -48,10 +46,7 @@ const serviceEntries: SitemapEntry[] = services.map((s) => ({
   priority: "0.7",
 }));
 
-const entries: SitemapEntry[] = [...staticEntries, ...landingEntries, ...yachtEntries, ...serviceEntries].map((e) => ({
-  lastmod: today,
-  ...e,
-}));
+const entries: SitemapEntry[] = [...staticEntries, ...landingEntries, ...yachtEntries, ...serviceEntries];
 
 function generateSitemap(entries: SitemapEntry[]) {
   const urls = entries.map((e) =>
