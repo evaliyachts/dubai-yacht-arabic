@@ -7,6 +7,7 @@ const failures = [];
 
 const fail = (route, message) => failures.push(`${route}: ${message}`);
 const extract = (source, pattern) => source.match(pattern)?.[1]?.trim();
+const jsonLdPattern = /<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi;
 
 if (!existsSync(sitemapPath)) {
   console.error("SEO static check requires a completed npm run build");
@@ -32,6 +33,7 @@ for (const canonicalUrl of sitemapUrls) {
   }
 
   const html = readFileSync(filePath, "utf8");
+  const htmlTag = html.match(/<html\b([^>]*)>/i)?.[1] ?? "";
   const title = extract(html, /<title[^>]*>([\s\S]*?)<\/title>/i);
   const description = extract(html, /<meta[^>]*name="description"[^>]*content="([^"]+)"/i);
   const canonical = extract(html, /<link[^>]*rel="canonical"[^>]*href="([^"]+)"/i);
@@ -39,12 +41,26 @@ for (const canonicalUrl of sitemapUrls) {
 
   if (!title) fail(route, "missing title");
   if (!description) fail(route, "missing description");
+  if (!/\blang=["']ar-AE["']/i.test(htmlTag)) fail(route, 'missing html lang="ar-AE"');
+  if (!/\bdir=["']rtl["']/i.test(htmlTag)) fail(route, 'missing html dir="rtl"');
   if (canonical !== canonicalUrl) fail(route, `canonical mismatch (${canonical ?? "missing"})`);
   if (!robots?.toLowerCase().includes("index")) fail(route, "missing index robots directive");
   if (!/<h1(?:\s[^>]*)?>[\s\S]*?[^\s<][\s\S]*?<\/h1>/i.test(html)) fail(route, "missing visible H1");
   if (!/<main(?:\s[^>]*)?>[\s\S]*?[^\s<][\s\S]*?<\/main>/i.test(html)) fail(route, "missing initial main content");
   if (html.includes("<!--app-html-->") || html.includes("<!--app-head-->")) fail(route, "unreplaced template marker");
   if (html.includes("yacht-dxb.netlify.app")) fail(route, "preview hostname in metadata or content");
+
+  const jsonLdBlocks = [...html.matchAll(jsonLdPattern)];
+  for (const [index, block] of jsonLdBlocks.entries()) {
+    try {
+      JSON.parse(block[1]);
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : String(error);
+      fail(route, `JSON-LD block ${index + 1} is invalid (${reason})`);
+    }
+  }
+
+  if (route === "/" && jsonLdBlocks.length === 0) fail(route, "homepage requires at least one valid JSON-LD block");
 }
 
 const notFoundPath = resolve(distDir, "404.html");
