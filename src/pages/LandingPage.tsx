@@ -11,6 +11,7 @@ const LandingPage = () => {
   } catch {
     decodedPathname = pathname;
   }
+  if (decodedPathname !== "/") decodedPathname = decodedPathname.replace(/\/+$/, "");
 
   const page = getLandingBySlug(decodedPathname);
   if (!page) return <NotFound />;

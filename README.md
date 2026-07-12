@@ -23,6 +23,16 @@ Node 22 is not a normal development or deployment target. It may be used only as
 npm run dev
 ```
 
+## Static production build
+
+```bash
+npm run build
+npm run seo:check
+npm run preview
+```
+
+The production build renders each current canonical route to its own `dist/<route>/index.html` and creates a standalone `dist/404.html`. Netlify serves those files with Pretty URLs and no SPA catch-all rewrite, so unknown paths return a real HTTP 404.
+
 ## Quality gate
 
 ```bash
