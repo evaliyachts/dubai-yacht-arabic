@@ -9,6 +9,7 @@ import { capacityGuidance, relatedYachts, yachtFaqs, yachtOverview } from "@/dat
 import { buildYachtJsonLd } from "@/data/yacht-page";
 import { ROUTES, getPhoneLink, getWhatsAppLink } from "@/lib/constants";
 import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
+import { socialImageForYachtMedia } from "@/seo/social-image";
 
 const normalizeYachtSlug = (slug?: string) => {
   if (!slug) return "";
@@ -39,7 +40,7 @@ const YachtDetails = () => {
 
   return (
     <Layout>
-      <SEOHead route={route} jsonLd={jsonLd} image={image.path} />
+      <SEOHead route={route} jsonLd={jsonLd} image={socialImageForYachtMedia(image)} />
       <main className="pt-28 pb-16" dir="rtl">
         <div className="container mx-auto px-4">
           <Link to={requireRouteRecord(ROUTES.yachts).path} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-5"><ArrowRight className="w-4 h-4" /> العودة إلى الأسطول</Link>

@@ -10,6 +10,8 @@ The 23 records already present in `src/data/yachts.ts` before PR 5 supplied the 
 
 The former branded 55-foot record was renamed to the factual neutral name `عوامة خاصة 55 قدم للإيجار في دبي`. Only the legacy redirect retains its former inbound URL as required; that URL is not a canonical page, sitemap member, asset path, or internal link.
 
+PR 5's correction commit normalized three obvious generic Arabic wording errors without changing specifications or uncertain manufacturer/model identities: `يخت أزيموت 50 قدم للإيجار`, `يخت أوريكس 50 قدم للإيجار`, and `يخت فيريتي 50 قدم للإيجار`. Their former malformed paths remain only as direct permanent redirects to the corrected canonical routes.
+
 One source conflict remains visible in the audited source data: the record named and slugged as `يخت دي تري 151 قدم للايجار` stores `lengthFt: 150`. PR 5 preserves both source values without silently changing either. A future factual correction requires approved evidence and a redirect review if the slug changes.
 
 ## Benetti static snapshot

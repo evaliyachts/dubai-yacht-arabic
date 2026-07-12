@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { FLEET_RANGES, relatedYachts, yachtFaqs, yachtOverview } from "@/data/fleet";
 import { validateYachtRecords } from "@/data/yacht-schema";
 import { yachts, type YachtRecord } from "@/data/yachts";
-import { buildYachtJsonLd } from "@/data/yacht-page";
+import { buildYachtJsonLd, validateYachtServiceName, yachtSeoTitle } from "@/data/yacht-page";
 import {
   INDEXABLE_ROUTE_RECORDS,
   LEGACY_REDIRECTS,
@@ -16,6 +16,11 @@ import {
 const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 const oldInboundPath = decodeURI("/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%A5%DA%A4%D8%A7%D9%84%D9%8A-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D8%AF%D8%A8%D9%8A");
 const newPath = "/yachts/عوامة-خاصة-55-قدم-للإيجار-في-دبي/";
+const correctedRoutes = [
+  ["/yachts/استأجار-يخت-50-قدم-ازيموت", "/yachts/يخت-أزيموت-50-قدم-للإيجار/"],
+  ["/yachts/أجار-يخت-50-قدم-اوركس", "/yachts/يخت-أوريكس-50-قدم-للإيجار/"],
+  ["/yachts/يجار-يخت-50-قدم-فيريتتي", "/yachts/يخت-فيريتي-50-قدم-للإيجار/"],
+] as const;
 
 describe("PR 5 verified yacht catalogue", () => {
   it("contains exactly 24 strict, unique, validated records", () => {
@@ -60,6 +65,14 @@ describe("PR 5 verified yacht catalogue", () => {
     expect(() => validateYachtRecords([{ ...base, media: [{ ...base.media[0], altAr: "صورة إڤالي" }] }])).toThrow(/prohibited branding/);
   });
 
+  it("rejects malformed Arabic yacht names and slugs", () => {
+    const base = clone(yachts[0]);
+    expect(() => validateYachtRecords([{ ...base, name: "استأجار يخت 50 قدم" }])).toThrow(/malformed Arabic/);
+    expect(() => validateYachtRecords([{ ...base, name: "أجار يخت 50 قدم" }])).toThrow(/malformed Arabic/);
+    expect(() => validateYachtRecords([{ ...base, slug: "يجار-يخت-50-قدم" }])).toThrow(/malformed Arabic/);
+    expect(JSON.stringify(yachts)).not.toMatch(/استأجار|"name":"أجار يخت|"slug":"يجار-/);
+  });
+
   it("includes the verified static Benetti snapshot without remote media", () => {
     const benetti = yachts.find((yacht) => yacht.id === "yacht-14");
     expect(benetti).toMatchObject({
@@ -90,6 +103,17 @@ describe("PR 5 verified yacht catalogue", () => {
     expect(LEGACY_REDIRECTS).toContainEqual({ from: oldInboundPath, to: newPath, status: 301 });
   });
 
+  it("normalizes the three obvious Arabic names and redirects every former path directly", () => {
+    expect(yachts.find((yacht) => yacht.id === "yacht-06")).toMatchObject({ name: "يخت أزيموت 50 قدم للإيجار", slug: "يخت-أزيموت-50-قدم-للإيجار" });
+    expect(yachts.find((yacht) => yacht.id === "yacht-07")).toMatchObject({ name: "يخت أوريكس 50 قدم للإيجار", slug: "يخت-أوريكس-50-قدم-للإيجار" });
+    expect(yachts.find((yacht) => yacht.id === "yacht-08")).toMatchObject({ name: "يخت فيريتي 50 قدم للإيجار", slug: "يخت-فيريتي-50-قدم-للإيجار" });
+    for (const [from, to] of correctedRoutes) {
+      expect(requireRouteRecord(from)).toMatchObject({ indexable: false, redirectTo: to });
+      expect(LEGACY_REDIRECTS).toContainEqual({ from, to, status: 301 });
+      expect(LEGACY_REDIRECTS).toContainEqual({ from: `${from}/`, to, status: 301 });
+    }
+  });
+
   it("derives the current fleet ranges and keeps all curated selections valid", () => {
     expect(FLEET_RANGES).toEqual({
       lengthFt: { min: 42, max: 150 },
@@ -111,11 +135,18 @@ describe("PR 5 verified yacht catalogue", () => {
   it("owns 24 unique yacht pages within the audited current route counts", () => {
     expect(YACHT_ROUTE_RECORDS).toHaveLength(24);
     expect(INDEXABLE_ROUTE_RECORDS).toHaveLength(58);
-    expect(NON_INDEXABLE_ROUTE_RECORDS).toHaveLength(20);
+    expect(NON_INDEXABLE_ROUTE_RECORDS).toHaveLength(23);
     expect(new Set(YACHT_ROUTE_RECORDS.map((route) => route.title)).size).toBe(24);
     expect(new Set(YACHT_ROUTE_RECORDS.map((route) => route.description)).size).toBe(24);
     expect(new Set(YACHT_ROUTE_RECORDS.map((route) => route.h1)).size).toBe(24);
-    for (const route of YACHT_ROUTE_RECORDS) expect(route.schema).toEqual(["Service", "BreadcrumbList"]);
+    for (const yacht of yachts) {
+      const route = requireRouteRecord(`/yachts/${yacht.slug}`);
+      expect(route.schema).toEqual(["Service", "BreadcrumbList"]);
+      expect(route.title).toBe(yachtSeoTitle(yacht));
+      expect(route.title).toBe(`${yacht.name} | السعر والسعة — يخوت دبي`);
+      expect(route.title.split(`${yacht.lengthFt} قدم`).length - 1).toBe(yacht.name.split(`${yacht.lengthFt} قدم`).length - 1);
+      expect(route.title.split("للإيجار").length - 1).toBe(yacht.name.split("للإيجار").length - 1);
+    }
   });
 
   it("renders factual, unique initial HTML with Service Offer, breadcrumbs, links, FAQs, and three related yachts", () => {
@@ -126,6 +157,7 @@ describe("PR 5 verified yacht catalogue", () => {
       const route = requireRouteRecord(`/yachts/${yacht.slug}`);
       const schemas = buildYachtJsonLd(yacht, canonicalUrlForPath(route.path));
       const service = schemas.find((node) => node["@type"] === "Service");
+      expect(service).toMatchObject({ name: yacht.name, serviceType: "تأجير يخت خاص في دبي" });
       expect(service?.offers).toMatchObject({ "@type": "Offer", price: yacht.pricePerHour, priceCurrency: "AED", url: canonicalUrlForPath(route.path) });
       expect(schemas.map((node) => node["@type"])).toEqual(["Service", "BreadcrumbList"]);
       expect(JSON.stringify(schemas)).not.toMatch(/Product|AggregateRating|Review|Event|LocalBusiness|FAQPage/);
@@ -140,5 +172,13 @@ describe("PR 5 verified yacht catalogue", () => {
     expect(source).toContain("faqs.map");
     expect(source).toContain("getWhatsAppLink");
     expect(source).toContain("getPhoneLink");
+  });
+
+  it("rejects duplicated rental and repeated specification phrases in schema names", () => {
+    expect(() => validateYachtServiceName("تأجير تأجير يخت خاص")).toThrow(/Duplicated rental/);
+    expect(() => validateYachtServiceName("تأجير ايجار يخت خاص")).toThrow(/Duplicated rental/);
+    expect(() => validateYachtServiceName("يخت 50 قدم 50 قدم")).toThrow(/Repeated length/);
+    expect(() => validateYachtServiceName("يخت للإيجار للإيجار")).toThrow(/Repeated rental/);
+    for (const yacht of yachts) expect(validateYachtServiceName(yacht.name)).toBe(yacht.name);
   });
 });

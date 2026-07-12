@@ -43,6 +43,9 @@ export const validateYachtRecords = (input: unknown): YachtRecord[] => {
     slugs.add(slug);
     if (slug.includes("/") || slug !== slug.trim()) throw new Error(`${label}.slug is invalid`);
     if (PROHIBITED_PUBLIC_TEXT.test(`${name} ${slug}`)) throw new Error(`${label} exposes prohibited branding`);
+    if (name.includes("استأجار") || name.startsWith("أجار يخت") || slug.startsWith("يجار-")) {
+      throw new Error(`${label} contains malformed Arabic public wording`);
+    }
 
     for (const key of ["lengthFt", "guestCapacity", "yearBuilt", "pricePerHour", "minimumDuration"] as const) positive(record[key], `${label}.${key}`);
     if (record.numberOfBedrooms !== undefined) positive(record.numberOfBedrooms, `${label}.numberOfBedrooms`);

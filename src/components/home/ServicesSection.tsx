@@ -22,9 +22,9 @@ const buildCards = (): ServiceCard[] => {
     { path: ROUTES.graduation, title: "حفلة تخرج على يخت", subtitle: "يخت خاص للمجموعة حسب السعة والمدة", yachtSlug: "يخت-64-قدم-ازيموت-إيطالي" },
     { path: ROUTES.anniversary, title: "ذكرى زواج على يخت", subtitle: "رحلة خاصة بتفاصيل مؤكدة قبل الانطلاق", yachtSlug: "يخت-64-قدم-هاترس-للإيجار" },
     { path: ROUTES.bachelor, title: "حفلة وداع العزوبية", subtitle: "حجز خاص وإضافات اختيارية عند الطلب", yachtSlug: "يخت-ماجستي-101-قدم-جاكوزي-للإيجار" },
-    { path: ROUTES.genderReveal, title: "تحديد جنس المولود", subtitle: "ناقش متطلبات المناسبة واحصل على تأكيد", yachtSlug: "استأجار-يخت-50-قدم-ازيموت" },
-    { path: ROUTES.afternoonTea, title: "افترنون تي على يخت", subtitle: "اختر اليخت والوقت والمدة المناسبة", yachtSlug: "أجار-يخت-50-قدم-اوركس" },
-    { path: ROUTES.morning, title: "رحلة يخت صباحية", subtitle: "رحلة خاصة تبدأ من دبي مارينا", yachtSlug: "يجار-يخت-50-قدم-فيريتتي" },
+    { path: ROUTES.genderReveal, title: "تحديد جنس المولود", subtitle: "ناقش متطلبات المناسبة واحصل على تأكيد", yachtSlug: "يخت-أزيموت-50-قدم-للإيجار" },
+    { path: ROUTES.afternoonTea, title: "افترنون تي على يخت", subtitle: "اختر اليخت والوقت والمدة المناسبة", yachtSlug: "يخت-أوريكس-50-قدم-للإيجار" },
+    { path: ROUTES.morning, title: "رحلة يخت صباحية", subtitle: "رحلة خاصة تبدأ من دبي مارينا", yachtSlug: "يخت-فيريتي-50-قدم-للإيجار" },
     { path: ROUTES.swimming, title: "سباحة على يخت", subtitle: "اطلب تأكيد تفاصيل النشاط قبل الحجز", yachtSlug: "يخت-95-قدم-دوريتتي-مع-جاكوزي" },
     { path: ROUTES.fishing, title: "رحلة صيد على يخت", subtitle: "راجع الخدمة والمتطلبات قبل التأكيد", yachtSlug: "تأجير-يخت-سنسيكر-90-قدم" },
   ];

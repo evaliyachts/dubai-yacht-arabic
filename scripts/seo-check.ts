@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { yachts } from "../src/data/yachts";
 import { validateYachtRecords } from "../src/data/yacht-schema";
+import { socialImageForYachtMedia, validateSocialImageUrl } from "../src/seo/social-image";
 import { generateRedirects, generateRobotsTxt } from "../src/seo/output-generators";
 import {
   assertValidRouteManifest,
@@ -129,6 +130,8 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   const description = extract(html, /<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i);
   const canonical = extract(html, /<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i);
   const robots = extract(html, /<meta[^>]*name=["']robots["'][^>]*content=["']([^"']+)["']/i);
+  const ogImage = extract(html, /<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i);
+  const twitterImage = extract(html, /<meta[^>]*name=["']twitter:image["'][^>]*content=["']([^"']+)["']/i);
   const h1Matches = [...html.matchAll(/<h1(?:\s[^>]*)?>([\s\S]*?)<\/h1>/gi)].map((match) => textContent(match[1]));
 
   if (title !== expectation.title) fail(expectation.path, `title mismatch (${title ?? "missing"})`);
@@ -146,6 +149,15 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   if (html.includes("yacht-dxb.netlify.app")) fail(expectation.path, "preview hostname in output");
   if (/<meta[^>]*name=["']keywords["']/i.test(html)) fail(expectation.path, "meta keywords output is prohibited");
   if (/\bhreflang\s*=/i.test(html)) fail(expectation.path, "live hreflang is prohibited until reciprocal rollout");
+
+  for (const [label, mediaUrl] of [["og:image", ogImage], ["twitter:image", twitterImage]] as const) {
+    if (!mediaUrl) continue;
+    try {
+      validateSocialImageUrl(mediaUrl);
+    } catch (error) {
+      fail(expectation.path, `${label} is invalid (${error instanceof Error ? error.message : String(error)})`);
+    }
+  }
 
   try {
     const parsedCanonical = canonical ? new URL(canonical) : undefined;
@@ -182,6 +194,13 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
 
   const yacht = yachtByPath.get(expectation.path);
   if (yacht) {
+    const expectedSocialImage = socialImageForYachtMedia(yacht.media[0]);
+    if (!expectedSocialImage && (ogImage || twitterImage)) {
+      fail(expectation.path, "neutral yacht placeholder must not be emitted as social media metadata");
+    }
+    if (expectedSocialImage && (ogImage !== expectedSocialImage.url || twitterImage !== expectedSocialImage.url)) {
+      fail(expectation.path, "authorized yacht social image must use its absolute production URL");
+    }
     const schemaTypes = parsedJsonLd.map((node) => node["@type"]);
     if (schemaTypes.length !== 2 || schemaTypes[0] !== "Service" || schemaTypes[1] !== "BreadcrumbList") {
       fail(expectation.path, `yacht schema must be Service then BreadcrumbList (${schemaTypes.join(", ")})`);
@@ -251,6 +270,7 @@ const outputFiles = (directory: string): string[] => readdirSync(directory).flat
 });
 const prohibitedOutput = /evaliyacht(?:s)?\.com|\bevali\b|إڤالي|إيفالي|ايفالي|supabase(?:\.co)?/i;
 const inheritedSchema = /AggregateRating|ratingValue|reviewCount|"@type"\s*:\s*"Product"/i;
+const malformedYachtWording = /استأجار|>\s*أجار يخت|\/yachts\/يجار-/i;
 for (const file of outputFiles(distDir)) {
   const relative = file.slice(distDir.length + 1);
   if (prohibitedOutput.test(relative)) failures.push(`${relative}: production path exposes prohibited branding or provenance`);
@@ -259,6 +279,7 @@ for (const file of outputFiles(distDir)) {
   const source = readFileSync(file, "utf8");
   if (prohibitedOutput.test(source)) failures.push(`${relative}: production output exposes prohibited branding or runtime provenance`);
   if (inheritedSchema.test(source)) failures.push(`${relative}: production output contains inherited product/rating schema`);
+  if (malformedYachtWording.test(source)) failures.push(`${relative}: production output contains malformed yacht wording`);
 }
 
 if (failures.length > 0) {
