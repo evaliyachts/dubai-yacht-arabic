@@ -4,12 +4,16 @@
 
 - Production authority: `https://yacht-dxb.com/`
 - Audited Deploy Preview: `https://deploy-preview-9--yacht-dxb.netlify.app/`
+- Cutover Deploy Preview: `https://deploy-preview-11--yacht-dxb.netlify.app/`
 - PR: `#9` — merged
 - PR 8 merge commit: `3ceff416fcbe2ab260628a4470cf9ea114a55c4f`
+- Exact-host cutover PR: `#11` — merged
+- PR 11 merge commit: `2fa5c08cf23ea59a71c1537b29dba21431d156d2`
 - Reviewed functional commit before squash merge: `bb5ddab`
-- Netlify production deploy ID: `6a54a2bed9485200089a1fc3`
-- Netlify production deployment time: `2026-07-13T08:33:02.486Z`
-  (`2026-07-13 12:33:02.486` Asia/Dubai; published in 14 seconds)
+- Netlify production deploy ID: `6a5503140c553000081849a8`
+- Netlify production deployment timestamp: `2026-07-13T15:24:24.178Z`
+  (`2026-07-13 19:24:24.178` Asia/Dubai; deploy created at
+  `2026-07-13T15:24:04.224Z`)
 - Production asset bundle: `/assets/index-B5zETnBQ.js`
 - Approved Arabic legal body-copy commit: `562b59b`
 - Approved legal metadata and regression-test commit: `bb5ddab`
@@ -20,13 +24,13 @@
 - Sitemap URLs: 58
 - Registered legacy redirects: 144
 - Verified yacht records: 24
-- Release state: **PR 8 production deployment and smoke test passed**
+- Release state: **final exact-host cutover and production smoke test passed**
 - Production deployment state: **active on `https://yacht-dxb.com/`**
-- Exact Netlify-host redirect state: **not activated; separate cutover PR pending review**
+- Exact Netlify-host redirect state: **active and verified**
 
 This post-merge report is documentation-only and does not change the audited
-production runtime. Search Console, analytics, live language alternates and the
-exact default-Netlify-host redirect remain deliberately untouched.
+production runtime. Search Console, analytics and live language alternates
+remain deliberately untouched.
 
 ## Legal approval gate — passed
 
@@ -267,59 +271,66 @@ messages and all submitted values excluded. Analytics must not be enabled
 without a supplied production destination and an approved privacy/consent
 decision.
 
-## Domain, DNS, HTTPS and cutover gate
+## Final exact-host cutover production smoke test — passed
 
-Observed on 2026-07-13:
+The final cutover smoke test completed at `2026-07-13T15:30:16Z`
+(`2026-07-13 19:30:16` Asia/Dubai) against Netlify production deploy
+`6a5503140c553000081849a8`, which serves PR 11 merge commit
+`2fa5c08cf23ea59a71c1537b29dba21431d156d2`.
 
-- `yacht-dxb.com` resolves to Netlify addresses `63.176.8.218` and
-  `35.157.26.135`;
-- the custom domain returns HTTP 200 from Netlify;
-- `robots.txt` and `sitemap.xml` return HTTP 200 on the custom domain;
-- the Let's Encrypt certificate covers `yacht-dxb.com` and
-  `www.yacht-dxb.com`, valid from 2026-06-28 through 2026-09-26;
-- production serves PR 8 merge commit
-  `3ceff416fcbe2ab260628a4470cf9ea114a55c4f` through Netlify deploy
-  `6a54a2bed9485200089a1fc3`;
-- production serves `/assets/index-B5zETnBQ.js`;
-- the reviewed Deploy Preview remains separately accessible;
-- `https://yacht-dxb.netlify.app/` still returns 200 and is not redirected.
+| Cutover source | Result | Final destination |
+| --- | --- | --- |
+| `https://yacht-dxb.netlify.app/` | exactly one 301 | `https://yacht-dxb.com/` — direct 200 |
+| `https://yacht-dxb.netlify.app/yachts/` | exactly one 301 | `https://yacht-dxb.com/yachts/` — direct 200 |
+| `https://yacht-dxb.netlify.app/contact/?source=cutover-test` | exactly one 301 | query-preserving `https://yacht-dxb.com/contact/?source=cutover-test` — direct 200 |
+| encoded `/تأجير-يخت-في-دبي/` on the default Netlify host | exactly one 301 | matching encoded production canonical — direct 200 |
 
-The domain, DNS, HTTPS, production deployment and post-merge smoke-test gates
-have passed. The exact-host redirect is nevertheless intentionally absent
-until the separately reviewed cutover PR requested by the owner. That later PR
-must add this rule after all generated specific legacy redirects:
+There was no loop or second hop. Manual redirect handling confirmed the exact
+`Location` value in every case before the destination was fetched.
 
-```toml
-[[redirects]]
-from = "https://yacht-dxb.netlify.app/*"
-to = "https://yacht-dxb.com/:splat"
-status = 301
-force = true
-```
+Representative production checks returned direct 200 responses with no
+`Location` header for the homepage, yacht catalogue, one keyword page, one
+event page, one yacht page, Terms, Privacy, `sitemap.xml` and `robots.txt`.
+Production serves `/assets/index-B5zETnBQ.js`.
 
-That separate cutover must verify path and query preservation, no loop, one
-hop, and continued access to deploy-preview and branch-deploy hosts. It is not
-part of this smoke-test report.
+Preview isolation also passed:
+
+- `https://deploy-preview-11--yacht-dxb.netlify.app/` remains a direct 200;
+- the branch-deploy-style hostname
+  `https://agent-final-netlify-host-cutover--yacht-dxb.netlify.app/` returned
+  its normal 404 with no redirect;
+- `www.yacht-dxb.com` retains its existing single 301 to
+  `https://yacht-dxb.com/`.
+
+The full production crawler confirmed 58 canonical routes returning 200, 52
+encoded Arabic-path checks returning 200, all 144 registered legacy sources
+returning one 301 to direct-200 canonical destinations, exactly 58 sitemap
+URLs, and a real 404 for an unknown route. It also confirmed that production
+HTML contains no preview or Lovable hostname, accidental `noindex`, live
+`hreflang` or `x-default`; canonical and sitemap ownership remain unchanged.
+
+A live Chrome runtime check found `window.dataLayer` undefined, no Google
+Analytics or Tag Manager script, and no live language-alternate link. The
+production HTML contains no analytics script and the deployed JavaScript has
+no embedded GA measurement ID.
 
 ## Remaining limitations and required approvals
 
 1. No analytics destination or privacy/consent decision is approved; analytics
    remains disabled.
-2. The exact Netlify-host redirect and its path/query smoke test remain gated
-   behind a separate review.
-3. Lighthouse LCP remains slow in the mobile lab runs, and the main JavaScript
+2. Lighthouse LCP remains slow in the mobile lab runs, and the main JavaScript
    chunk remains above Vite's 500 kB warning threshold.
-4. No field Core Web Vitals are claimed.
-5. Remote yacht media remains dependent on the authorized external host;
+3. No field Core Web Vitals are claimed.
+4. Remote yacht media remains dependent on the authorized external host;
    strict pre-release verification mitigates availability regressions.
-6. Future binding legal changes must be supplied and approved by the business;
+5. Future binding legal changes must be supplied and approved by the business;
    they must not be machine-invented in this repository.
 
 ## Search Console checklist
 
-Do not submit the sitemap or request indexing yet. PR 8, its production deploy
-and the smoke test have passed, but Search Console remains gated by the owner's
-review of this report. After explicit approval:
+Do not submit the sitemap or request indexing from Codex. PR 8 and the final
+exact-host cutover have passed their production smoke tests, but Search Console
+remains a separate owner-controlled action. After explicit approval:
 
 1. Confirm the Search Console property uses `https://yacht-dxb.com/`.
 2. Open the live production `robots.txt` and confirm its production sitemap URL.
@@ -337,10 +348,10 @@ review of this report. After explicit approval:
 
 If a regression is discovered after this successful smoke test:
 
-1. For a later cutover-only failure, remove the exact-host redirect and publish
-   the audited PR 8 deploy `6a54a2bed9485200089a1fc3` without changing DNS.
-   For a PR 8 runtime regression, the prior reviewed PR 7 deploy is
-   `6a5424b1722b9200081e2d4a`.
+1. For a cutover-only failure, remove or revert the exact-host redirect and
+   publish the last pre-cutover production deploy
+   `6a54ff7fb7233e0008dc351c` without changing DNS. For a PR 8 runtime
+   regression, the prior reviewed PR 7 deploy is `6a5424b1722b9200081e2d4a`.
 2. If the exact-host redirect was activated, remove or revert that rule first so
    the Netlify hostname can be used for diagnosis without a loop.
 3. Revert the failing PR 8 merge through a normal reviewed Git revert; do not
