@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { ROUTES } from "@/lib/constants";
 import { yachts } from "@/data/yachts";
+import { responsiveImageSrcSet } from "@/lib/responsive-image";
 import { cn } from "@/lib/utils";
 import { requireRouteRecord } from "@/seo/route-manifest";
 
@@ -156,6 +157,7 @@ const ServicesSection = () => {
                 <Link to={card.path} className="block w-full h-full relative group">
                   <img
                     src={card.image}
+                    srcSet={responsiveImageSrcSet(card.image, card.imageWidth)}
                     alt={card.title}
                     width={card.imageWidth}
                     height={card.imageHeight}
@@ -189,11 +191,17 @@ const ServicesSection = () => {
               key={i}
               onClick={() => setActive(i)}
               aria-label={`انتقل إلى البطاقة ${i + 1}`}
-              className={cn(
-                "h-1.5 rounded-full transition-all",
-                i === active ? "w-6 bg-primary" : "w-1.5 bg-foreground/30"
-              )}
-            />
+              aria-current={i === active ? "true" : undefined}
+              className="flex h-12 w-6 items-center justify-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "h-1.5 rounded-full transition-all",
+                  i === active ? "w-6 bg-primary" : "w-1.5 bg-foreground/30",
+                )}
+              />
+            </button>
           ))}
         </div>
       </div>

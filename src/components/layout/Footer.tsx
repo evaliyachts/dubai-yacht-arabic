@@ -36,7 +36,7 @@ const Footer = () => (
         </div>
 
         <div>
-          <h4 className="font-display font-semibold text-foreground mb-4">روابط سريعة</h4>
+          <h2 className="font-display font-semibold text-foreground mb-4">روابط سريعة</h2>
           <nav className="flex flex-col gap-2">
             {NAVIGATION_TARGETS.map((link) => (
               <Link key={link.route.path} to={link.route.path} className="text-sm text-muted-foreground hover:text-primary transition-colors">{link.label}</Link>
@@ -45,7 +45,7 @@ const Footer = () => (
         </div>
 
         <div>
-          <h4 className="font-display font-semibold text-foreground mb-4">قبل طلب الحجز</h4>
+          <h2 className="font-display font-semibold text-foreground mb-4">قبل طلب الحجز</h2>
           <ul className="space-y-2 text-sm text-muted-foreground">
             {["حدّد عدد الضيوف", "راجع سعر الساعة", "تحقق من الحد الأدنى للمدة", "اطلب تأكيد الإضافات اختيارياً"].map(a => (
               <li key={a} className="flex items-center gap-2"><Check className="w-3 h-3 text-primary" />{a}</li>
@@ -54,7 +54,7 @@ const Footer = () => (
         </div>
 
         <div>
-          <h4 className="font-display font-semibold text-foreground mb-4">ساعات العمل</h4>
+          <h2 className="font-display font-semibold text-foreground mb-4">ساعات العمل</h2>
           <div className="flex items-start gap-2 text-sm text-muted-foreground mb-3">
             <Clock className="w-4 h-4 text-primary mt-0.5" />
             <div>

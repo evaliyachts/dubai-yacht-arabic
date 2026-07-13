@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CalendarDays, Clock3, Ruler, Users } from "lucide-react";
 import { yachts } from "@/data/yachts";
 import { requireRouteRecord } from "@/seo/route-manifest";
+import { responsiveYachtMediaSrcSet } from "@/lib/responsive-image";
 
 interface VerifiedYachtSelectionProps {
   slugs: string[];
@@ -33,10 +34,11 @@ const VerifiedYachtSelection = ({ slugs }: VerifiedYachtSelectionProps) => {
             <article key={yacht.slug} className="liquid-glass overflow-hidden">
               <img
                 src={image.path}
+                srcSet={responsiveYachtMediaSrcSet(image)}
                 alt={image.altAr}
                 width={image.width}
                 height={image.height}
-                sizes="(min-width: 768px) 50vw, 100vw"
+                sizes="(min-width: 768px) 45vw, calc(100vw - 2rem)"
                 className="h-52 w-full object-cover"
                 loading="lazy"
                 decoding="async"

@@ -4,6 +4,7 @@ import { BedDouble, CalendarDays, Clock3, MessageCircle, Ruler, Users } from "lu
 import type { YachtRecord } from "@/data/yachts";
 import { getWhatsAppLink } from "@/lib/constants";
 import { requireRouteRecord } from "@/seo/route-manifest";
+import { responsiveYachtMediaSrcSet } from "@/lib/responsive-image";
 
 interface YachtCardProps {
   yacht: YachtRecord;
@@ -26,10 +27,11 @@ const YachtCard = ({ yacht }: YachtCardProps) => {
       <div className="relative h-56 overflow-hidden bg-muted">
         <img
           src={image.path}
+          srcSet={responsiveYachtMediaSrcSet(image)}
           alt={image.altAr}
           width={image.width}
           height={image.height}
-          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, calc(100vw - 2rem)"
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
           decoding="async"

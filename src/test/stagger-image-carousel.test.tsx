@@ -54,11 +54,16 @@ describe("existing stagger image carousel", () => {
 
   it("opens the centered image in the Arabic fullscreen dialog", async () => {
     renderCarousel();
-    fireEvent.click(screen.getByRole("button", { name: /فتح اليخت التجريبي — صورة 1/ }));
+    const trigger = screen.getByRole("button", { name: /فتح اليخت التجريبي — صورة 1/ });
+    trigger.focus();
+    fireEvent.click(trigger);
 
     expect(await screen.findByRole("dialog")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "عرض صورة اليخت التجريبي بالحجم الكامل" })).toBeInTheDocument();
     expect(screen.getAllByAltText("اليخت التجريبي — صورة 1").at(-1)).toHaveClass("object-contain");
+    fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    expect(trigger).toHaveFocus();
   });
 
   it("supports Arrow keys plus Enter and Space activation", async () => {

@@ -17,6 +17,8 @@
     "typecheck": "tsc --noEmit",
     "seo:check": "tsx scripts/seo-check.ts",
     "media:verify": "tsx scripts/media-verify.ts",
+    "images:measure": "tsx scripts/measure-image-transfer.ts",
+    "qa:crawl": "tsx scripts/crawl-deployment.ts",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

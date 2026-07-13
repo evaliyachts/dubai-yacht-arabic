@@ -1,6 +1,7 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "@/App";
+import { vi } from "vitest";
 
 describe("mobile navigation keyboard behavior", () => {
   it("traps tab focus, isolates the background, locks scrolling, and restores trigger focus on Escape", async () => {
@@ -44,5 +45,32 @@ describe("mobile navigation keyboard behavior", () => {
     await waitFor(() => expect(screen.queryByRole("dialog", { name: "قائمة التنقل عبر الهاتف" })).not.toBeInTheDocument());
     expect(decodeURI(window.location.pathname)).toBe("/yachts/");
     expect(screen.getByRole("button", { name: "فتح القائمة" })).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("closes and releases isolation when resizing across the desktop breakpoint", async () => {
+    let desktopListener: ((event: MediaQueryListEvent) => void) | undefined;
+    const originalMatchMedia = window.matchMedia;
+    vi.spyOn(window, "matchMedia").mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: () => undefined,
+      removeListener: () => undefined,
+      addEventListener: (_type, listener) => {
+        if (query === "(min-width: 1024px)") desktopListener = listener as (event: MediaQueryListEvent) => void;
+      },
+      removeEventListener: () => undefined,
+      dispatchEvent: () => true,
+    }));
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("button", { name: "فتح القائمة" }));
+    expect(await screen.findByRole("dialog", { name: "قائمة التنقل عبر الهاتف" })).toBeInTheDocument();
+    act(() => desktopListener?.({ matches: true } as MediaQueryListEvent));
+
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: "قائمة التنقل عبر الهاتف" })).not.toBeInTheDocument());
+    expect(document.body).not.toHaveAttribute("data-scroll-locked");
+    window.matchMedia = originalMatchMedia;
   });
 });
