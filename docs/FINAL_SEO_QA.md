@@ -5,13 +5,16 @@
 - Production authority: `https://yacht-dxb.com/`
 - Audited Deploy Preview: `https://deploy-preview-9--yacht-dxb.netlify.app/`
 - PR: `#9` (`agent/pr8-final-qa-legal-gate`)
-- Final functional commit audited by this report: `562b59b`
+- Final functional commit audited by this report: `bb5ddab`
+- Approved Arabic legal body-copy commit: `562b59b`
+- Approved legal metadata and regression-test commit: `bb5ddab`
+- Legal approval record: `docs/LEGAL_CONTENT_APPROVAL.md`
 - Indexable route records: 58
 - Static canonical route records: 58
 - Sitemap URLs: 58
 - Registered legacy redirects: 144
 - Verified yacht records: 24
-- Release state: **legal gate resolved; awaiting PR review and production cutover**
+- Release state: **legal gate passed; awaiting PR review and production cutover**
 - Production cutover state: **not activated**
 
 The documentation commit that contains this report follows the functional
@@ -19,7 +22,7 @@ commit above and does not change runtime page behavior. The merge commit and
 post-merge production deploy ID must be appended during the separate
 production smoke test.
 
-## Legal approval gate — resolved
+## Legal approval gate — passed
 
 The business owner approved the Arabic `/terms/` and `/privacy/` documents for
 publication on `yacht-dxb.com` on 2026-07-13 and confirmed that they reflect
@@ -28,13 +31,15 @@ English placeholders without machine translation or editorially invented
 legal terms.
 
 Both routes remain indexable members of the preferred 58-route release. They
-now have Arabic titles, descriptions, H1s and visible content, a truthful
+now have the exact approved Arabic titles, descriptions, H1s and visible
+content and a truthful
 `lastSignificantUpdate` of `2026-07-13`, production canonicals and their
 existing `BreadcrumbList` ownership. Automated tests cover the approved
 section counts, key current-practice statements, phone link, initial static
 HTML, indexability, canonical authority and removal of the superseded English
-claims. Any future legal or operational change requires fresh business
-approval before publication.
+claims and fixed promises. The approval record is committed in
+`docs/LEGAL_CONTENT_APPROVAL.md`. Any future legal or operational change
+requires fresh business approval before publication.
 
 ## Generated and deployed crawl
 
@@ -181,7 +186,7 @@ Preview. These are lab snapshots, not field Core Web Vitals.
 | Royal Majesty detail | 60 | 100 | 96 | 69 | 8,917 ms | 0.030 | 33 ms | 233,370 B | 522,380 B |
 | Contact | 61 | 100 | 96 | 69 | 8,489 ms | 0.000 | 0 ms | 25,630 B | 522,186 B |
 
-The final Vite production application bundle is 712.63 kB raw and 219.93 kB gzip.
+The final Vite production application bundle is 712.51 kB raw and 219.87 kB gzip.
 Lighthouse's total script transfer includes Netlify's Deploy Preview toolbar.
 INP is not available from a navigation-only lab run, so TBT is recorded only
 as its lab responsiveness proxy.
