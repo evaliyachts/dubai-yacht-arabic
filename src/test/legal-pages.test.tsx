@@ -1,7 +1,13 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import App from "@/App";
 import { approvedPrivacyContent, approvedTermsContent } from "@/data/legal-pages";
-import { canonicalUrlForPath, requireRouteRecord } from "@/seo/route-manifest";
+import { generateSitemap } from "@/seo/output-generators";
+import {
+  canonicalUrlForPath,
+  INDEXABLE_ROUTE_RECORDS,
+  requireRouteRecord,
+  ROUTE_MANIFEST,
+} from "@/seo/route-manifest";
 
 const allApprovedText = (content: typeof approvedTermsContent) => [
   ...content.introduction,
@@ -18,12 +24,18 @@ describe("approved Arabic legal pages", () => {
 
     expect(termsRoute).toMatchObject({
       indexable: true,
+      title: "الشروط والأحكام | يخوت دبي",
+      description:
+        "شروط استخدام موقع يخوت دبي وطلبات تأجير اليخوت والأسعار والتأكيد والإلغاء والمسؤوليات.",
       h1: "الشروط والأحكام",
       lastSignificantUpdate: "2026-07-13",
       schema: ["BreadcrumbList"],
     });
     expect(privacyRoute).toMatchObject({
       indexable: true,
+      title: "سياسة الخصوصية | يخوت دبي",
+      description:
+        "كيفية تعامل يخوت دبي مع بيانات التواصل وواتساب والبيانات التقنية وحقوق مستخدمي الموقع.",
       h1: "سياسة الخصوصية",
       lastSignificantUpdate: "2026-07-13",
       schema: ["BreadcrumbList"],
@@ -45,15 +57,34 @@ describe("approved Arabic legal pages", () => {
     );
   });
 
+  it("keeps Terms and Privacy in the 58-URL indexable sitemap inventory", () => {
+    const sitemap = generateSitemap(ROUTE_MANIFEST);
+    const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+
+    expect(INDEXABLE_ROUTE_RECORDS).toHaveLength(58);
+    expect(sitemapUrls).toHaveLength(INDEXABLE_ROUTE_RECORDS.length);
+    expect(sitemapUrls).toContain("https://yacht-dxb.com/terms/");
+    expect(sitemapUrls).toContain("https://yacht-dxb.com/privacy/");
+  });
+
   it.each([
-    ["/terms/", "الشروط والأحكام", "تخضع هذه الشروط للقوانين السارية في دولة الإمارات العربية المتحدة."],
-    ["/privacy/", "سياسة الخصوصية", "لا نبيع بياناتك الشخصية."],
-  ] as const)("renders approved Arabic content and metadata for %s", async (path, h1, requiredText) => {
+    [
+      "/terms/",
+      "الشروط والأحكام",
+      "تخضع هذه الشروط للقوانين السارية في دولة الإمارات العربية المتحدة.",
+      approvedTermsContent,
+    ],
+    ["/privacy/", "سياسة الخصوصية", "لا نبيع بياناتك الشخصية.", approvedPrivacyContent],
+  ] as const)("renders approved Arabic content and metadata for %s", async (path, h1, requiredText, content) => {
     const route = requireRouteRecord(path);
     window.history.pushState({}, "", path);
     render(<App />);
 
-    expect(await screen.findByRole("heading", { level: 1, name: h1 })).toBeInTheDocument();
+    expect(await screen.findAllByRole("heading", { level: 1 })).toHaveLength(1);
+    expect(screen.getByRole("heading", { level: 1, name: h1 })).toBeInTheDocument();
+    for (const section of content.sections) {
+      expect(screen.getByRole("heading", { level: 2, name: section.heading })).toBeInTheDocument();
+    }
     expect(screen.getByText("13 يوليو 2026")).toHaveAttribute("datetime", "2026-07-13");
     expect(screen.getByText(requiredText)).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "+971 50 464 1020" })[0]).toHaveAttribute(
@@ -66,10 +97,15 @@ describe("approved Arabic legal pages", () => {
       "href",
       canonicalUrlForPath(route.path),
     );
+    expect(document.head.querySelector('meta[name="description"]')).toHaveAttribute("content", route.description);
+    const schemaTypes = [...document.head.querySelectorAll('script[type="application/ld+json"]')]
+      .map((script) => JSON.parse(script.textContent ?? "null")?.["@type"])
+      .filter(Boolean);
+    expect(schemaTypes).toEqual(["BreadcrumbList"]);
     expect(document.head.querySelector("[hreflang]")).toBeNull();
   });
 
-  it("does not restore the superseded English legal claims or old misspelled brand", () => {
+  it("does not restore English legal copy or prohibited fixed promises", () => {
     const output = [
       ...allApprovedText(approvedTermsContent),
       ...allApprovedText(approvedPrivacyContent),
@@ -80,8 +116,19 @@ describe("approved Arabic legal pages", () => {
     ].join("\n");
 
     expect(output).not.toContain("Booking & Payment");
+    expect(output).not.toContain("Cancellation Policy");
+    expect(output).not.toContain("Safety & Conduct");
+    expect(output).not.toContain("Information We Collect");
+    expect(output).not.toContain("How We Use Your Information");
+    expect(output).not.toContain("Data Security");
     expect(output).not.toContain("A 50% deposit");
+    expect(output).not.toContain("50%");
     expect(output).not.toContain("Free cancellation up to 48 hours");
+    expect(output).not.toContain("48 hours");
+    expect(output).not.toContain("full refund");
+    expect(output).not.toContain("free rescheduling");
+    expect(output).not.toContain("maritime insurance");
+    expect(output).not.toContain("Accepted payment methods include");
     expect(output).not.toContain("Dubai Yatch");
   });
 });
