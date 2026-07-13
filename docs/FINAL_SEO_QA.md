@@ -4,8 +4,13 @@
 
 - Production authority: `https://yacht-dxb.com/`
 - Audited Deploy Preview: `https://deploy-preview-9--yacht-dxb.netlify.app/`
-- PR: `#9` (`agent/pr8-final-qa-legal-gate`)
-- Final functional commit audited by this report: `bb5ddab`
+- PR: `#9` — merged
+- PR 8 merge commit: `3ceff416fcbe2ab260628a4470cf9ea114a55c4f`
+- Reviewed functional commit before squash merge: `bb5ddab`
+- Netlify production deploy ID: `6a54a2bed9485200089a1fc3`
+- Netlify production deployment time: `2026-07-13T08:33:02.486Z`
+  (`2026-07-13 12:33:02.486` Asia/Dubai; published in 14 seconds)
+- Production asset bundle: `/assets/index-B5zETnBQ.js`
 - Approved Arabic legal body-copy commit: `562b59b`
 - Approved legal metadata and regression-test commit: `bb5ddab`
 - Legal approval record commit: `2585916`
@@ -15,13 +20,13 @@
 - Sitemap URLs: 58
 - Registered legacy redirects: 144
 - Verified yacht records: 24
-- Release state: **legal gate passed; awaiting PR review and production cutover**
-- Production cutover state: **not activated**
+- Release state: **PR 8 production deployment and smoke test passed**
+- Production deployment state: **active on `https://yacht-dxb.com/`**
+- Exact Netlify-host redirect state: **not activated; separate cutover PR pending review**
 
-The documentation commit that contains this report follows the functional
-commit above and does not change runtime page behavior. The merge commit and
-post-merge production deploy ID must be appended during the separate
-production smoke test.
+This post-merge report is documentation-only and does not change the audited
+production runtime. Search Console, analytics, live language alternates and the
+exact default-Netlify-host redirect remain deliberately untouched.
 
 ## Legal approval gate — passed
 
@@ -42,7 +47,55 @@ claims and fixed promises. The approval record is committed in
 `docs/LEGAL_CONTENT_APPROVAL.md`. Any future legal or operational change
 requires fresh business approval before publication.
 
-## Generated and deployed crawl
+The legal publication date is `2026-07-13`, matching the approved visible
+`آخر تحديث` value and the two sitemap `lastmod` values.
+
+## Post-merge production smoke test — passed
+
+The production smoke test completed at `2026-07-13T08:40:10Z`
+(`2026-07-13 12:40:10` Asia/Dubai) against `https://yacht-dxb.com/`.
+
+| Production surface | Expected | Result |
+| --- | ---: | ---: |
+| Canonical manifest routes | 58 × 200 | 58 × 200 |
+| Encoded Arabic-path checks | 52 × 200 | 52 × 200 |
+| Registered legacy sources | 144 × 301 | 144 × 301 |
+| Redirect destinations | one hop to canonical 200 | 144 one-hop 200 destinations |
+| Unknown route | real HTTP 404 | 404 |
+| Sitemap membership | 58 canonical URLs | 58 canonical URLs |
+| `robots.txt` sitemap reference | production URL | passed |
+| Production yacht images | 156 reachable images | 156 passed |
+| Benetti media | one approved local fallback | passed |
+| Fingerprinted JavaScript | immutable 200 | passed |
+| Fingerprinted CSS | immutable 200 | passed |
+| Production JavaScript source map | 404 | 404 |
+
+The production crawl and targeted checks also confirmed:
+
+- every canonical uses `https://yacht-dxb.com/` and the manifest-owned
+  trailing-slash path;
+- no preview or Lovable hostname appears in canonical page HTML;
+- no indexable page emits `noindex`;
+- no live `hreflang` or `x-default` exists;
+- `/terms/` and `/privacy/` return 200 with their exact approved Arabic title,
+  description, single H1, visible content, self-canonical and sole
+  `BreadcrumbList` schema owner;
+- both legal pages show `13 يوليو 2026` with machine-readable
+  `2026-07-13`, and both sitemap entries use `2026-07-13` as `lastmod`;
+- the superseded English legal copy and fixed deposit, cancellation, refund,
+  rescheduling, insurance and payment-method promises are absent;
+- `window.dataLayer` is undefined at runtime, no GA measurement ID is embedded,
+  and no Google Analytics or Tag Manager script is mounted;
+- HTML, `404.html`, unknown-route 404 responses, `robots.txt` and `sitemap.xml`
+  use `public,max-age=0,must-revalidate` and never `immutable`;
+- `/assets/index-B5zETnBQ.js` and `/assets/index-Cd0UA_xv.css` use
+  `public,max-age=31536000,immutable`;
+- the production output exposes no source map;
+- all 156 retained remote yacht images are reachable and valid WebP files, and
+  yacht `yacht-14` uses only `/media/yacht-placeholder.svg` with rights record
+  `media-neutral-placeholder-001`.
+
+## Deploy Preview crawl evidence
 
 `npm run qa:crawl -- --base=https://deploy-preview-9--yacht-dxb.netlify.app`
 completed successfully on 2026-07-13.
@@ -205,6 +258,8 @@ No GA4 or Tag Manager destination has been approved. `VITE_GA_MEASUREMENT_ID`
 remains unset, no Google tag/container was installed, no measurement ID is
 embedded in the production or Deploy Preview JavaScript, the preview creates
 no `window.dataLayer` on load, and `ConversionTracking` is not mounted.
+The post-merge production runtime check also found `window.dataLayer`
+undefined and no analytics or Tag Manager script.
 
 The existing code retains only `whatsapp_click`, `phone_click`,
 `booking_form_start` and `booking_form_submit`, with route queries, WhatsApp
@@ -222,16 +277,17 @@ Observed on 2026-07-13:
 - `robots.txt` and `sitemap.xml` return HTTP 200 on the custom domain;
 - the Let's Encrypt certificate covers `yacht-dxb.com` and
   `www.yacht-dxb.com`, valid from 2026-06-28 through 2026-09-26;
-- production currently serves the reviewed PR 7 bundle
-  `/assets/index-ZcBz9gVK.js`;
-- the Deploy Preview serves the PR 8 bundle separately;
+- production serves PR 8 merge commit
+  `3ceff416fcbe2ab260628a4470cf9ea114a55c4f` through Netlify deploy
+  `6a54a2bed9485200089a1fc3`;
+- production serves `/assets/index-B5zETnBQ.js`;
+- the reviewed Deploy Preview remains separately accessible;
 - `https://yacht-dxb.netlify.app/` still returns 200 and is not redirected.
 
-The domain, DNS and HTTPS prerequisites are healthy, but production does not
-yet serve the reviewed PR 8 build. Therefore
-the exact-host redirect is intentionally absent. After PR review, merge and
-production smoke testing, add this rule after all generated
-specific legacy redirects:
+The domain, DNS, HTTPS, production deployment and post-merge smoke-test gates
+have passed. The exact-host redirect is nevertheless intentionally absent
+until the separately reviewed cutover PR requested by the owner. That later PR
+must add this rule after all generated specific legacy redirects:
 
 ```toml
 [[redirects]]
@@ -241,28 +297,29 @@ status = 301
 force = true
 ```
 
-Then verify path and query preservation, no loop, one hop, and continued access
-to deploy-preview and branch-deploy hosts. The redirect must not be activated
-before PR review, merge and the post-merge production smoke test.
+That separate cutover must verify path and query preservation, no loop, one
+hop, and continued access to deploy-preview and branch-deploy hosts. It is not
+part of this smoke-test report.
 
 ## Remaining limitations and required approvals
 
 1. No analytics destination or privacy/consent decision is approved; analytics
    remains disabled.
-2. The custom production domain has not served the PR 8 reviewed build yet.
-3. The exact Netlify-host redirect and its path/query smoke test remain gated.
-4. Lighthouse LCP remains slow in the mobile lab runs, and the main JavaScript
+2. The exact Netlify-host redirect and its path/query smoke test remain gated
+   behind a separate review.
+3. Lighthouse LCP remains slow in the mobile lab runs, and the main JavaScript
    chunk remains above Vite's 500 kB warning threshold.
-5. No field Core Web Vitals are claimed.
-6. Remote yacht media remains dependent on the authorized external host;
+4. No field Core Web Vitals are claimed.
+5. Remote yacht media remains dependent on the authorized external host;
    strict pre-release verification mitigates availability regressions.
-7. Future binding legal changes must be supplied and approved by the business;
+6. Future binding legal changes must be supplied and approved by the business;
    they must not be machine-invented in this repository.
 
 ## Search Console checklist
 
-Do not submit the sitemap or request indexing yet. After PR review, merge and
-the post-merge production smoke test pass:
+Do not submit the sitemap or request indexing yet. PR 8, its production deploy
+and the smoke test have passed, but Search Console remains gated by the owner's
+review of this report. After explicit approval:
 
 1. Confirm the Search Console property uses `https://yacht-dxb.com/`.
 2. Open the live production `robots.txt` and confirm its production sitemap URL.
@@ -278,10 +335,12 @@ the post-merge production smoke test pass:
 
 ## Rollback procedure
 
-If the production smoke test fails after merge:
+If a regression is discovered after this successful smoke test:
 
-1. Use Netlify's deploy history to publish the last reviewed production deploy
-   (currently the PR 7 build) without changing DNS.
+1. For a later cutover-only failure, remove the exact-host redirect and publish
+   the audited PR 8 deploy `6a54a2bed9485200089a1fc3` without changing DNS.
+   For a PR 8 runtime regression, the prior reviewed PR 7 deploy is
+   `6a5424b1722b9200081e2d4a`.
 2. If the exact-host redirect was activated, remove or revert that rule first so
    the Netlify hostname can be used for diagnosis without a loop.
 3. Revert the failing PR 8 merge through a normal reviewed Git revert; do not
