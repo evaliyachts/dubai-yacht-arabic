@@ -169,10 +169,12 @@ const coreRecords: RouteManifestRecord[] = [
     path: toCanonicalPath(ROUTES.terms),
     indexable: true,
     pageType: "support",
-    title: "Terms & Conditions | Dubai Yatch",
-    description: "Terms and conditions for yacht rental services provided by Dubai Yatch.",
-    h1: "Terms & Conditions",
+    title: "الشروط والأحكام | طلب تأجير يخت — يخوت دبي",
+    description:
+      "اطّلع على شروط استخدام موقع يخوت دبي وطلبات تأجير اليخوت والأسعار والتأكيد والدفع والإلغاء والسلامة والخدمات الاختيارية.",
+    h1: "الشروط والأحكام",
     primaryIntent: "شروط وأحكام حجز اليخوت",
+    lastSignificantUpdate: "2026-07-13",
     schema: ["BreadcrumbList"],
   },
   {
@@ -180,10 +182,12 @@ const coreRecords: RouteManifestRecord[] = [
     path: toCanonicalPath(ROUTES.privacy),
     indexable: true,
     pageType: "support",
-    title: "Privacy Policy | Dubai Yatch",
-    description: "Privacy policy for Dubai Yatch yacht rental services.",
-    h1: "Privacy Policy",
+    title: "سياسة الخصوصية | بيانات التواصل والحجز — يخوت دبي",
+    description:
+      "تعرّف على كيفية تعامل يخوت دبي مع بيانات الاستفسار والتواصل عبر النموذج وواتساب والهاتف والخدمات التقنية وحقوقك المتعلقة بالخصوصية.",
+    h1: "سياسة الخصوصية",
     primaryIntent: "سياسة خصوصية بيانات حجز اليخوت",
+    lastSignificantUpdate: "2026-07-13",
     schema: ["BreadcrumbList"],
   },
 ];
