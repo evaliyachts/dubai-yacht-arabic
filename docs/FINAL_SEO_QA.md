@@ -5,13 +5,13 @@
 - Production authority: `https://yacht-dxb.com/`
 - Audited Deploy Preview: `https://deploy-preview-9--yacht-dxb.netlify.app/`
 - PR: `#9` (`agent/pr8-final-qa-legal-gate`)
-- Final functional commit audited by this report: `b2cd4c6`
+- Final functional commit audited by this report: `562b59b`
 - Indexable route records: 58
 - Static canonical route records: 58
 - Sitemap URLs: 58
 - Registered legacy redirects: 144
 - Verified yacht records: 24
-- Release state: **blocked by legal approval**
+- Release state: **legal gate resolved; awaiting PR review and production cutover**
 - Production cutover state: **not activated**
 
 The documentation commit that contains this report follows the functional
@@ -19,20 +19,22 @@ commit above and does not change runtime page behavior. The merge commit and
 post-merge production deploy ID must be appended during the separate
 production smoke test.
 
-## Legal approval gate
+## Legal approval gate — resolved
 
-`/terms/` and `/privacy/` remain indexable members of the preferred 58-route
-release, but their current visible content is English and contains unapproved
-fixed legal or business claims. Examples include deposit percentages,
-cancellation windows and charges, refund and insurance claims, liability
-language, payment methods, data-sharing promises and security claims.
+The business owner approved the Arabic `/terms/` and `/privacy/` documents for
+publication on `yacht-dxb.com` on 2026-07-13 and confirmed that they reflect
+the site's and service's current practices. The approved text replaced the
+English placeholders without machine translation or editorially invented
+legal terms.
 
-No legal text was translated, rewritten or invented in PR 8. Business-approved
-Arabic Terms and Privacy copy is required before this PR can become
-release-ready. If the business instead explicitly selects the temporary
-noindex approach, both route records must become `noindex, follow`, leave the
-sitemap, remain linked from the footer, and the route/sitemap counts must be
-recalculated dynamically. That alternative has not been authorized.
+Both routes remain indexable members of the preferred 58-route release. They
+now have Arabic titles, descriptions, H1s and visible content, a truthful
+`lastSignificantUpdate` of `2026-07-13`, production canonicals and their
+existing `BreadcrumbList` ownership. Automated tests cover the approved
+section counts, key current-practice statements, phone link, initial static
+HTML, indexability, canonical authority and removal of the superseded English
+claims. Any future legal or operational change requires fresh business
+approval before publication.
 
 ## Generated and deployed crawl
 
@@ -179,7 +181,7 @@ Preview. These are lab snapshots, not field Core Web Vitals.
 | Royal Majesty detail | 60 | 100 | 96 | 69 | 8,917 ms | 0.030 | 33 ms | 233,370 B | 522,380 B |
 | Contact | 61 | 100 | 96 | 69 | 8,489 ms | 0.000 | 0 ms | 25,630 B | 522,186 B |
 
-The final Vite production application bundle is 696.18 kB raw and 212.48 kB gzip.
+The final Vite production application bundle is 712.63 kB raw and 219.93 kB gzip.
 Lighthouse's total script transfer includes Netlify's Deploy Preview toolbar.
 INP is not available from a navigation-only lab run, so TBT is recorded only
 as its lab responsiveness proxy.
@@ -220,9 +222,9 @@ Observed on 2026-07-13:
 - `https://yacht-dxb.netlify.app/` still returns 200 and is not redirected.
 
 The domain, DNS and HTTPS prerequisites are healthy, but production does not
-yet serve the reviewed PR 8 build and the legal gate is unresolved. Therefore
-the exact-host redirect is intentionally absent. After legal approval, PR
-review, merge and production smoke testing, add this rule after all generated
+yet serve the reviewed PR 8 build. Therefore
+the exact-host redirect is intentionally absent. After PR review, merge and
+production smoke testing, add this rule after all generated
 specific legacy redirects:
 
 ```toml
@@ -235,27 +237,26 @@ force = true
 
 Then verify path and query preservation, no loop, one hop, and continued access
 to deploy-preview and branch-deploy hosts. The redirect must not be activated
-from the current legally blocked draft.
+before PR review, merge and the post-merge production smoke test.
 
 ## Remaining limitations and required approvals
 
-1. Business-approved Arabic Terms and Privacy content is missing.
-2. No analytics destination or privacy/consent decision is approved; analytics
+1. No analytics destination or privacy/consent decision is approved; analytics
    remains disabled.
-3. The custom production domain has not served the PR 8 reviewed build yet.
-4. The exact Netlify-host redirect and its path/query smoke test remain gated.
-5. Lighthouse LCP remains slow in the mobile lab runs, and the main JavaScript
+2. The custom production domain has not served the PR 8 reviewed build yet.
+3. The exact Netlify-host redirect and its path/query smoke test remain gated.
+4. Lighthouse LCP remains slow in the mobile lab runs, and the main JavaScript
    chunk remains above Vite's 500 kB warning threshold.
-6. No field Core Web Vitals are claimed.
-7. Remote yacht media remains dependent on the authorized external host;
+5. No field Core Web Vitals are claimed.
+6. Remote yacht media remains dependent on the authorized external host;
    strict pre-release verification mitigates availability regressions.
-8. Binding legal localization must be supplied and approved by the business;
-   it must not be machine-invented in this repository.
+7. Future binding legal changes must be supplied and approved by the business;
+   they must not be machine-invented in this repository.
 
 ## Search Console checklist
 
-Do not submit the sitemap or request indexing yet. After the legal gate and
-post-merge production smoke test pass:
+Do not submit the sitemap or request indexing yet. After PR review, merge and
+the post-merge production smoke test pass:
 
 1. Confirm the Search Console property uses `https://yacht-dxb.com/`.
 2. Open the live production `robots.txt` and confirm its production sitemap URL.

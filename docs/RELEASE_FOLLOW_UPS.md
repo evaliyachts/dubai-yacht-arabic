@@ -1,13 +1,18 @@
 # Release follow-ups
 
-## Arabic legal localization before PR 8
+## Arabic legal localization — completed in PR 8
 
-The `/terms/` and `/privacy/` routes still require approved Arabic legal localization before the PR 8 production cutover.
+The business owner approved the Arabic `/terms/` and `/privacy/` text for
+publication on `yacht-dxb.com` on 2026-07-13 and confirmed that both documents
+reflect the site's and service's current practices.
 
-- Do not invent, machine-translate, or automatically translate binding legal terms.
-- Obtain Arabic wording approved by an authorized legal reviewer.
-- Preserve the approved legal meaning, obligations, contact details, and jurisdiction without editorial inference.
-- After approval, verify each route's Arabic title, description, H1, visible content, canonical URL, schema ownership, and internal links.
-- Record the approver and approval date in the release evidence.
+- The supplied text was published without machine translation or invented terms.
+- Both routes retain their production canonicals, indexable ownership and
+  `BreadcrumbList` schema.
+- Their Arabic titles, descriptions, H1s, visible update date and approved phone
+  number are covered by automated tests and the production SEO check.
+- Any future legal or operational change must receive fresh business approval
+  before the visible text or privacy-related configuration is changed.
 
-This follow-up is a production acceptance gate; PR 3 does not alter the current legal text.
+This former production acceptance gate is resolved. PR 8 review, merge and the
+post-merge production smoke test remain separate release gates.
