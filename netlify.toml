@@ -27,3 +27,9 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[redirects]]
+from = "https://yacht-dxb.netlify.app/*"
+to = "https://yacht-dxb.com/:splat"
+status = 301
+force = true
