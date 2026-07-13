@@ -8,6 +8,7 @@
 - Final functional commit audited by this report: `bb5ddab`
 - Approved Arabic legal body-copy commit: `562b59b`
 - Approved legal metadata and regression-test commit: `bb5ddab`
+- Legal approval record commit: `2585916`
 - Legal approval record: `docs/LEGAL_CONTENT_APPROVAL.md`
 - Indexable route records: 58
 - Static canonical route records: 58

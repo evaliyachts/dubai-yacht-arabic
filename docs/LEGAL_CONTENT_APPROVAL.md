@@ -9,6 +9,7 @@
 - Approved phone: `+971 50 464 1020` (`+971504641020`)
 - Exact Arabic Terms and Privacy publication commit: `562b59b`
 - Approved legal metadata and regression-test commit: `bb5ddab`
+- Legal approval record introduced in commit: `2585916`
 
 The business owner approved the exact Arabic Terms and Privacy texts supplied
 for `/terms/` and `/privacy/` and confirmed that they reflect the site's and
