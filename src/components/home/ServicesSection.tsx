@@ -49,30 +49,39 @@ const ServicesSection = () => {
   const cards = buildCards();
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  const activeRef = useRef(0);
+  const isFullyInViewRef = useRef(false);
   const lockRef = useRef(false);
   const touchStartY = useRef<number | null>(null);
 
   useEffect(() => {
-    const isInView = () => {
-      const el = sectionRef.current;
-      if (!el) return false;
-      const r = el.getBoundingClientRect();
-      return r.top <= 1 && r.bottom >= window.innerHeight - 1;
-    };
+    activeRef.current = active;
+  }, [active]);
+
+  useEffect(() => {
+    const element = sectionRef.current;
+    const observer = element && "IntersectionObserver" in window
+      ? new IntersectionObserver(
+        ([entry]) => { isFullyInViewRef.current = (entry?.intersectionRatio ?? 0) >= 0.45; },
+        { threshold: [0, 0.45] },
+      )
+      : null;
+    if (element && observer) observer.observe(element);
 
     const step = (dir: 1 | -1) => {
       setActive((prev) => {
-        const next = prev + dir;
-        if (next < 0 || next > cards.length - 1) return prev;
+        const next = Math.min(cards.length - 1, Math.max(0, prev + dir));
+        activeRef.current = next;
         return next;
       });
     };
 
     const onWheel = (e: WheelEvent) => {
-      if (!isInView()) return;
+      if (!isFullyInViewRef.current) return;
       const dir: 1 | -1 = e.deltaY > 0 ? 1 : -1;
-      const atStart = active === 0 && dir === -1;
-      const atEnd = active === cards.length - 1 && dir === 1;
+      const current = activeRef.current;
+      const atStart = current === 0 && dir === -1;
+      const atEnd = current === cards.length - 1 && dir === 1;
       if (atStart || atEnd) return;
       e.preventDefault();
       if (lockRef.current) return;
@@ -88,18 +97,19 @@ const ServicesSection = () => {
     };
 
     const onTouchMove = (e: TouchEvent) => {
-      if (!isInView() || touchStartY.current == null) return;
+      if (!isFullyInViewRef.current || touchStartY.current == null) return;
       const dy = touchStartY.current - (e.touches[0]?.clientY ?? 0);
       if (Math.abs(dy) < 40) return;
       const dir: 1 | -1 = dy > 0 ? 1 : -1;
-      const atStart = active === 0 && dir === -1;
-      const atEnd = active === cards.length - 1 && dir === 1;
+      const current = activeRef.current;
+      const atStart = current === 0 && dir === -1;
+      const atEnd = current === cards.length - 1 && dir === 1;
       if (atStart || atEnd) return;
       e.preventDefault();
       if (lockRef.current) return;
       lockRef.current = true;
       step(dir);
-      touchStartY.current = e.touches[0]?.clientY ?? null;
+      touchStartY.current = null;
       window.setTimeout(() => {
         lockRef.current = false;
       }, 600);
@@ -109,11 +119,12 @@ const ServicesSection = () => {
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: false });
     return () => {
+      observer?.disconnect();
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [active, cards.length]);
+  }, [cards.length]);
 
   return (
     <section ref={sectionRef} className="liquid-divider relative" style={{ height: "200vh" }} dir="rtl">

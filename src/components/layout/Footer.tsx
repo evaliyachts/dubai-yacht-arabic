@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { MessageCircle, Phone, Check, Clock, Globe } from "lucide-react";
 import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY, ROUTES } from "@/lib/constants";
 import { NAVIGATION_TARGETS, requireRouteRecord } from "@/seo/route-manifest";
+import brandMark from "@/assets/home/brand-mark.png";
 
 const Footer = () => (
   <footer className="liquid-divider pt-16 pb-8 border-t border-border/30" dir="rtl" data-analytics-region="footer">
@@ -10,10 +11,10 @@ const Footer = () => (
         <div>
           <Link to="/" className="flex items-center gap-2 mb-4">
             <img
-              src="/favicon.png"
+              src={brandMark}
               alt={BRAND_NAME}
-              width={181}
-              height={181}
+              width={72}
+              height={72}
               loading="lazy"
               decoding="async"
               className="h-9 w-9 rounded-md"

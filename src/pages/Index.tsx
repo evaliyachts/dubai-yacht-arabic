@@ -12,7 +12,6 @@ import HomeOverviewSection from "@/components/home/HomeOverviewSection";
 import SEOHead from "@/components/shared/SEOHead";
 import { requireRouteRecord } from "@/seo/route-manifest";
 import { contactPointEntity, organizationEntity, websiteEntity } from "@/seo/entities";
-import { Helmet } from "react-helmet-async";
 
 const route = requireRouteRecord("/");
 
@@ -22,19 +21,18 @@ const Index = () => {
   return (
     <Layout>
       <SEOHead route={route} jsonLd={jsonLd} />
-      <Helmet>
-        <link rel="preconnect" href="https://dubai-yacht.fra1.cdn.digitaloceanspaces.com" />
-      </Helmet>
-      <HeroSection />
-      <HomeOverviewSection />
-      <FeaturedYachts />
-      <ServicesSection />
-      <WhyChooseUs />
-      <PricesSection />
-      <GallerySection />
-      <RoutesSection />
-      <HomeFAQ />
-      <CTAStrip />
+      <div data-homepage>
+        <HeroSection />
+        <HomeOverviewSection />
+        <FeaturedYachts />
+        <ServicesSection />
+        <WhyChooseUs />
+        <PricesSection />
+        <GallerySection />
+        <RoutesSection />
+        <HomeFAQ />
+        <CTAStrip />
+      </div>
     </Layout>
   );
 };

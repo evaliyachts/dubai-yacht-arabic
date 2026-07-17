@@ -41,12 +41,12 @@ describe("PR 7 accessibility and performance safeguards", () => {
     expect(build.match(/sourcemap: false/g)).toHaveLength(2);
   });
 
-  it("keeps the critical hero preconnect homepage-specific and downgrades the shared yacht origin", () => {
+  it("keeps the localized hero independent from its former origin and downgrades the shared yacht origin", () => {
     const template = readFileSync(resolve("index.html"), "utf8");
     const homepage = readFileSync(resolve("src/pages/Index.tsx"), "utf8");
     expect(template).toContain('<link rel="dns-prefetch" href="//yacht.fra1.cdn.digitaloceanspaces.com" />');
     expect(template).not.toContain('<link rel="preconnect" href="https://yacht.fra1.cdn.digitaloceanspaces.com"');
     expect(template).not.toContain('<link rel="preconnect" href="https://dubai-yacht.fra1.cdn.digitaloceanspaces.com"');
-    expect(homepage).toContain('<link rel="preconnect" href="https://dubai-yacht.fra1.cdn.digitaloceanspaces.com" />');
+    expect(homepage).not.toContain("dubai-yacht.fra1.cdn.digitaloceanspaces.com");
   });
 });

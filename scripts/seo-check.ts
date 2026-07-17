@@ -145,7 +145,6 @@ const canonicals: Array<{ route: string; value: string }> = [];
 const h1Values: Array<{ route: string; value: string }> = [];
 const jsonLdPattern = /<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi;
 const yachtByPath = new Map(yachts.map((yacht) => [`/yachts/${yacht.slug}/`, yacht]));
-const heroOrigin = "https://dubai-yacht.fra1.cdn.digitaloceanspaces.com";
 const yachtOrigin = "https://yacht.fra1.cdn.digitaloceanspaces.com";
 
 for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus === 200 && item.indexable)) {
@@ -184,9 +183,25 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   if (html.includes("yacht-dxb.netlify.app")) fail(expectation.path, "preview hostname in output");
   if (/<meta[^>]*name=["']keywords["']/i.test(html)) fail(expectation.path, "meta keywords output is prohibited");
   if (/\bhreflang\s*=/i.test(html)) fail(expectation.path, "live hreflang is prohibited until reciprocal rollout");
-  const heroPreconnectCount = [...html.matchAll(new RegExp(`<link[^>]+rel=["']preconnect["'][^>]+href=["']${heroOrigin.replaceAll(".", "\\.")}["']`, "gi"))].length;
-  if (expectation.path === "/" && heroPreconnectCount !== 1) fail(expectation.path, "homepage requires exactly one hero-origin preconnect");
-  if (expectation.path !== "/" && heroPreconnectCount !== 0) fail(expectation.path, "hero-origin preconnect must remain homepage-specific");
+  if (/dubai-yacht\.fra1\.cdn\.digitaloceanspaces\.com/i.test(html)) {
+    fail(expectation.path, "localized homepage hero must not retain a runtime source-origin dependency");
+  }
+  const inlineHomepageCssCount = [...html.matchAll(/<style\b[^>]*\bdata-homepage-inline-css\b[^>]*>/gi)].length;
+  const generatedStylesheetCount = [...html.matchAll(/<link\b[^>]*\brel=["']stylesheet["'][^>]*\bhref=["']\/assets\/[^"']+\.css["'][^>]*>/gi)].length;
+  if (expectation.path === "/" && (inlineHomepageCssCount !== 1 || generatedStylesheetCount !== 0)) {
+    fail(expectation.path, "homepage must inline the generated stylesheet exactly once without a blocking asset stylesheet");
+  }
+  if (expectation.path !== "/" && (inlineHomepageCssCount !== 0 || generatedStylesheetCount !== 1)) {
+    fail(expectation.path, "inner routes must retain exactly one fingerprinted external stylesheet");
+  }
+  const htmlWithoutNoscript = html.replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, "");
+  for (const fontTag of htmlWithoutNoscript.matchAll(/<link\b[^>]*fonts\.googleapis\.com\/css2\?[^>]*>/gi)) {
+    const tag = fontTag[0];
+    if (/rel=["']stylesheet["']/i.test(tag) && !/media=["']print["']/i.test(tag)) {
+      fail(expectation.path, "Google Fonts stylesheet must not block rendering");
+    }
+    if (!/display=optional/i.test(tag)) fail(expectation.path, "Google Fonts must use display=optional");
+  }
   if (new RegExp(`<link[^>]+rel=["']preconnect["'][^>]+href=["']${yachtOrigin.replaceAll(".", "\\.")}["']`, "i").test(html)) {
     fail(expectation.path, "below-fold yacht origin must not use a global preconnect");
   }

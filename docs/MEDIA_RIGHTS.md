@@ -2,6 +2,18 @@
 
 Production yacht records may reference only media whose `rightsRecordId` exists in this register. Absence of an approved source means the neutral fallback must remain in use.
 
+## Homepage performance renditions — 17 July 2026
+
+The focused mobile-performance candidate preserves the two hero photographs already used by the approved production homepage and emits local, neutral, fingerprinted renditions. No new photograph, yacht fact, service claim, usage surface or social-preview right is introduced.
+
+| Candidate asset | Existing production source | Dimensions | SHA-256 |
+| --- | --- | ---: | --- |
+| `src/assets/home/yacht-cover-desktop.avif` | `https://dubai-yacht.fra1.cdn.digitaloceanspaces.com/dubai_yacht_luxury_dt.avif` | 2752×1536 | `9095255cc998d6eaf68fdd5725185edcd4a9debbefe2c7af9371c7264cc9292b` |
+| `src/assets/home/yacht-cover-mobile.avif` | `https://dubai-yacht.fra1.cdn.digitaloceanspaces.com/dubai_yacht_luxury_mob.avif` | 768×1376 | `18da0d9a4102830e365c8799f90bfcdbe91f4907eface5cb518ac3f04121abca` |
+| `src/assets/home/brand-mark.png` | Existing local `/favicon.png` brand asset | 72×72 | `e8dd3fe7336404d1743a4bf57a89dab67bd87ec7067855245e11d9665240be10` |
+
+The original mobile source is 1536×2752, 73,778 bytes and has SHA-256 `3a1c62a8f21c968a16116198066bcb758016b3c051bfc7d21ef76105d3f0d875`. The original desktop source has the same checksum as its exact local snapshot. The existing `/favicon.png` source remains unchanged and has SHA-256 `cf3aed3b4cbeabc1b2c8ec167004a737647ae3d489a0a674afbe59eb21977367`.
+
 | Rights record ID | Local asset path | Original source | Owner | Authorization evidence | Approved usage | Approval date |
 | --- | --- | --- | --- | --- | --- | --- |
 | `media-neutral-placeholder-001` | `/media/yacht-placeholder.svg` | Original neutral vector created in this repository for PR 5 | Yacht DXB project | PR 5 implementation and approved roadmap requirement to use a neutral fallback when authorized yacht media is unavailable | Fallback on yacht catalogue cards, detail pages, and other Yacht DXB pages; it must not be described as a photograph of a specific yacht | 2026-07-12 |

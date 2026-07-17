@@ -6,6 +6,7 @@ import { PRERENDER_ROUTES } from "../src/lib/static-routes";
 import { assertValidRouteManifest } from "../src/seo/route-manifest";
 import { yachts } from "../src/data/yachts";
 import { validateYachtRecords } from "../src/data/yacht-schema";
+import { getGeneratedStylesheetPath, inlineHomepageStylesheet } from "../src/lib/static-performance";
 
 const rootDir = resolve(".");
 const distDir = resolve(rootDir, "dist");
@@ -60,13 +61,16 @@ try {
   });
 
   const template = await readFile(resolve(distDir, "index.html"), "utf8");
+  const generatedStylesheetPath = getGeneratedStylesheetPath(template);
+  const homepageStylesheet = await readFile(resolve(distDir, generatedStylesheetPath.slice(1)), "utf8");
+  const homepageTemplate = inlineHomepageStylesheet(template, homepageStylesheet);
   const { renderRoute } = (await import(pathToFileURL(serverEntry).href)) as typeof import("../src/entry-server");
 
   for (const route of PRERENDER_ROUTES) {
     const { appHtml, headHtml } = renderRoute(route);
     const outputFile = outputFileForRoute(route);
     await mkdir(dirname(outputFile), { recursive: true });
-    await writeFile(outputFile, composeDocument(template, appHtml, headHtml));
+    await writeFile(outputFile, composeDocument(route === "/" ? homepageTemplate : template, appHtml, headHtml));
   }
 
   const notFound = renderRoute("/__404__/");
