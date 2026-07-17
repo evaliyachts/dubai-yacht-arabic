@@ -76,6 +76,13 @@
   [dir="rtl"] {
     text-align: right;
   }
+
+  @supports (content-visibility: auto) {
+    [data-homepage] > section:not([data-home-section="hero"]) {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 900px;
+    }
+  }
 }
 
 .skip-link {

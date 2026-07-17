@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { BRAND_NAME, getWhatsAppLink, getPhoneLink } from "@/lib/constants";
 import { NAVIGATION_TARGETS } from "@/seo/route-manifest";
+import brandMark from "@/assets/home/brand-mark.png";
 
 const normalizePath = (path: string) => {
   try {
@@ -44,10 +45,7 @@ const Header = () => {
   }, []);
 
   return (
-    <motion.header
-      initial={false}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled ? "liquid-header py-3" : "bg-transparent py-5"
       }`}
@@ -58,10 +56,10 @@ const Header = () => {
         <div className="container mx-auto px-4 flex items-center justify-between relative z-50">
           <Link to="/" className="flex items-center gap-2 group">
           <img
-            src="/favicon.png"
+            src={brandMark}
             alt={BRAND_NAME}
-            width={181}
-            height={181}
+            width={72}
+            height={72}
             decoding="async"
             className="h-9 w-9 rounded-md transition-transform duration-300 group-hover:scale-105"
           />
@@ -161,7 +159,7 @@ const Header = () => {
           </DialogPrimitive.Content>
         </DialogPrimitive.Portal>
       </DialogPrimitive.Root>
-    </motion.header>
+    </header>
   );
 };
 
