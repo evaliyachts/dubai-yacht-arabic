@@ -147,15 +147,15 @@ const jsonLdPattern = /<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>
 const yachtByPath = new Map(yachts.map((yacht) => [`/yachts/${yacht.slug}/`, yacht]));
 const yachtOrigin = "https://yacht.fra1.cdn.digitaloceanspaces.com";
 const expectedSocialProfiles = [
-  ["فيسبوك", "https://www.facebook.com/share/14i7z1YMxtg/?mibextid=wwXIfr"],
-  ["إنستغرام", "https://www.instagram.com/dubai___yachts?igsh=N3Z6OTFpdThvdm92&utm_source=qr"],
-  ["ثريدز", "https://www.threads.com/@dubai___yachts?igshid=NTc4MTIwNjQ2YQ=="],
-  ["تيك توك", "https://www.tiktok.com/@dubai__yachts?_r=1&_t=ZS-98EMuY54sYG"],
-  ["إكس", "https://x.com/dubai__yachts?s=11"],
-  ["يوتيوب", "https://youtube.com/@dubai_yach_trental?si=GBpmM1NkYfCliFBX"],
+  ["Facebook", "فيسبوك", "https://www.facebook.com/share/14i7z1YMxtg/?mibextid=wwXIfr"],
+  ["Instagram", "إنستغرام", "https://www.instagram.com/dubai___yachts?igsh=N3Z6OTFpdThvdm92&utm_source=qr"],
+  ["Threads", "ثريدز", "https://www.threads.com/@dubai___yachts?igshid=NTc4MTIwNjQ2YQ=="],
+  ["TikTok", "تيك توك", "https://www.tiktok.com/@dubai__yachts?_r=1&_t=ZS-98EMuY54sYG"],
+  ["X", "إكس", "https://x.com/dubai__yachts?s=11"],
+  ["YouTube", "يوتيوب", "https://youtube.com/@dubai_yach_trental?si=GBpmM1NkYfCliFBX"],
 ] as const;
 
-if (JSON.stringify(SOCIAL_PROFILES.map(({ labelAr, url }) => [labelAr, url])) !== JSON.stringify(expectedSocialProfiles)) {
+if (JSON.stringify(SOCIAL_PROFILES.map(({ platform, labelAr, url }) => [platform, labelAr, url])) !== JSON.stringify(expectedSocialProfiles)) {
   failures.push("social profiles: owner-approved Arabic profile contract is incomplete or altered");
 }
 
@@ -193,9 +193,9 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   if (!/<main(?:\s[^>]*)?>[\s\S]*?[^\s<][\s\S]*?<\/main>/i.test(html)) fail(expectation.path, "missing initial main content");
   if (html.includes("<!--app-html-->") || html.includes("<!--app-head-->")) fail(expectation.path, "unreplaced template marker");
   if (html.includes("yacht-dxb.netlify.app")) fail(expectation.path, "preview hostname in output");
-  for (const [labelAr, url] of expectedSocialProfiles) {
+  for (const [platform, labelAr, url] of expectedSocialProfiles) {
     const escapedUrl = url.replaceAll("&", "&amp;");
-    if (!html.includes(`href="${escapedUrl}"`) || !html.includes(`aria-label="زيارة صفحة يخوت دبي على ${labelAr}"`)) {
+    if (!html.includes(`href="${escapedUrl}"`) || !html.includes(`aria-label="زيارة صفحة يخوت دبي على ${labelAr}"`) || !html.includes(`data-social-icon="${platform}"`)) {
       fail(expectation.path, `approved ${labelAr} footer profile is missing or altered`);
     }
   }
