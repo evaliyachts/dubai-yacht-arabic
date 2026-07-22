@@ -4,7 +4,7 @@ import { yachts } from "../src/data/yachts";
 import { APPROVED_ATTACHED_MEDIA_URLS } from "../src/data/yacht-media";
 import { validateYachtRecords } from "../src/data/yacht-schema";
 import { socialImageForYachtMedia, validateSocialImageUrl } from "../src/seo/social-image";
-import { PHONE_NUMBER } from "../src/lib/constants";
+import { PHONE_NUMBER, SOCIAL_PROFILES } from "../src/lib/constants";
 import { CONTACT_POINT_ID, ORGANIZATION_ID, WEBSITE_ID } from "../src/seo/entities";
 import { generateRedirects, generateRobotsTxt } from "../src/seo/output-generators";
 import {
@@ -146,6 +146,18 @@ const h1Values: Array<{ route: string; value: string }> = [];
 const jsonLdPattern = /<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi;
 const yachtByPath = new Map(yachts.map((yacht) => [`/yachts/${yacht.slug}/`, yacht]));
 const yachtOrigin = "https://yacht.fra1.cdn.digitaloceanspaces.com";
+const expectedSocialProfiles = [
+  ["فيسبوك", "https://www.facebook.com/share/14i7z1YMxtg/?mibextid=wwXIfr"],
+  ["إنستغرام", "https://www.instagram.com/dubai___yachts?igsh=N3Z6OTFpdThvdm92&utm_source=qr"],
+  ["ثريدز", "https://www.threads.com/@dubai___yachts?igshid=NTc4MTIwNjQ2YQ=="],
+  ["تيك توك", "https://www.tiktok.com/@dubai__yachts?_r=1&_t=ZS-98EMuY54sYG"],
+  ["إكس", "https://x.com/dubai__yachts?s=11"],
+  ["يوتيوب", "https://youtube.com/@dubai_yach_trental?si=GBpmM1NkYfCliFBX"],
+] as const;
+
+if (JSON.stringify(SOCIAL_PROFILES.map(({ labelAr, url }) => [labelAr, url])) !== JSON.stringify(expectedSocialProfiles)) {
+  failures.push("social profiles: owner-approved Arabic profile contract is incomplete or altered");
+}
 
 for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus === 200 && item.indexable)) {
   const filePath = outputFileForRoute(expectation.path);
@@ -181,6 +193,12 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
   if (!/<main(?:\s[^>]*)?>[\s\S]*?[^\s<][\s\S]*?<\/main>/i.test(html)) fail(expectation.path, "missing initial main content");
   if (html.includes("<!--app-html-->") || html.includes("<!--app-head-->")) fail(expectation.path, "unreplaced template marker");
   if (html.includes("yacht-dxb.netlify.app")) fail(expectation.path, "preview hostname in output");
+  for (const [labelAr, url] of expectedSocialProfiles) {
+    const escapedUrl = url.replaceAll("&", "&amp;");
+    if (!html.includes(`href="${escapedUrl}"`) || !html.includes(`aria-label="زيارة صفحة يخوت دبي على ${labelAr}"`)) {
+      fail(expectation.path, `approved ${labelAr} footer profile is missing or altered`);
+    }
+  }
   if (/<meta[^>]*name=["']keywords["']/i.test(html)) fail(expectation.path, "meta keywords output is prohibited");
   if (/\bhreflang\s*=/i.test(html)) fail(expectation.path, "live hreflang is prohibited until reciprocal rollout");
   if (/dubai-yacht\.fra1\.cdn\.digitaloceanspaces\.com/i.test(html)) {
