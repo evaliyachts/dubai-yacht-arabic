@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { MessageCircle, Phone, Check, Clock, Globe } from "lucide-react";
-import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY, ROUTES } from "@/lib/constants";
+import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY, ROUTES, SOCIAL_PROFILES } from "@/lib/constants";
 import { NAVIGATION_TARGETS, requireRouteRecord } from "@/seo/route-manifest";
 import brandMark from "@/assets/home/brand-mark.png";
 
@@ -34,6 +34,24 @@ const Footer = () => (
               <Phone className="w-4 h-4" />
             </a>
           </div>
+          <nav aria-label="حسابات يخوت دبي على منصات التواصل" className="mt-5">
+            <p className="mb-2 text-xs font-semibold text-foreground">تابع يخوت دبي</p>
+            <ul className="flex flex-wrap gap-x-3 gap-y-2 text-xs">
+              {SOCIAL_PROFILES.map((profile) => (
+                <li key={profile.platform}>
+                  <a
+                    href={profile.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`زيارة صفحة يخوت دبي على ${profile.labelAr}`}
+                    className="text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary focus-visible:text-primary"
+                  >
+                    {profile.labelAr}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
 
         <div>

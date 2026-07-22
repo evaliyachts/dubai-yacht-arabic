@@ -1,0 +1,16 @@
+# اعتماد روابط منصات التواصل — 22 يوليو 2026
+
+اعتمد مالك الموقع الروابط الخارجية الدقيقة التالية للظهور في تذييل `https://yacht-dxb.com/`:
+
+| المنصة | الرابط المعتمد |
+| --- | --- |
+| فيسبوك | `https://www.facebook.com/share/14i7z1YMxtg/?mibextid=wwXIfr` |
+| إنستغرام | `https://www.instagram.com/dubai___yachts?igsh=N3Z6OTFpdThvdm92&utm_source=qr` |
+| ثريدز | `https://www.threads.com/@dubai___yachts?igshid=NTc4MTIwNjQ2YQ==` |
+| تيك توك | `https://www.tiktok.com/@dubai__yachts?_r=1&_t=ZS-98EMuY54sYG` |
+| إكس | `https://x.com/dubai__yachts?s=11` |
+| يوتيوب | `https://youtube.com/@dubai_yach_trental?si=GBpmM1NkYfCliFBX` |
+
+نوع الدليل: إفادة مباشرة من المالك في مهمة تنفيذ الموقع بتاريخ 2026-07-22. أعادت جميع الوجهات المقدمة حالة HTTP `200` أثناء التحقق السابق للتنفيذ في التاريخ نفسه.
+
+يقتصر الاعتماد على روابط تذييل ظاهرة وعادية وقابلة للزحف. لا يسمح هذا الاعتماد بإضافة `sameAs` إلى البيانات المنظمة، أو تفعيل التحليلات أو وحدات تتبع المنصات، أو تغيير المسارات أو خريطة الموقع أو بيانات الهاتف وواتساب المعتمدة.
