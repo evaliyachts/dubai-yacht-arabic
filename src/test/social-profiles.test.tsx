@@ -17,7 +17,7 @@ describe("روابط منصات التواصل المعتمدة", () => {
     expect(SOCIAL_PROFILES).toEqual(expectedProfiles);
   });
 
-  it("يعرض روابط تذييل واضحة وقابلة للزحف من دون تغيير مخطط الكيان", () => {
+  it("يعرض أيقونات تذييل واضحة وقابلة للزحف من دون تغيير مخطط الكيان", () => {
     window.history.pushState({}, "", "/");
     render(<App />);
     const nav = within(document.body).getByRole("navigation", { name: "حسابات يخوت دبي على منصات التواصل" });
@@ -27,6 +27,8 @@ describe("روابط منصات التواصل المعتمدة", () => {
     links.forEach((link, index) => {
       const profile = expectedProfiles[index];
       expect(link).toHaveTextContent(profile.labelAr);
+      expect(link.querySelector(`[data-social-icon="${profile.platform}"]`)).not.toBeNull();
+      expect(link.querySelector(".sr-only")).toHaveTextContent(profile.labelAr);
       expect(link).toHaveAttribute("href", profile.url);
       expect(link).toHaveAttribute("target", "_blank");
       expect(link).toHaveAttribute("rel", "noopener noreferrer");

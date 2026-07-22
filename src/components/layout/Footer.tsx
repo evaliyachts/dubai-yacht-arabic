@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { MessageCircle, Phone, Check, Clock, Globe } from "lucide-react";
 import { BRAND_NAME, ENGLISH_SITE_URL, getWhatsAppLink, getPhoneLink, PHONE_DISPLAY, ROUTES, SOCIAL_PROFILES } from "@/lib/constants";
 import { NAVIGATION_TARGETS, requireRouteRecord } from "@/seo/route-manifest";
+import { SocialPlatformIcon } from "@/components/shared/SocialPlatformIcon";
 import brandMark from "@/assets/home/brand-mark.png";
 
 const Footer = () => (
@@ -36,7 +37,7 @@ const Footer = () => (
           </div>
           <nav aria-label="حسابات يخوت دبي على منصات التواصل" className="mt-5">
             <p className="mb-2 text-xs font-semibold text-foreground">تابع يخوت دبي</p>
-            <ul className="flex flex-wrap gap-x-3 gap-y-2 text-xs">
+            <ul className="flex flex-wrap gap-2">
               {SOCIAL_PROFILES.map((profile) => (
                 <li key={profile.platform}>
                   <a
@@ -44,9 +45,10 @@ const Footer = () => (
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`زيارة صفحة يخوت دبي على ${profile.labelAr}`}
-                    className="text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary focus-visible:text-primary"
+                    className="liquid-btn inline-flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary"
                   >
-                    {profile.labelAr}
+                    <SocialPlatformIcon platform={profile.platform} className="h-4 w-4" />
+                    <span className="sr-only">{profile.labelAr}</span>
                   </a>
                 </li>
               ))}
