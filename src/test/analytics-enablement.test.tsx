@@ -16,7 +16,7 @@ describe("analytics listener enablement", () => {
     vi.stubEnv("VITE_GA_MEASUREMENT_ID", "invalid");
     render(
       <AppProviders>
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}><AppRoutes /></MemoryRouter>
+        <MemoryRouter><AppRoutes /></MemoryRouter>
       </AppProviders>,
     );
     expect(screen.queryByTestId("conversion-tracking-mounted")).not.toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("analytics listener enablement", () => {
     vi.stubEnv("VITE_GA_MEASUREMENT_ID", "G-TEST123456");
     render(
       <AppProviders>
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}><AppRoutes /></MemoryRouter>
+        <MemoryRouter><AppRoutes /></MemoryRouter>
       </AppProviders>,
     );
     expect(screen.getByTestId("conversion-tracking-mounted")).toBeInTheDocument();

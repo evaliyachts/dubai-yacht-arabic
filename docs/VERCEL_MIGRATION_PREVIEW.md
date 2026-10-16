@@ -2,10 +2,14 @@
 
 State: Draft / Preview only. This document does not authorize merge, production deployment, domain assignment, DNS changes or nameserver cutover.
 
-Repository: `evaliyachts/dubai-yacht-arabic`  
-Base main: `ed3b47f7cd352a002ac9418d9d6d9b7833a169a0`  
-Branch: `agent/arabic-dxb-vercel-migration`  
-Production authority: `https://yacht-dxb.com/`  
+Repository: `evaliyachts/dubai-yacht-arabic`
+
+Base main: `fc09d5ea1de0663f6d2900221b09831a5b5e8fdf` (dependency stabilization PR #17 merged)
+
+Branch: `agent/arabic-dxb-vercel-migration`
+
+Production authority: `https://yacht-dxb.com/`
+
 Vercel scope/project: `evali1/dubai-yacht-arabic`
 
 ## Preserved contract
@@ -16,7 +20,7 @@ This release expects 58 indexable routes and 58 distinct sitemap URLs, with Arab
 - Preserve the existing 144 explicit legacy 301 rules and 57 implicit Netlify canonical slash-normalization 301s. No new redirect decision, consolidation or route restoration is approved.
 - Preserve real unknown-route 404s; no SPA wildcard rewrite.
 - Preserve absence of hreflang/x-default and existing analytics state.
-- Leave existing Netlify configuration, DNS, live deploy and other migration/dependency PRs unchanged.
+- Leave existing Netlify configuration, DNS, live deploy and other migration/dependency PRs unchanged. The refreshed branch inherits the approved dependency stabilization from main; it introduces no additional dependency or lockfile change relative to main.
 
 ## Hosting adaptation
 
@@ -40,6 +44,7 @@ npm test
 npm run build
 npm run seo:check
 npm run build:vercel
+npm audit --omit=dev
 git diff --check
 ```
 
@@ -47,11 +52,17 @@ The `scripts/migration-audit.mjs` read-only collector compares every canonical p
 
 The final PR description records the exact head, immutable protected Preview URL/deploy ID, complete changed files, route/redirect/crawl results, desktop/mobile RTL review, menu and gallery interaction, representative images, checksums and outstanding approvals. A preview is not a production release or guarantee of rankings.
 
-## Known release blockers
+## Dependency stabilization and refresh
 
-- Baseline `npm audit --omit=dev`: 12 findings (9 high, 3 moderate), unchanged by this migration. No dependency version, lockfile, override or audit suppression is changed here. Dependency remediation requires a separate reviewed PR before cutover approval.
+The earlier Preview at head `31ccd17a9b0f55e13b0d011d184e71a10acc5ea6` predates dependency PR #17 and is superseded for release review. Refresh this branch from main with a merge, retaining the hosting adapter and all approved dependency fixes. The only overlap was the generated-output exclusion in `.gitignore`; preserve `dist-vercel`, `.vercel` and `.env*` exclusions. The new exact head and immutable Vercel Preview belong in the PR description after verification.
+
+PR #17 was squash-merged as `fc09d5ea1de0663f6d2900221b09831a5b5e8fdf`. Its production Netlify deploy is `6ad1b8c260716e72a6936471`; the expected live bundle is `/assets/index-Bb0uK5g_.js`. This refresh must not replace that deployment. The Vercel project production/bootstrap target must also remain `dpl_7oxzpUmVmqac8M3tztt335nyR2aK` while Preview work runs.
+
+## Remaining release gates
+
+- The former 12 production dependency findings (9 high, 3 moderate) were resolved in separate approved PR #17. Rerun `npm audit --omit=dev` on the refreshed migration head; the expected result is zero production findings. Nine development-only Tailwind-chain findings (5 high, 4 moderate) remain documented and deferred; do not describe the entire dependency tree as vulnerability-free. No further version, lockfile, override or audit-suppression change belongs in this migration refresh.
 - DNS is not changed here. Public NS records currently remain `dns1.p01.nsone.net` through `dns4.p01.nsone.net`; Google verification TXT must be preserved. No public MX was returned at preflight. A full authoritative-zone inventory and any DNSSEC/CAA/email records must be verified before any future delegation change; public query results are not a complete zone inventory.
-- The Netlify connector's current preflight requires reauthentication. This does not prevent public HTTP baseline capture or the authenticated Vercel Preview, but authenticated zone/deploy inventory is pending. Do not claim it was verified through that connector.
+- The Netlify connector previously required reauthentication, but existing authenticated dashboard access verified the PR #17 production publication. Full authoritative DNS-zone inventory is still pending; neither public lookups nor the deploy dashboard replace that inventory. Do not claim it was verified through the connector.
 - Git integration/domain configuration and final production build must be explicitly verified before release; no nameserver change or custom-domain traffic switch is authorized by this Draft PR.
 
 ## Future release gate

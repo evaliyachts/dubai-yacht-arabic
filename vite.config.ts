@@ -7,6 +7,8 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   build: {
     sourcemap: false,
+    // Preserve Vite 5's compilation target instead of adopting Vite 7's newer default.
+    target: ["es2020", "edge88", "firefox78", "chrome87", "safari14"],
   },
   server: {
     host: "::",
