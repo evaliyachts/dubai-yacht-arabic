@@ -42,3 +42,6 @@ jobs:
 
       - name: Check baseline SEO
         run: npm run seo:check
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
