@@ -341,7 +341,8 @@ for (const expectation of QA_EXPECTATIONS.filter((item) => item.expectedStatus =
     if (!/\bwidth=["']\d+["']/i.test(imageTag) || !/\bheight=["']\d+["']/i.test(imageTag)) {
       fail(expectation.path, `image is missing explicit dimensions: ${source}`);
     }
-    if (source.startsWith("https://yacht.fra1.cdn.digitaloceanspaces.com/") && !/\bsrcset=["'][^"']*\/\.netlify\/images\?url=/i.test(imageTag)) {
+    const imageEndpoint = process.env.VITE_IMAGE_CDN === "vercel" ? "/_vercel/image?url=" : "/.netlify/images?url=";
+    if (source.startsWith("https://yacht.fra1.cdn.digitaloceanspaces.com/") && !imageTag.includes(imageEndpoint)) {
       fail(expectation.path, `authorized remote yacht image is missing an allowlisted responsive srcset: ${source}`);
     }
     if (source.startsWith("/") && !source.startsWith("//")) {

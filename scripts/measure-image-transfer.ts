@@ -1,7 +1,7 @@
 import { eventPages } from "../src/data/eventPages";
 import { yachts, type YachtMediaRecord } from "../src/data/yachts";
 import { ROUTES } from "../src/lib/constants";
-import { isApprovedResponsiveImageSource, netlifyImageUrl } from "../src/lib/responsive-image";
+import { isApprovedResponsiveImageSource, responsiveImageUrl } from "../src/lib/responsive-image";
 
 const baseArgument = process.argv.find((argument) => argument.startsWith("--base="))?.slice("--base=".length);
 const mode = process.argv.find((argument) => argument.startsWith("--mode="))?.slice("--mode=".length) ?? "original";
@@ -39,7 +39,8 @@ const surfaces: Record<string, YachtMediaRecord[]> = {
 
 const measuredUrl = (media: YachtMediaRecord) => {
   if (mode === "responsive" && isApprovedResponsiveImageSource(media.path)) {
-    return netlifyImageUrl(media.path, Math.min(media.width, 640), base);
+    return responsiveImageUrl(media.path, Math.min(media.width, 640), base,
+      process.env.VITE_IMAGE_CDN === "vercel" ? "vercel" : "netlify");
   }
   return media.path.startsWith("/") ? new URL(media.path, base).href : media.path;
 };

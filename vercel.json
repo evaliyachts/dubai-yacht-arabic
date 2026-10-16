@@ -1,0 +1,1330 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npx --yes npm@11.16.0 ci",
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist-vercel",
+  "cleanUrls": false,
+  "redirects": [
+    {
+      "source": "/offers",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offers/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B6",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B6/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offers/sunset-escape",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offers/sunset-escape/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B6/sunset-escape",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B6/sunset-escape/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offer/sunset-escape",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offer/sunset-escape/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offers/marina-party",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offers/marina-party/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B6/marina-party",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B6/marina-party/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offer/marina-party",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offer/marina-party/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offers/vip-celebration",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offers/vip-celebration/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B6/vip-celebration",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B6/vip-celebration/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offer/vip-celebration",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/offer/vip-celebration/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq",
+      "destination": "/%D8%A7%D9%84%D8%A3%D8%B3%D8%A6%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%A7%D8%A6%D8%B9%D8%A9/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/",
+      "destination": "/%D8%A7%D9%84%D8%A3%D8%B3%D8%A6%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%A7%D8%A6%D8%B9%D8%A9/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services",
+      "destination": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/",
+      "destination": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/banana-boat-ride",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/banana-boat-ride/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/banana-boat-ride",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/banana-boat-ride/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D9%83%D9%88%D8%A8-%D8%A8%D9%86%D8%A7%D9%86%D8%A7-%D8%A8%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D9%83%D9%88%D8%A8-%D8%A8%D9%86%D8%A7%D9%86%D8%A7-%D8%A8%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/swimming",
+      "destination": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/swimming/",
+      "destination": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/swimming",
+      "destination": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/swimming/",
+      "destination": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/barbecue-on-the-yacht",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/barbecue-on-the-yacht/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/barbecue-on-the-yacht",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/barbecue-on-the-yacht/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/fishing",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/fishing/",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/fishing",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/fishing/",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/birthday-party",
+      "destination": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/birthday-party/",
+      "destination": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/birthday-party",
+      "destination": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/birthday-party/",
+      "destination": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/graduation-parties",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/graduation-parties/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/graduation-parties",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/graduation-parties/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/wedding-anniversary-parties",
+      "destination": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/wedding-anniversary-parties/",
+      "destination": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/wedding-anniversary-parties",
+      "destination": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/wedding-anniversary-parties/",
+      "destination": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/bachelor-parties",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/bachelor-parties/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/bachelor-parties",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/bachelor-parties/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D9%88%D8%AF%D8%A7%D8%B9-%D8%A7%D9%84%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D9%88%D8%AF%D8%A7%D8%B9-%D8%A7%D9%84%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/marriage-proposal-party",
+      "destination": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/marriage-proposal-party/",
+      "destination": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/marriage-proposal-party",
+      "destination": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/marriage-proposal-party/",
+      "destination": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/gender-reveal-party",
+      "destination": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/gender-reveal-party/",
+      "destination": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/gender-reveal-party",
+      "destination": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/gender-reveal-party/",
+      "destination": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/engagement-and-wedding-parties",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/engagement-and-wedding-parties/",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/engagement-and-wedding-parties",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/engagement-and-wedding-parties/",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%88%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%88%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/food-menu",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/food-menu/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/food-menu",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/food-menu/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D9%82%D8%A7%D8%A6%D9%85%D8%A9-%D8%B7%D8%B9%D8%A7%D9%85-%D9%84%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D9%82%D8%A7%D8%A6%D9%85%D8%A9-%D8%B7%D8%B9%D8%A7%D9%85-%D9%84%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/donut-ride",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/donut-ride/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/donut-ride",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/donut-ride/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D9%83%D9%88%D8%A8-%D8%AF%D9%88%D9%86%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D9%83%D9%88%D8%A8-%D8%AF%D9%88%D9%86%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/jet-ski",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/jet-ski/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/jet-ski",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/jet-ski/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/afternoon-tea-trip",
+      "destination": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/afternoon-tea-trip/",
+      "destination": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/afternoon-tea-trip",
+      "destination": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/afternoon-tea-trip/",
+      "destination": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D8%AD%D9%84%D8%A9-%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D8%AD%D9%84%D8%A9-%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/morning-yacht-trips",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/morning-yacht-trips/",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/morning-yacht-trips",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/morning-yacht-trips/",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D8%AD%D9%84%D8%A7%D8%AA-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%B1%D8%AD%D9%84%D8%A7%D8%AA-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/engagement-parties",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/engagement-parties/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/engagement-parties",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/engagement-parties/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/wedding-parties",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/wedding-parties/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/wedding-parties",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/wedding-parties/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/%D8%AD%D9%81%D9%84%D8%A7%D8%AA-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%A5%DA%A4%D8%A7%D9%84%D9%8A-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D8%AF%D8%A8%D9%8A",
+      "destination": "/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%A5%DA%A4%D8%A7%D9%84%D9%8A-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%A7%D8%B3%D8%AA%D8%A3%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D8%B2%D9%8A%D9%85%D9%88%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%A7%D8%B3%D8%AA%D8%A3%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA/",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D8%B2%D9%8A%D9%85%D9%88%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%A3%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%A7%D9%88%D8%B1%D9%83%D8%B3",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D9%88%D8%B1%D9%8A%D9%83%D8%B3-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%A3%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%A7%D9%88%D8%B1%D9%83%D8%B3/",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D9%88%D8%B1%D9%8A%D9%83%D8%B3-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D9%8A-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A/",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D9%8A-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts",
+      "destination": "/yachts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA",
+      "destination": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/",
+      "statusCode": 301
+    },
+    {
+      "source": "/about",
+      "destination": "/about/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%A3%D8%B3%D8%A6%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%A7%D8%A6%D8%B9%D8%A9",
+      "destination": "/%D8%A7%D9%84%D8%A3%D8%B3%D8%A6%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%A7%D8%A6%D8%B9%D8%A9/",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms/",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AD%D8%AC%D8%B2-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D8%AC%D8%B2-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D9%88%D8%AA-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D9%88%D8%AA-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D8%A7%D8%AE%D8%B1%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D8%A7%D8%AE%D8%B1%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D8%AF%D8%A8%D9%8A-%D9%85%D8%A7%D8%B1%D9%8A%D9%86%D8%A7",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D8%AF%D8%A8%D9%8A-%D9%85%D8%A7%D8%B1%D9%8A%D9%86%D8%A7/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%B1%D8%AD%D9%84%D8%A7%D8%AA-%D8%A8%D8%AD%D8%B1%D9%8A%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A7%D8%AA-%D8%A8%D8%AD%D8%B1%D9%8A%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D8%A7%D8%A6%D9%84%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D8%A7%D8%A6%D9%84%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%B9%D8%B4%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B9%D8%B4%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A",
+      "destination": "/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%B1%D9%88%D9%8A%D8%A7%D9%84-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A",
+      "destination": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%B1%D9%88%D9%8A%D8%A7%D9%84-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-42-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-42-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-44-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-44-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D8%B2%D9%8A%D9%85%D9%88%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D8%B2%D9%8A%D9%85%D9%88%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D9%88%D8%B1%D9%8A%D9%83%D8%B3-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D9%88%D8%B1%D9%8A%D9%83%D8%B3-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D9%8A-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D9%8A-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-56-%D9%82%D8%AF%D9%85-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A",
+      "destination": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-56-%D9%82%D8%AF%D9%85-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-55-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA",
+      "destination": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-55-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-88-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A",
+      "destination": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-88-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-64-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA-%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-64-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA-%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-64-%D9%82%D8%AF%D9%85-%D9%87%D8%A7%D8%AA%D8%B1%D8%B3-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-64-%D9%82%D8%AF%D9%85-%D9%87%D8%A7%D8%AA%D8%B1%D8%B3-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A8%D9%8A%D9%86%D9%8A%D8%AA%D9%8A-110-%D9%82%D8%AF%D9%85-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A8%D9%8A%D9%86%D9%8A%D8%AA%D9%8A-110-%D9%82%D8%AF%D9%85-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-101-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-101-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%87%D8%A7%D9%8A%D8%BA%D8%A7%D9%86-90-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A",
+      "destination": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%87%D8%A7%D9%8A%D8%BA%D8%A7%D9%86-90-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%AF%D9%88%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A-90-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%AF%D9%88%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A-90-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%A7%D9%88%D8%B4%D9%86-%D8%AF%D8%B1%D9%8A%D9%85-%D9%8A%D8%AE%D8%AA-143-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D8%A7%D9%88%D8%B4%D9%86-%D8%AF%D8%B1%D9%8A%D9%85-%D9%8A%D8%AE%D8%AA-143-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%85%D8%B2%D8%A7%D9%8A%D9%84-135-%D9%82%D8%AF%D9%85-%D8%AF%D8%A8%D9%8A",
+      "destination": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%85%D8%B2%D8%A7%D9%8A%D9%84-135-%D9%82%D8%AF%D9%85-%D8%AF%D8%A8%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-95-%D9%82%D8%AF%D9%85-%D8%AF%D9%88%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-95-%D9%82%D8%AF%D9%85-%D8%AF%D9%88%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-92-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-92-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-90-%D9%82%D8%AF%D9%85",
+      "destination": "/yachts/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-90-%D9%82%D8%AF%D9%85/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%AF%D9%8A-%D8%AA%D8%B1%D9%8A-151-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%AF%D9%8A-%D8%AA%D8%B1%D9%8A-151-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-108-%D9%82%D8%AF%D9%85-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-108-%D9%82%D8%AF%D9%85-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "statusCode": 301
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A7%D9%88%D9%85%D9%8A%D8%BA%D8%A7-100-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1",
+      "destination": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A7%D9%88%D9%85%D9%8A%D8%BA%D8%A7-100-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "statusCode": 301
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/yachts/",
+      "destination": "/_pages/yachts.html"
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA/",
+      "destination": "/_pages/%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA.html"
+    },
+    {
+      "source": "/about/",
+      "destination": "/_pages/about.html"
+    },
+    {
+      "source": "/%D8%A7%D9%84%D8%A3%D8%B3%D8%A6%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%A7%D8%A6%D8%B9%D8%A9/",
+      "destination": "/_pages/%D8%A7%D9%84%D8%A3%D8%B3%D8%A6%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%A7%D8%A6%D8%B9%D8%A9.html"
+    },
+    {
+      "source": "/contact/",
+      "destination": "/_pages/contact.html"
+    },
+    {
+      "source": "/terms/",
+      "destination": "/_pages/terms.html"
+    },
+    {
+      "source": "/privacy/",
+      "destination": "/_pages/privacy.html"
+    },
+    {
+      "source": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AD%D8%AC%D8%B2-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AD%D8%AC%D8%B2-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D9%88%D8%AA-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D9%8A%D8%AE%D9%88%D8%AA-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D8%A7%D8%AE%D8%B1%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D8%A7%D8%AE%D8%B1%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%A7%D9%84%D9%8A%D8%AE%D9%88%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D8%AF%D8%A8%D9%8A-%D9%85%D8%A7%D8%B1%D9%8A%D9%86%D8%A7/",
+      "destination": "/_pages/%D9%8A%D8%AE%D8%AA-%D8%AF%D8%A8%D9%8A-%D9%85%D8%A7%D8%B1%D9%8A%D9%86%D8%A7.html"
+    },
+    {
+      "source": "/%D8%B1%D8%AD%D9%84%D8%A7%D8%AA-%D8%A8%D8%AD%D8%B1%D9%8A%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%B1%D8%AD%D9%84%D8%A7%D8%AA-%D8%A8%D8%AD%D8%B1%D9%8A%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%B9%D9%8A%D8%AF-%D9%85%D9%8A%D9%84%D8%A7%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D9%8A%D8%AE%D8%AA-%D9%84%D8%AD%D9%81%D9%84%D8%A9-%D8%AE%D8%B7%D9%88%D8%A8%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%B7%D9%84%D8%A8-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AD%D9%81%D9%84%D8%A9-%D8%B2%D9%81%D8%A7%D9%81-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%B0%D9%83%D8%B1%D9%89-%D8%B2%D9%88%D8%A7%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AD%D9%81%D9%84%D8%A9-%D8%AA%D8%AE%D8%B1%D8%AC-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AA%D8%AD%D8%AF%D9%8A%D8%AF-%D8%AC%D9%86%D8%B3-%D8%A7%D9%84%D9%85%D9%88%D9%84%D9%88%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AD%D9%81%D9%84%D8%A9-%D9%88%D8%AF%D8%A7%D8%B9-%D8%B9%D8%B2%D9%88%D8%A8%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D8%A7%D8%A6%D9%84%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D9%8A%D8%AE%D8%AA-%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D8%A7%D8%A6%D9%84%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%AD%D9%81%D9%84%D8%A9-%D8%B4%D9%88%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%B9%D8%B4%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%B9%D8%B4%D8%A7%D8%A1-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%A7%D9%81%D8%AA%D8%B1%D9%86%D9%88%D9%86-%D8%AA%D9%8A-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%AC%D8%AA-%D8%B3%D9%83%D9%8A-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D9%8A%D8%AE%D8%AA-%D9%85%D8%B9-%D8%A7%D9%84%D8%B9%D8%A7%D8%A8-%D9%85%D8%A7%D8%A6%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%B1%D8%AD%D9%84%D8%A9-%D8%B5%D9%8A%D8%AF-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/%D8%B3%D8%A8%D8%A7%D8%AD%D8%A9-%D8%B9%D9%84%D9%89-%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/yachts/%D8%B9%D9%88%D8%A7%D9%85%D8%A9-%D8%AE%D8%A7%D8%B5%D8%A9-55-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1-%D9%81%D9%8A-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%B1%D9%88%D9%8A%D8%A7%D9%84-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A/",
+      "destination": "/_pages/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-50-%D9%82%D8%AF%D9%85-%D8%B1%D9%88%D9%8A%D8%A7%D9%84-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-42-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-42-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-44-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-44-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D8%B2%D9%8A%D9%85%D9%88%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D8%B2%D9%8A%D9%85%D9%88%D8%AA-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D9%88%D8%B1%D9%8A%D9%83%D8%B3-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D8%A3%D9%88%D8%B1%D9%8A%D9%83%D8%B3-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D9%8A-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D9%81%D9%8A%D8%B1%D9%8A%D8%AA%D9%8A-50-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-56-%D9%82%D8%AF%D9%85-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A/",
+      "destination": "/_pages/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-56-%D9%82%D8%AF%D9%85-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-55-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA/",
+      "destination": "/_pages/yachts/%D8%B1%D8%AD%D9%84%D8%A9-%D9%8A%D8%AE%D8%AA-55-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA.html"
+    },
+    {
+      "source": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-88-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "destination": "/_pages/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-88-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-64-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA-%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-64-%D9%82%D8%AF%D9%85-%D8%A7%D8%B2%D9%8A%D9%85%D9%88%D8%AA-%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-64-%D9%82%D8%AF%D9%85-%D9%87%D8%A7%D8%AA%D8%B1%D8%B3-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-64-%D9%82%D8%AF%D9%85-%D9%87%D8%A7%D8%AA%D8%B1%D8%B3-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A8%D9%8A%D9%86%D9%8A%D8%AA%D9%8A-110-%D9%82%D8%AF%D9%85-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D8%A8%D9%8A%D9%86%D9%8A%D8%AA%D9%8A-110-%D9%82%D8%AF%D9%85-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-101-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A-101-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A-%D9%84%D9%84%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%87%D8%A7%D9%8A%D8%BA%D8%A7%D9%86-90-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "destination": "/_pages/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%87%D8%A7%D9%8A%D8%BA%D8%A7%D9%86-90-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%AF%D9%88%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A-90-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D8%AF%D9%88%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A-90-%D9%82%D8%AF%D9%85-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D8%A7%D9%88%D8%B4%D9%86-%D8%AF%D8%B1%D9%8A%D9%85-%D9%8A%D8%AE%D8%AA-143-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D8%A7%D9%88%D8%B4%D9%86-%D8%AF%D8%B1%D9%8A%D9%85-%D9%8A%D8%AE%D8%AA-143-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%85%D8%B2%D8%A7%D9%8A%D9%84-135-%D9%82%D8%AF%D9%85-%D8%AF%D8%A8%D9%8A/",
+      "destination": "/_pages/yachts/%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1-%D9%8A%D8%AE%D8%AA-%D9%85%D8%B2%D8%A7%D9%8A%D9%84-135-%D9%82%D8%AF%D9%85-%D8%AF%D8%A8%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-95-%D9%82%D8%AF%D9%85-%D8%AF%D9%88%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-95-%D9%82%D8%AF%D9%85-%D8%AF%D9%88%D8%B1%D9%8A%D8%AA%D8%AA%D9%8A-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-92-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-92-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-90-%D9%82%D8%AF%D9%85/",
+      "destination": "/_pages/yachts/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-90-%D9%82%D8%AF%D9%85.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%AF%D9%8A-%D8%AA%D8%B1%D9%8A-151-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D8%AF%D9%8A-%D8%AA%D8%B1%D9%8A-151-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-108-%D9%82%D8%AF%D9%85-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D8%B3%D9%86%D8%B3%D9%8A%D9%83%D8%B1-108-%D9%82%D8%AF%D9%85-%D9%85%D8%B9-%D8%AC%D8%A7%D9%83%D9%88%D8%B2%D9%8A.html"
+    },
+    {
+      "source": "/yachts/%D9%8A%D8%AE%D8%AA-%D8%A7%D9%88%D9%85%D9%8A%D8%BA%D8%A7-100-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1/",
+      "destination": "/_pages/yachts/%D9%8A%D8%AE%D8%AA-%D8%A7%D9%88%D9%85%D9%8A%D8%BA%D8%A7-100-%D9%82%D8%AF%D9%85-%D9%84%D9%84%D8%A7%D9%8A%D8%AC%D8%A7%D8%B1.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "images": {
+    "sizes": [
+      320,
+      360,
+      364,
+      376,
+      432,
+      480,
+      557,
+      576,
+      614,
+      639,
+      640,
+      643,
+      679,
+      694,
+      720,
+      768,
+      864,
+      867,
+      960,
+      1013,
+      1026,
+      1168,
+      1200,
+      1229,
+      1280,
+      1382,
+      1391,
+      1480,
+      1536,
+      1600
+    ],
+    "domains": [],
+    "remotePatterns": [
+      {
+        "protocol": "https",
+        "hostname": "yacht.fra1.cdn.digitaloceanspaces.com",
+        "port": "",
+        "pathname": "^/.*$",
+        "search": ""
+      }
+    ],
+    "localPatterns": [],
+    "qualities": [
+      75
+    ],
+    "formats": [
+      "image/webp"
+    ],
+    "minimumCacheTTL": 3600,
+    "dangerouslyAllowSVG": false
+  }
+}

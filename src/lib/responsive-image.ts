@@ -1,7 +1,9 @@
 import type { YachtMediaRecord } from "@/data/yachts";
 
 const APPROVED_YACHT_IMAGE_HOST = "yacht.fra1.cdn.digitaloceanspaces.com";
-const DEFAULT_WIDTHS = [320, 480, 640, 768, 960, 1280, 1600] as const;
+export const DEFAULT_WIDTHS = [320, 480, 640, 768, 960, 1280, 1600] as const;
+export type ImageCdnProvider = "netlify" | "vercel";
+const imageCdnProvider: ImageCdnProvider = import.meta.env?.VITE_IMAGE_CDN === "vercel" ? "vercel" : "netlify";
 
 export const isApprovedResponsiveImageSource = (source: string) => {
   try {
@@ -20,6 +22,19 @@ export const netlifyImageUrl = (source: string, width: number, origin = "") => {
   return `${origin}/.netlify/images?url=${encodeURIComponent(source)}&w=${width}&fm=webp&q=75`;
 };
 
+export const responsiveImageUrl = (
+  source: string,
+  width: number,
+  origin = "",
+  provider: ImageCdnProvider = imageCdnProvider,
+) => {
+  // Reuse the same source and width validation on both hosting platforms.
+  const netlifyUrl = netlifyImageUrl(source, width, origin);
+  return provider === "vercel"
+    ? `${origin}/_vercel/image?url=${encodeURIComponent(source)}&w=${width}&q=75`
+    : netlifyUrl;
+};
+
 export const responsiveImageSrcSet = (
   source: string,
   intrinsicWidth: number,
@@ -35,7 +50,7 @@ export const responsiveImageSrcSet = (
     cappedIntrinsicWidth,
   ])].sort((a, b) => a - b);
 
-  return candidates.map((width) => `${netlifyImageUrl(source, width)} ${width}w`).join(", ");
+  return candidates.map((width) => `${responsiveImageUrl(source, width)} ${width}w`).join(", ");
 };
 
 export const responsiveYachtMediaSrcSet = (media: YachtMediaRecord, widths?: readonly number[]) =>
