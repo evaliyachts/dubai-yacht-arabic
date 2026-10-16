@@ -12,6 +12,8 @@
     "dev": "vite",
     "prebuild": "tsx scripts/generate-sitemap.ts",
     "build": "tsx scripts/build-static.ts",
+    "build:vercel": "VITE_IMAGE_CDN=vercel npm run build && VITE_IMAGE_CDN=vercel npm run seo:check && tsx scripts/prepare-vercel-output.ts",
+    "vercel:config": "tsx scripts/generate-vercel-config.ts",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
